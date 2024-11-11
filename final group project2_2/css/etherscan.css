@@ -1,0 +1,91 @@
+/* 공통 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+/* 헤더 스타일 */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  padding: 20px 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2em;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: #ffcc00;
+}
+
+/* 컨테이너 스타일 */
+.container {
+  width: 85%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* 카드 스타일 */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  color: #4a90e2;
+  font-size: 1.8em;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  margin-top: 15px;
+}
+
+/* 이더스캔 홈페이지 방문 버튼 스타일 */
+.etherscan-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4a90e2; /* 파란색과 하늘색 사이의 색 */
+  color: #fff;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.etherscan-btn:hover {
+  background-color: #357abd; /* 약간 더 어두운 파란색 */
+}

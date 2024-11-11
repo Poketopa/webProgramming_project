@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>내 지갑</title>
+  <link rel="stylesheet" href="css/my-wallet.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 차트.js 라이브러리 추가 -->
+</head>
+<body>
+
+  <!-- 공통 헤더 -->
+  <header>
+    <h1>내 지갑</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">메인</a></li>
+        <li><a href="coin-details.html">코인상세</a></li>
+        <li><a href="etherscan.html">이더스캔</a></li>
+        <li><a href="bulletin-board.html">게시판</a></li>
+        <li><a href="my-wallet.html">내 지갑</a></li>
+        <li><a href="kakao-login.html">카카오 로그인</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 메인 컨텐츠 -->
+  <div class="container">
+    <!-- 왼쪽 섹션: 입금 및 현재 보유 코인 -->
+    <div class="left-section">
+      <!-- 입금 섹션 -->
+      <div class="card">
+        <h2>입금</h2>
+        <form id="depositForm">
+          <label for="depositAmount">입금할 금액:</label>
+          <input type="number" id="depositAmount" placeholder="금액 입력 (원)" required>
+
+          <label for="coinType">입금할 코인 종류:</label>
+          <select id="coinType" required>
+            <option value="bitcoin">비트코인</option>
+            <option value="ethereum">이더리움</option>
+            <option value="ripple">리플</option>
+            <!-- 코인 종류를 추가할 수 있습니다 -->
+          </select>
+
+          <label for="recipient">받으실 분:</label>
+          <input type="text" id="recipient" placeholder="받으실 분 이름 입력" required>
+
+          <button type="submit" class="submit-btn">입금하기</button>
+        </form>
+      </div>
+
+      <!-- 현재 보유 코인 섹션 -->
+      <div class="card">
+        <h2>현재 보유 코인</h2>
+        <ul id="currentHoldings">
+          <li>비트코인: 0.5 BTC</li>
+          <li>이더리움: 2 ETH</li>
+          <li>리플: 300 XRP</li>
+          <!-- 보유 코인 목록은 동적으로 업데이트할 수 있습니다 -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- 오른쪽 섹션: 수익률 -->
+    <div class="right-section">
+      <div class="card">
+        <h2>수익률</h2>
+        <canvas id="profitChart"></canvas> <!-- 차트를 표시할 캔버스 요소 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 차트.js로 수익률 차트 생성
+    const ctx = document.getElementById('profitChart').getContext('2d');
+    const profitChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
+        datasets: [{
+          label: '수익률 (%)',
+          data: [5, 10, 15, 20, 18, 25],
+          borderColor: '#4a90e2',
+          backgroundColor: 'rgba(74, 144, 226, 0.2)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: '수익률 (%)'
+            }
+          }
+        }
+      }
+    });
+
+    // 입금 기능
+    document.getElementById("depositForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const amount = document.getElementById("depositAmount").value;
+      const coin = document.getElementById("coinType").value;
+      const recipient = document.getElementById("recipient").value;
+      alert(`입금이 완료되었습니다:\n금액: ${amount} 원\n코인 종류: ${coin}\n받으실 분: ${recipient}`);
+      // 여기에 서버로 입금 정보를 전송하는 기능을 추가할 수 있습니다.
+    });
+  </script>
+
+</body>
+</html>

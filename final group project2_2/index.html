@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>암호화폐 사이트 메인</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 공통 헤더 -->
+  <header>
+    <h1>암호화폐 사이트</h1>
+    <nav>
+      <ul>
+        <li><a href="coin-details.html">코인상세</a></li>
+        <li><a href="etherscan.html">이더스캔</a></li>
+        <li><a href="bulletin-board.html">게시판</a></li>
+        <li><a href="my-wallet.html">내 지갑</a></li>
+        <li><a href="kakao-login.html">카카오 로그인</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 컨테이너 -->
+  <div class="container">
+    <!-- 차트 영역 -->
+    <div class="charts">
+      <div class="chart-placeholder">비트코인 차트 (외부 API)</div>
+      <div class="chart-placeholder">달러 차트 (외부 API)</div>
+    </div>
+
+    <!-- 코인 목록 -->
+    <div class="coin-list">
+      <table>
+        <thead>
+          <tr>
+            <th>코인 이름</th>
+            <th>가격 (원)</th>
+            <th>거래량</th>
+          </tr>
+        </thead>
+        <tbody id="coin-data">
+          <!-- JavaScript로 코인 데이터를 동적으로 추가 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // 다수의 샘플 코인 데이터 생성
+    const coins = [];
+    for (let i = 1; i <= 20; i++) {
+      coins.push({ name: `코인 이름 ${i}`, price: Math.floor(Math.random() * 50000000) + 1000, volume: `${Math.floor(Math.random() * 10000)} BTC` });
+    }
+
+    // 코인 데이터를 HTML에 추가하는 함수
+    function displayCoins() {
+      const coinData = document.getElementById('coin-data');
+      coins.forEach(coin => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${coin.name}</td>
+          <td>${coin.price.toLocaleString()} 원</td>
+          <td>${coin.volume}</td>
+        `;
+        coinData.appendChild(row);
+      });
+    }
+
+    // 페이지 로드 시 코인 목록 표시
+    document.addEventListener('DOMContentLoaded', displayCoins);
+  </script>
+</body>
+</html>
