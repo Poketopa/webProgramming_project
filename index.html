@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>암호화폐 스왑 인터페이스</title>
+    <link rel="stylesheet" href="test.css" />
+  </head>
+  <body>
+    <div class="swap-interface">
+      <!-- 상단 메뉴 -->
+      <div class="menu">
+        <button class="menu-item active">Swap</button>
+        <button class="menu-item">Limit</button>
+        <button class="menu-item">Send</button>
+        <button class="menu-item">Buy</button>
+        <button class="menu-settings">&#9881;</button>
+      </div>
+
+      <!-- 스왑 패널 -->
+      <div class="swap-panel">
+        <div class="swap-box">
+          <div class="swap-row">
+            <div class="label">Sell</div>
+            <div class="value">0</div>
+            <div class="currency">$0</div>
+            <button class="token-select">ETH</button>
+          </div>
+          <div class="arrow">↓</div>
+          <div class="swap-row">
+            <div class="label">Buy</div>
+            <div class="value">0</div>
+            <button class="token-select">Select token</button>
+          </div>
+        </div>
+
+        <!-- 지갑 연결 버튼 -->
+        <button class="connect-wallet">Connect wallet</button>
+
+        <!-- 네트워크 스왑 안내 -->
+        <div class="network-swap-info">
+          <span>Swapping across networks</span>
+          <span class="new-badge">New</span>
+          <span class="close">&times;</span>
+          <p>Move ETH, USDC, and more across 8+ networks.</p>
+        </div>
+      </div>
+
+      <!-- 언어 설정 -->
+      <div class="language-setting">
+        Uniswap available in: <a href="#">Korean</a>
+      </div>
+    </div>
+  </body>
+</html>
