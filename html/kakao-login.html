@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>카카오 로그인</title>
-  <link rel="stylesheet" href="css/kakao-login.css">
-  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  <script>
-    // Kakao JavaScript SDK 초기화
-    Kakao.init('YOUR_APP_KEY'); // YOUR_APP_KEY 부분에 발급받은 JavaScript 키를 입력하세요.
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카카오 로그인</title>
+    <link rel="stylesheet" href="/css/kakao-login.css" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+      // Kakao JavaScript SDK 초기화
+      Kakao.init("YOUR_APP_KEY"); // YOUR_APP_KEY 부분에 발급받은 JavaScript 키를 입력하세요.
 
-    function kakaoLogin() {
-      Kakao.Auth.login({
-        success: function (authObj) {
-          alert('로그인 성공!');
-          // 로그인 성공 후 추가 처리
-        },
-        fail: function (err) {
-          alert('로그인 실패: ' + JSON.stringify(err));
-        }
-      });
-    }
-  </script>
-</head>
-<body>
+      function kakaoLogin() {
+        Kakao.Auth.login({
+          success: function (authObj) {
+            alert("로그인 성공!");
+            // 로그인 성공 후 추가 처리
+          },
+          fail: function (err) {
+            alert("로그인 실패: " + JSON.stringify(err));
+          },
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <!-- 공통 헤더 -->
+    <header>
+      <h1>카카오 로그인</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">메인</a></li>
+          <li><a href="coin-details.html">코인상세</a></li>
+          <li><a href="etherscan.html">이더스캔</a></li>
+          <li><a href="bulletin-board.html">게시판</a></li>
+          <li><a href="my-wallet.html">내 지갑</a></li>
+          <li><a href="kakao-login.html">카카오 로그인</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <!-- 공통 헤더 -->
-  <header>
-    <h1>카카오 로그인</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">메인</a></li>
-        <li><a href="coin-details.html">코인상세</a></li>
-        <li><a href="etherscan.html">이더스캔</a></li>
-        <li><a href="bulletin-board.html">게시판</a></li>
-        <li><a href="my-wallet.html">내 지갑</a></li>
-        <li><a href="kakao-login.html">카카오 로그인</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- 카카오 로그인 섹션 -->
-  <div class="container">
-    <div class="card">
-      <h2>카카오 로그인</h2>
-      <p>카카오 계정을 사용하여 로그인하세요.</p>
-      <button onclick="kakaoLogin()" class="kakao-login-btn">카카오 로그인</button>
+    <!-- 카카오 로그인 섹션 -->
+    <div class="container">
+      <div class="card">
+        <h2>카카오 로그인</h2>
+        <p>카카오 계정을 사용하여 로그인하세요.</p>
+        <button onclick="kakaoLogin()" class="kakao-login-btn">
+          카카오 로그인
+        </button>
+      </div>
     </div>
-  </div>
-
-</body>
+  </body>
 </html>

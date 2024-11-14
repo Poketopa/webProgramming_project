@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>글쓰기</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>글쓰기</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <!-- 공통 헤더 -->
+    <header>
+      <h1>글쓰기</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">메인</a></li>
+          <li><a href="coin-details.html">코인상세</a></li>
+          <li><a href="etherscan.html">이더스캔</a></li>
+          <li><a href="bulletin-board.html">게시판</a></li>
+          <li><a href="my-wallet.html">내 지갑</a></li>
+          <li><a href="kakao-login.html">카카오 로그인</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <!-- 공통 헤더 -->
-  <header>
-    <h1>글쓰기</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">메인</a></li>
-        <li><a href="coin-details.html">코인상세</a></li>
-        <li><a href="etherscan.html">이더스캔</a></li>
-        <li><a href="bulletin-board.html">게시판</a></li>
-        <li><a href="my-wallet.html">내 지갑</a></li>
-        <li><a href="kakao-login.html">카카오 로그인</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- 글쓰기 메인 컨텐츠 -->
+    <div class="container">
+      <div class="card">
+        <h2>게시글 작성</h2>
+        <form id="postForm">
+          <label for="boardType">게시판 선택:</label>
+          <select id="boardType" required>
+            <option value="notice">공지게시판</option>
+            <option value="free">자유게시판</option>
+            <option value="coin">코인게시판</option>
+          </select>
 
-  <!-- 글쓰기 메인 컨텐츠 -->
-  <div class="container">
-    <div class="card">
-      <h2>게시글 작성</h2>
-      <form id="postForm">
-        <label for="boardType">게시판 선택:</label>
-        <select id="boardType" required>
-          <option value="notice">공지게시판</option>
-          <option value="free">자유게시판</option>
-          <option value="coin">코인게시판</option>
-        </select>
+          <label for="title">제목:</label>
+          <input type="text" id="title" required />
 
-        <label for="title">제목:</label>
-        <input type="text" id="title" required>
+          <label for="content">내용:</label>
+          <textarea id="content" rows="5" required></textarea>
 
-        <label for="content">내용:</label>
-        <textarea id="content" rows="5" required></textarea>
-
-        <button type="submit" class="submit-btn">게시글 등록</button>
-      </form>
+          <button type="submit" class="submit-btn">게시글 등록</button>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <script>
-    // 게시글 등록 시 처리
-    document.getElementById("postForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const board = document.getElementById("boardType").value;
-      const title = document.getElementById("title").value;
-      const content = document.getElementById("content").value;
+    <script>
+      // 게시글 등록 시 처리
+      document
+        .getElementById("postForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const board = document.getElementById("boardType").value;
+          const title = document.getElementById("title").value;
+          const content = document.getElementById("content").value;
 
-      alert(`게시글 등록됨:\n게시판: ${board}\n제목: ${title}\n내용: ${content}`);
-      // 서버로 게시글 데이터를 전송하거나, 로컬에 저장하는 기능 추가
-    });
-  </script>
-
-</body>
+          alert(
+            `게시글 등록됨:\n게시판: ${board}\n제목: ${title}\n내용: ${content}`
+          );
+          // 서버로 게시글 데이터를 전송하거나, 로컬에 저장하는 기능 추가
+        });
+    </script>
+  </body>
 </html>
