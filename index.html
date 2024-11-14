@@ -25,8 +25,8 @@
     <div class="container">
       <!-- 차트 영역 -->
       <div class="charts">
-        <div class="chart-placeholder">비트코인 차트 (외부 API)</div>
-        <div class="chart-placeholder">달러 차트 (외부 API)</div>
+        <div class="chart-placeholder" id="btc-chart"></div>
+        <div class="chart-placeholder" id="usd-chart"></div>
       </div>
 
       <!-- 코인 목록 -->
@@ -35,8 +35,8 @@
           <thead>
             <tr>
               <th>코인 이름</th>
-              <th>가격 (원)</th>
-              <th>거래량</th>
+              <th>가격 (USD)</th>
+              <th>변동률 (24시간)</th>
             </tr>
           </thead>
           <tbody id="coin-data">
@@ -46,33 +46,7 @@
       </div>
     </div>
 
-    <script>
-      // 다수의 샘플 코인 데이터 생성
-      const coins = [];
-      for (let i = 1; i <= 20; i++) {
-        coins.push({
-          name: `코인 이름 ${i}`,
-          price: Math.floor(Math.random() * 50000000) + 1000,
-          volume: `${Math.floor(Math.random() * 10000)} BTC`,
-        });
-      }
-
-      // 코인 데이터를 HTML에 추가하는 함수
-      function displayCoins() {
-        const coinData = document.getElementById("coin-data");
-        coins.forEach((coin) => {
-          const row = document.createElement("tr");
-          row.innerHTML = `
-          <td>${coin.name}</td>
-          <td>${coin.price.toLocaleString()} 원</td>
-          <td>${coin.volume}</td>
-        `;
-          coinData.appendChild(row);
-        });
-      }
-
-      // 페이지 로드 시 코인 목록 표시
-      document.addEventListener("DOMContentLoaded", displayCoins);
-    </script>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script src="fetchCoinData.js"></script>
   </body>
 </html>
