@@ -6,10 +6,8 @@
     <title>내 지갑</title>
     <link rel="stylesheet" href="../css/my-wallet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 차트.js 라이브러리 추가 -->
   </head>
   <body>
-    <!-- 공통 헤더 -->
     <header>
       <h1>내 지갑</h1>
       <nav>
@@ -24,9 +22,8 @@
       </nav>
     </header>
 
-    <!-- 메인 컨텐츠 -->
     <div class="container">
-      <!-- 왼쪽 섹션: 입금 및 현재 보유 코인 -->
+      <!-- 왼쪽 섹션: 입금 및 지갑 연결 -->
       <div class="left-section">
         <!-- 입금 섹션 -->
         <div class="card">
@@ -45,7 +42,6 @@
               <option value="bitcoin">비트코인</option>
               <option value="ethereum">이더리움</option>
               <option value="ripple">리플</option>
-              <!-- 코인 종류를 추가할 수 있습니다 -->
             </select>
 
             <label for="recipient">받으실 분:</label>
@@ -60,15 +56,12 @@
           </form>
         </div>
 
-        <!-- 현재 보유 코인 섹션 -->
+        <!-- 지갑 연결 섹션 -->
         <div class="card">
-          <h2>현재 보유 코인</h2>
-          <ul id="currentHoldings">
-            <li>비트코인: 0.5 BTC</li>
-            <li>이더리움: 2 ETH</li>
-            <li>리플: 300 XRP</li>
-            <!-- 보유 코인 목록은 동적으로 업데이트할 수 있습니다 -->
-          </ul>
+          <h2>지갑 연결</h2>
+          <button id="connectWalletBtn">지갑 연결</button>
+          <p id="walletAddress">지갑 주소: -</p>
+          <p id="walletBalance">잔액 (ETH): -</p>
         </div>
       </div>
 
@@ -77,7 +70,6 @@
         <div class="card">
           <h2>수익률</h2>
           <canvas id="profitChart"></canvas>
-          <!-- 차트를 표시할 캔버스 요소 -->
         </div>
       </div>
     </div>
@@ -124,8 +116,43 @@
           alert(
             `입금이 완료되었습니다:\n금액: ${amount} 원\n코인 종류: ${coin}\n받으실 분: ${recipient}`
           );
-          // 여기에 서버로 입금 정보를 전송하는 기능을 추가할 수 있습니다.
         });
+
+      // MetaMask 지갑 연결 및 잔액 조회 기능
+      async function connectWallet() {
+        if (typeof window.ethereum !== "undefined") {
+          try {
+            // MetaMask 연결 요청
+            const accounts = await ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            const account = accounts[0];
+            document.getElementById("walletAddress").innerText =
+              "지갑 주소: " + account;
+
+            // ETH 잔액 조회
+            const balance = await ethereum.request({
+              method: "eth_getBalance",
+              params: [account, "latest"],
+            });
+            const ethBalance = parseFloat(
+              window.web3.utils.fromWei(balance, "ether")
+            ).toFixed(4);
+            document.getElementById("walletBalance").innerText =
+              "잔액 (ETH): " + ethBalance;
+          } catch (error) {
+            console.error("지갑 연결 오류:", error);
+            alert("지갑 연결에 실패했습니다.");
+          }
+        } else {
+          alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
+        }
+      }
+
+      // 지갑 연결 버튼 클릭 이벤트
+      document
+        .getElementById("connectWalletBtn")
+        .addEventListener("click", connectWallet);
     </script>
   </body>
 </html>
