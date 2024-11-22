@@ -86,7 +86,7 @@ function initializeTradingViewCharts() {
   });
 }
 
-// 페이지 로드 시 CoinGecko API를 통해 데이터를 가져오고 TradingView 차트를 초기화
+// 페이지 로드 시 CoinGecko API를 통해 데이터를 가져오고 TradingView 차트 초기화
 document.addEventListener("DOMContentLoaded", () => {
   fetchCoinData();
   initializeTradingViewCharts();
