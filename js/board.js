@@ -82,15 +82,18 @@ async function showPostDetail(postId) {
       const deleteButton = document.getElementById("deletePostBtn");
       deleteButton.dataset.id = postId;
 
-      // 수정 버튼 추가
-      const editButton = document.createElement("button");
-      editButton.textContent = "수정";
-      editButton.onclick = () => loadPostForEdit(postId);
-      document.getElementById("postDetail").appendChild(editButton);
+      // 수정 버튼 생성 (중복 방지)
+      const existingEditButton = document.getElementById("editButton");
+      if (!existingEditButton) {
+        const editButton = document.createElement("button");
+        editButton.id = "editButton"; // 버튼에 고유 ID 추가
+        editButton.textContent = "수정";
+        editButton.addEventListener("click", () => loadPostForEdit(postId));
+        document.getElementById("postDetail").appendChild(editButton);
+      }
     }
   } catch (error) {
     console.error("게시글 상세 보기 중 오류 발생:", error);
-    alert("게시글 상세 정보를 불러올 수 없습니다.");
   }
 }
 
