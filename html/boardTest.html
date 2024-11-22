@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase 게시판</title>
+  </head>
+  <body>
+    <h1>Firebase 게시판</h1>
+
+    <!-- 게시글 추가 폼 -->
+    <form id="postForm">
+      <input type="text" id="title" placeholder="제목" required />
+      <textarea id="content" placeholder="내용" required></textarea>
+      <input type="text" id="author" placeholder="작성자" required />
+      <button type="submit">게시글 추가</button>
+    </form>
+
+    <!-- 게시글 목록 -->
+    <ul id="postList"></ul>
+
+    <!-- 게시글 상세 보기 -->
+    <div
+      id="postDetail"
+      style="
+        display: none;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 20px;
+      "
+    >
+      <h2 id="detailTitle"></h2>
+      <p id="detailContent"></p>
+      <small id="detailAuthor"></small>
+      <br />
+      <button id="deletePostBtn">삭제</button>
+    </div>
+
+    <!-- Firebase & JavaScript 연결 -->
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+    <script src="../js/board.js"></script>
+  </body>
+</html>
