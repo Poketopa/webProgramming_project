@@ -3,27 +3,29 @@ const firebaseConfig = {
   apiKey: "AIzaSyAcGdEVkZS8l_w4eczwzFGKL5enLHXJKFk",
   authDomain: "webproject-12c7a.firebaseapp.com",
   projectId: "webproject-12c7a",
-  storageBucket: "webproject-12c7a.firebasestorage.app",
+  storageBucket: "webproject-12c7a.appspot.com", // ".app"에서 ".com"으로 수정
   messagingSenderId: "169348055607",
   appId: "1:169348055607:web:c0c5440edecc1d0e3a35b2",
   measurementId: "G-8PPXSFGBB3",
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+// Firebase 초기화
+firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // 게시글 추가 함수
 async function addPost(title, content, author) {
   try {
     await db.collection("posts").add({
-      title,
-      content,
-      author,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      title: title.trim(), // 공백 제거
+      content: content.trim(),
+      author: author.trim(),
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(), // 서버 시간 추가
     });
     console.log("게시글 추가 완료");
   } catch (error) {
     console.error("게시글 추가 중 오류 발생:", error);
+    alert("게시글 추가 중 오류가 발생했습니다.");
   }
 }
 
@@ -34,9 +36,10 @@ async function getPosts() {
       .collection("posts")
       .orderBy("timestamp", "desc")
       .get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })); // 문서 ID 포함
   } catch (error) {
     console.error("게시글 불러오기 중 오류 발생:", error);
+    alert("게시글 목록을 불러오지 못했습니다.");
   }
 }
 
@@ -47,6 +50,7 @@ async function deletePost(postId) {
     console.log("게시글 삭제 완료");
   } catch (error) {
     console.error("게시글 삭제 중 오류 발생:", error);
+    alert("게시글 삭제 중 문제가 발생했습니다.");
   }
 }
 
@@ -57,6 +61,7 @@ async function updatePost(postId, updatedData) {
     console.log("게시글 수정 완료");
   } catch (error) {
     console.error("게시글 수정 중 오류 발생:", error);
+    alert("게시글 수정 중 오류가 발생했습니다.");
   }
 }
 
@@ -77,14 +82,15 @@ async function showPostDetail(postId) {
       const deleteButton = document.getElementById("deletePostBtn");
       deleteButton.dataset.id = postId;
 
-      // 수정 버튼 생성
+      // 수정 버튼 추가
       const editButton = document.createElement("button");
       editButton.textContent = "수정";
-      editButton.addEventListener("click", () => loadPostForEdit(postId));
+      editButton.onclick = () => loadPostForEdit(postId);
       document.getElementById("postDetail").appendChild(editButton);
     }
   } catch (error) {
     console.error("게시글 상세 보기 중 오류 발생:", error);
+    alert("게시글 상세 정보를 불러올 수 없습니다.");
   }
 }
 
@@ -101,21 +107,24 @@ async function loadPostForEdit(postId) {
     }
   } catch (error) {
     console.error("게시글 로딩 중 오류 발생:", error);
+    alert("게시글 수정 데이터를 불러올 수 없습니다.");
   }
 }
 
-// 게시글 렌더링
+// 게시글 목록 렌더링
 async function displayPosts() {
   const postList = document.getElementById("postList");
   postList.innerHTML = ""; // 기존 게시글 목록 초기화
   const posts = await getPosts();
-  posts.forEach((post) => {
-    const li = document.createElement("li");
-    li.textContent = `${post.title} - ${post.author}`;
-    li.dataset.id = post.id;
-    li.addEventListener("click", () => showPostDetail(post.id)); // 클릭 시 상세 보기
-    postList.appendChild(li);
-  });
+  if (posts) {
+    posts.forEach((post) => {
+      const li = document.createElement("li");
+      li.textContent = `${post.title} - ${post.author}`;
+      li.dataset.id = post.id;
+      li.onclick = () => showPostDetail(post.id); // 클릭 시 상세 보기
+      postList.appendChild(li);
+    });
+  }
 }
 
 // 게시글 추가 이벤트
@@ -124,8 +133,14 @@ document.getElementById("postForm").addEventListener("submit", async (e) => {
   const title = document.getElementById("title").value;
   const content = document.getElementById("content").value;
   const author = document.getElementById("author").value;
+
+  if (!title || !content || !author) {
+    alert("모든 필드를 작성해주세요.");
+    return;
+  }
+
   await addPost(title, content, author);
-  document.getElementById("postForm").reset();
+  document.getElementById("postForm").reset(); // 입력 폼 초기화
   displayPosts(); // 게시글 목록 새로고침
 });
 
@@ -147,16 +162,14 @@ document
     const updatedTitle = document.getElementById("editTitle").value;
     const updatedContent = document.getElementById("editContent").value;
 
-    try {
-      await updatePost(postId, {
-        title: updatedTitle,
-        content: updatedContent,
-      });
-      document.getElementById("editForm").style.display = "none"; // 수정 폼 숨기기
-      displayPosts(); // 게시글 목록 새로고침
-    } catch (error) {
-      console.error("게시글 수정 중 오류 발생:", error);
+    if (!updatedTitle || !updatedContent) {
+      alert("제목과 내용을 모두 작성해주세요.");
+      return;
     }
+
+    await updatePost(postId, { title: updatedTitle, content: updatedContent });
+    document.getElementById("editForm").style.display = "none"; // 수정 폼 숨기기
+    displayPosts(); // 게시글 목록 새로고침
   });
 
 // 게시글 수정 취소 버튼 이벤트
