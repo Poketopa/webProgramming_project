@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>암호화폐 사이트 메인</title>
     <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js 추가 -->
   </head>
   <body>
     <!-- 공통 헤더 -->
@@ -25,8 +26,12 @@
     <div class="container">
       <!-- 차트 영역 -->
       <div class="charts">
-        <div class="chart-placeholder" id="btc-chart"></div>
-        <div class="chart-placeholder" id="usd-chart"></div>
+        <div class="chart-placeholder" id="btc-chart">
+          <canvas id="btc-chart-canvas"></canvas> <!-- 비트코인 차트를 위한 캔버스 추가 -->
+        </div>
+        <div class="chart-placeholder" id="usd-krw-chart">
+          <canvas id="usd-krw-chart-canvas"></canvas> <!-- USD/KRW 환율 차트를 위한 캔버스 추가 -->
+        </div>
       </div>
 
       <!-- 코인 목록 -->
@@ -50,7 +55,7 @@
       </div>
     </div>
 
-    <script src="https://s3.tradingview.com/tv.js"></script>
     <script src="./js/메인.js"></script>
+    <script src="./js/차트.js"></script> <!-- 차트 스크립트 추가 -->
   </body>
 </html>
