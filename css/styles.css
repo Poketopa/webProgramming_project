@@ -1,9 +1,18 @@
+@font-face {
+  font-family: "S-CoreDream-3Light";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff")
+    format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* 기본 스타일 */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "S-CoreDream-3Light", Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
+  background-color: rgb(20, 20, 20); /* 배경색 변경 */
+  color: white; /* 텍스트 색상 변경 */
 }
 
 /* 기본 스타일 */
@@ -75,10 +84,16 @@ nav ul li a:hover {
 
 .coin-list {
   width: 80%;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: rgb(30, 30, 30); /* 표 배경 변경 */
+  border: 1px solid rgb(50, 50, 50); /* 테두리 색상 변경 */
   border-radius: 5px;
-  padding: 10px;
+  padding: 20px; /* 패딩 추가 */
+}
+
+.coin-list h2 {
+  font-size: 1.5em;
+  color: white; /* 제목 색상 */
+  margin-bottom: 10px;
 }
 
 .coin-list table {
@@ -90,11 +105,12 @@ nav ul li a:hover {
 .coin-list td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid rgb(50, 50, 50); /* 테두리 색상 변경 */
+  color: white; /* 텍스트 색상 */
 }
 
 .coin-list th {
-  background-color: #f8f8f8;
+  background-color: rgb(40, 40, 40); /* 헤더 배경 변경 */
   font-weight: bold;
 }
 

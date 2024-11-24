@@ -3,8 +3,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
-  color: #333;
+  background-color: rgb(20, 20, 20);
+  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
 }
 
 /* 헤더 스타일 */
@@ -12,7 +12,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #222;
+  background-color: rgb(20, 20, 20);
   color: #fff;
   padding: 20px 0;
 }
@@ -44,16 +44,16 @@ nav ul li a:hover {
 /* 컨테이너 스타일 */
 .container {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  width: 85%;
-  margin: 20px auto;
+  flex-direction: column; /* 세로 정렬 */
+  gap: 20px; /* 카드 간 간격 */
+  width: 50%; /* 너비 조정 */
+  margin: 20px auto; /* 가운데 정렬 */
   padding: 20px;
 }
 
 /* 카드 스타일 */
 .card {
-  background-color: #fff;
+  background-color: rgb(30, 30, 30);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -78,26 +78,32 @@ nav ul li a:hover {
   width: 55%;
 }
 
-/* 입금 폼 스타일 */
-#depositForm label {
-  font-weight: bold;
-  margin-top: 10px;
-  display: block;
-}
-
-#depositForm input, #depositForm select {
+/* 텍스트 필드 스타일 */
+#depositForm input,
+#depositForm select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: none;
+  background-color: rgb(20, 20, 20); /* 배경색 변경 */
+  color: white;
   font-size: 1em;
   box-sizing: border-box;
 }
 
-#depositForm button {
-  background-color: #4a90e2;
-  color: #fff;
+#depositForm label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
+}
+
+/* 버튼 스타일 */
+#depositForm button,
+#connectWalletBtn {
+  background-color: rgb(41, 28, 43); /* 버튼 배경색 변경 */
+  color: rgb(234, 118, 250); /* 버튼 글씨 색 변경 */
   padding: 10px;
   margin-top: 15px;
   border-radius: 5px;
@@ -107,6 +113,13 @@ nav ul li a:hover {
   transition: background-color 0.3s ease;
 }
 
-#depositForm button:hover {
-  background-color: #357abd;
+#depositForm button:hover,
+#connectWalletBtn:hover {
+  background-color: rgb(60, 40, 63);
+}
+
+/* 지갑 연결 텍스트 색상 */
+#walletAddress,
+#walletBalance {
+  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
 }

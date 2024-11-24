@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>암호화폐 사이트 메인</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <!-- 공통 헤더 -->
+    <header>
+      <h1>암호화폐 사이트</h1>
+      <nav>
+        <ul>
+          <li><a href="coin-details.html">코인상세</a></li>
+          <li><a href="etherscan.html">이더스캔</a></li>
+          <li><a href="boardTest.html">게시판</a></li>
+          <li><a href="my-wallet.html">내 지갑</a></li>
+          <li><a href="kakao-login.html">카카오 로그인</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- 컨테이너 -->
+    <div class="container">
+      <!-- 차트 영역 -->
+      <div class="charts">
+        <div class="chart-placeholder" id="btc-chart"></div>
+        <div class="chart-placeholder" id="usd-chart"></div>
+      </div>
+
+      <!-- 코인 목록 -->
+      <div class="coin-list">
+        <table>
+          <thead>
+            <tr>
+              <th>코인 이름</th>
+              <th>가격 (USD)</th>
+              <th>변동률 (24시간)</th>
+              <th>거래량 (24시간)</th>
+            </tr>
+          </thead>
+          <tbody id="coin-data">
+            <!-- JavaScript로 코인 데이터를 동적으로 추가 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script src="fetchCoinData.js"></script>
+  </body>
+</html>

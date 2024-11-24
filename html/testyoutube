@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Animation Page with YouTube Background</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      /* 유튜브 영상 배경 스타일 */
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .video-background iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* 클릭 방지 */
+      }
+
+      /* 콘텐츠 섹션 스타일 */
+      .content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 50px 20px;
+        background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+      }
+
+      .content h1 {
+        font-size: 3em;
+        margin: 0;
+      }
+
+      .content p {
+        font-size: 1.2em;
+        margin: 20px 0;
+      }
+
+      .btn-main {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 15px 30px;
+        background: #ff7e5f;
+        color: white;
+        font-size: 1.2em;
+        font-weight: bold;
+        border: none;
+        border-radius: 30px;
+        text-decoration: none;
+        transition: background 0.3s;
+      }
+
+      .btn-main:hover {
+        background: #feb47b;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 유튜브 영상 배경 -->
+    <div class="video-background">
+      <iframe
+        src="https://www.youtube.com/watch?v=2Bxz1UGSUkY"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <!-- 콘텐츠 -->
+    <div class="content">
+      <h1>Welcome to Crypto World</h1>
+      <p>
+        Discover the fascinating world of cryptocurrencies with a seamless video
+        background.
+      </p>
+      <a href="main.html" class="btn-main">Go to Main Page</a>
+    </div>
+  </body>
+</html>
