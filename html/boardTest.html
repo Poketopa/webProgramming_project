@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Firebase 게시판</title>
     <link rel="stylesheet" href="../css/board.css" />
+    <script>
+      // 사용자 로그인 상태 확인
+      function checkUserSession() {
+        const kakaoUserId = localStorage.getItem("kakaoUserId");
+        const kakaoNickname = localStorage.getItem("kakaoNickname");
+
+        if (!kakaoUserId || !kakaoNickname) {
+          alert("로그인이 필요합니다.");
+          window.location.href = "kakao-login.html"; // 로그인 페이지로 리디렉션
+        } else {
+          console.log(`${kakaoNickname}님이 로그인 중입니다.`);
+        }
+      }
+    </script>
   </head>
-  <body onload="displayPosts()">
+  <body onload="checkUserSession(); displayPosts();">
     <h1>Firebase 게시판</h1>
 
     <!-- 게시글 추가 폼 -->
