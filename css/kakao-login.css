@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: rgb(20, 20, 20); /* 어두운 배경 */
-  color: rgb(83, 83, 83); /* 텍스트 색상 */
+  color: rgb(83, 83, 83); /* 기본 텍스트 색상 */
 }
 
 /* 헤더 스타일 */
@@ -12,8 +12,8 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(20, 20, 20);
-  color: #fff;
+  background-color: rgb(20, 20, 20); /* 헤더 배경 */
+  color: #fff; /* 헤더 텍스트 */
   padding: 20px 0;
 }
 
@@ -38,28 +38,28 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: #ffcc00;
+  color: #ffcc00; /* 링크 호버 색상 */
 }
 
 /* 컨테이너 스타일 */
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%; /* 가로 너비 조정 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center; /* 가운데 정렬 */
+  gap: 20px; /* 카드 간격 */
+  width: 50%; /* 가로 길이 설정 */
   margin: 50px auto; /* 중앙 정렬 */
   padding: 20px;
 }
 
 /* 카드 스타일 */
 .card {
-  background-color: rgb(30, 30, 30); /* 어두운 카드 배경 */
+  background-color: rgb(30, 30, 30); /* 카드 배경 */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  width: 100%;
-  max-width: 350px; /* 최대 너비 설정 */
+  width: 100%; /* 동일한 가로 길이 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -68,19 +68,37 @@ nav ul li a:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* 카카오 로그인 버튼 스타일 */
+/* 텍스트 카드 스타일 */
+.text-area h2 {
+  color: rgb(234, 118, 250); /* 텍스트 색상 */
+  margin-bottom: 15px;
+}
+
+.text-area p {
+  font-size: 1.1em;
+  line-height: 1.6em;
+  color: rgb(200, 200, 200); /* 밝은 회색 */
+}
+
+/* 버튼 카드 스타일 */
+.button-area {
+  padding: 20px 0; /* 버튼 영역의 패딩 */
+  background-color: rgb(20, 20, 20); /* 버튼 영역 배경 색상 */
+  border-radius: 20px; /* 버튼 div 둥근 모서리 */
+}
+
 .kakao-login-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: rgb(41, 28, 43); /* 버튼 배경 */
-  color: rgb(234, 118, 250); /* 버튼 텍스트 */
-  font-size: 1em;
+  padding: 25px 150px; /* 버튼 크기 */
+  background-color: rgb(41, 27, 47); /* 버튼 배경 */
+  color: rgb(255, 255, 255); /* 버튼 텍스트 (밝은 흰색) */
+  font-size: 1.2em; /* 버튼 텍스트 크기 */
   border: none;
-  border-radius: 5px;
+  border-radius: 20px; /* 둥근 버튼 모양 */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .kakao-login-btn:hover {
   background-color: rgb(60, 40, 63); /* 버튼 호버 배경 */
+  transform: scale(1.05); /* 버튼 크기 확대 */
 }

@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: rgb(20, 20, 20);
-  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
+  color: rgb(150, 150, 150);
 }
 
 /* 헤더 스타일 */
@@ -96,7 +96,7 @@ nav ul li a:hover {
   font-weight: bold;
   margin-top: 10px;
   display: block;
-  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
+  color: rgb(150, 150, 150); /* 텍스트 색 변경 */
 }
 
 /* 버튼 스타일 */
@@ -121,5 +121,5 @@ nav ul li a:hover {
 /* 지갑 연결 텍스트 색상 */
 #walletAddress,
 #walletBalance {
-  color: rgb(83, 83, 83); /* 텍스트 색 변경 */
+  color: rgb(150, 150, 150); /* 텍스트 색 변경 */
 }

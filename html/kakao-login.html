@@ -8,12 +8,11 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
       // Kakao JavaScript SDK 초기화
-      Kakao.init("977fb60304f38cb2010c792fb5b934f2"); // YOUR_APP_KEY 부분에 발급받은 JavaScript 키를 입력하세요.
+      Kakao.init("977fb60304f38cb2010c792fb5b934f2");
 
       function kakaoLogin() {
         Kakao.Auth.login({
           success: function (authObj) {
-            // 사용자 정보 요청
             Kakao.API.request({
               url: "/v2/user/me",
               success: function (res) {
@@ -26,7 +25,7 @@
 
                 alert(`${nickname}님, 로그인에 성공했습니다!`);
                 // 로그인 후 이동할 페이지로 리디렉션
-                window.location.href = "bulletin-board.html"; // 게시판 페이지로 이동
+                window.location.href = "bulletin-board.html";
               },
               fail: function (error) {
                 alert("사용자 정보 요청 실패: " + JSON.stringify(error));
@@ -49,7 +48,7 @@
           <li><a href="home.html">메인</a></li>
           <li><a href="coin-details.html">코인상세</a></li>
           <li><a href="etherscan.html">이더스캔</a></li>
-          <li><a href="bulletin-board.html">게시판</a></li>
+          <li><a href="board.html">게시판</a></li>
           <li><a href="my-wallet.html">내 지갑</a></li>
           <li><a href="kakao-login.html">카카오 로그인</a></li>
         </ul>
@@ -58,9 +57,14 @@
 
     <!-- 카카오 로그인 섹션 -->
     <div class="container">
-      <div class="card">
+      <!-- 텍스트 영역 -->
+      <div class="card text-area">
         <h2>카카오 로그인</h2>
         <p>카카오 계정을 사용하여 로그인하세요.</p>
+      </div>
+
+      <!-- 버튼 영역 -->
+      <div class="card button-area">
         <button onclick="kakaoLogin()" class="kakao-login-btn">
           카카오 로그인
         </button>

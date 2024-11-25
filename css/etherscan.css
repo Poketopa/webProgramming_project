@@ -3,8 +3,10 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
-  color: #333;
+  background-color: rgb(20, 20, 20); /* 어두운 배경 */
+  color: rgb(150, 150, 150); /* 기본 텍스트 색상 */
+  position: relative; /* 배경 이미지 포지션 */
+  overflow-x: hidden; /* 가로 스크롤 방지 */
 }
 
 /* 헤더 스타일 */
@@ -12,7 +14,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #222;
+  background-color: rgb(20, 20, 20);
   color: #fff;
   padding: 20px 0;
 }
@@ -44,26 +46,29 @@ nav ul li a:hover {
 /* 컨테이너 스타일 */
 .container {
   width: 85%;
-  margin: 20px auto;
+  margin: 50px auto;
   padding: 20px;
+  position: relative; /* 카드의 위치를 배경과 분리 */
+  z-index: 10; /* 카드가 배경보다 위에 보이도록 설정 */
 }
 
 /* 카드 스타일 */
 .card {
-  background-color: #fff;
+  background-color: rgba(30, 30, 30, 0.9); /* 반투명 어두운 배경 */
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
-  color: #4a90e2;
+  color: rgb(234, 118, 250); /* 테마 컬러 */
   font-size: 1.8em;
 }
 
@@ -71,14 +76,15 @@ p {
   font-size: 1.1em;
   line-height: 1.6em;
   margin-top: 15px;
+  color: rgb(200, 200, 200); /* 밝은 회색 */
 }
 
-/* 이더스캔 홈페이지 방문 버튼 스타일 */
+/* 이더스캔 버튼 스타일 */
 .etherscan-btn {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #4a90e2; /* 파란색과 하늘색 사이의 색 */
-  color: #fff;
+  background-color: rgb(41, 28, 43); /* 테마 색상 */
+  color: rgb(234, 118, 250); /* 버튼 텍스트 */
   font-size: 1em;
   border: none;
   border-radius: 5px;
@@ -87,5 +93,20 @@ p {
 }
 
 .etherscan-btn:hover {
-  background-color: #357abd; /* 약간 더 어두운 파란색 */
+  background-color: rgb(60, 40, 63); /* 버튼 호버 배경 */
+}
+
+/* 배경 이미지 스타일 */
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../coinImage/etherscan.jpg"); /* 이더스캔 이미지 */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1; /* 불투명도 조정 */
+  z-index: 0; /* 배경이 콘텐츠 아래에 위치하도록 설정 */
+  pointer-events: none; /* 클릭 방지 */
 }
