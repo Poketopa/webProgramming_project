@@ -81,7 +81,6 @@ async function fetchCoinData() {
     }
 }
 
-// 특정 코인의 가격 차트를 표시하는 함수
 async function renderTokenChart(coinId, coinName) {
     try {
         const response = await fetch(
@@ -89,25 +88,21 @@ async function renderTokenChart(coinId, coinName) {
         );
         const data = await response.json();
 
-        // 날짜별 가격 데이터와 라벨 생성
-        const labels = [];
+        const labelsForXAxis = []; // X축에 보이는 라벨
+        const labelsForTooltip = []; // 툴팁에 보이는 라벨
         const prices = [];
 
-        data.prices.forEach((price, index) => {
+        data.prices.forEach((price) => {
             const date = new Date(price[0]);
-            // 하루 단위로 레이블 추가
-            if (index % 24 === 0) { 
-                labels.push(`${date.getMonth() + 1}/${date.getDate()}`);
-            } else {
-                labels.push(""); // 레이블 비우기
-            }
+            const formattedDateForXAxis = `${date.getMonth() + 1}/${date.getDate()}`; // 날짜만
+            const formattedDateForTooltip = `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:00`; // 날짜와 시간
+            labelsForXAxis.push(formattedDateForXAxis);
+            labelsForTooltip.push(formattedDateForTooltip);
             prices.push(price[1]);
         });
 
-        // 차트 캔버스 컨텍스트 가져오기
         const ctx = document.getElementById("btc-chart-canvas").getContext("2d");
 
-        // 기존 차트를 삭제하고 새 차트 생성
         if (window.tokenChart) {
             window.tokenChart.destroy();
         }
@@ -115,7 +110,7 @@ async function renderTokenChart(coinId, coinName) {
         window.tokenChart = new Chart(ctx, {
             type: "line",
             data: {
-                labels: labels,
+                labels: labelsForXAxis, // X축에 날짜만 표시
                 datasets: [
                     {
                         label: `${coinName} 가격 (7일)`,
@@ -143,6 +138,54 @@ async function renderTokenChart(coinId, coinName) {
                             },
                         },
                     },
+                    tooltip: {
+                        enabled: false, // 기본 툴팁 비활성화
+                        external: function (context) {
+                            const tooltipEl = document.getElementById("custom-tooltip");
+                            if (!tooltipEl) {
+                                const div = document.createElement("div");
+                                div.id = "custom-tooltip";
+                                div.style.position = "absolute";
+                                div.style.background = "#333";
+                                div.style.color = "#fff";
+                                div.style.padding = "8px";
+                                div.style.borderRadius = "4px";
+                                div.style.pointerEvents = "none";
+                                div.style.fontSize = "12px";
+                                div.style.fontWeight = "bold";
+                                div.style.textAlign = "center";
+                                document.body.appendChild(div);
+                            }
+                            const tooltip = context.tooltip;
+                            const tooltipBox = document.getElementById("custom-tooltip");
+
+                            if (tooltip.opacity === 0) {
+                                tooltipBox.style.opacity = 0;
+                                return;
+                            }
+
+                            const mouseEvent = context.chart._lastEvent;
+                            const mouseX = mouseEvent.x;
+                            const mouseY = mouseEvent.y;
+
+                            const dataIndex = tooltip.dataPoints[0].dataIndex;
+                            const price = prices[dataIndex].toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                            });
+                            const dateTime = labelsForTooltip[dataIndex]; // 툴팁 용 라벨 사용
+
+                            tooltipBox.innerHTML = `<div style="font-size: 16px; font-weight: bold;">${price}</div><div>${dateTime}</div>`;
+                            tooltipBox.style.opacity = 1;
+
+                            tooltipBox.style.left = mouseX + 40 + "px";
+                            tooltipBox.style.top = mouseY + 100 + "px";
+                        },
+                    },
+                },
+                interaction: {
+                    mode: "index",
+                    intersect: false,
                 },
                 scales: {
                     x: {
@@ -151,16 +194,26 @@ async function renderTokenChart(coinId, coinName) {
                             font: {
                                 size: 12,
                             },
-                            autoSkip: false, // 모든 레이블 유지
-                            maxRotation: 0, // 레이블 세로로 표시 방지
-                            callback: function (value, index, ticks) {
-                                return labels[index] ? labels[index] : null; // 빈 레이블 제거
+                            autoSkip: false, // 자동 생략 비활성화
+                            maxRotation: 0, // 라벨 수평 유지
+                            minRotation: 0,
+                            callback: function (value, index, values) {
+                                // 표시할 라벨 수를 10개로 제한
+                                const totalLabels = values.length;
+                                const maxLabels = 7; // 최대 10개의 라벨만 표시
+                                const interval = Math.ceil(totalLabels / maxLabels);
+                                if (index % interval === 0) {
+                                    return this.getLabelForValue(value);
+                                }
+                                return ""; // 나머지는 빈 문자열
                             },
                         },
                         grid: {
                             display: false,
                         },
                     },
+                    
+                    
                     y: {
                         ticks: {
                             color: "#ffffff",
@@ -178,16 +231,50 @@ async function renderTokenChart(coinId, coinName) {
                     },
                 },
             },
+            plugins: [
+                {
+                    id: "verticalLine",
+                    afterDraw: function (chart) {
+                        if (chart.tooltip._active && chart.tooltip._active.length) {
+                            const activePoint = chart.tooltip._active[0];
+                            const ctx = chart.ctx;
+                            const x = activePoint.element.x;
+                            const y = activePoint.element.y; // 곡선과 만나는 Y좌표
+                            const topY = chart.scales.y.top;
+                            const bottomY = chart.scales.y.bottom;
+
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.moveTo(x, topY);
+                            ctx.lineTo(x, bottomY);
+                            ctx.lineWidth = 1;
+                            ctx.strokeStyle = "#ff0000"; // 세로선 색상
+                            ctx.stroke();
+
+                            ctx.beginPath();
+                            ctx.arc(x, y, 5, 0, 2 * Math.PI); // 중심 좌표(x, y), 반지름 5
+                            ctx.fillStyle = "#007bff"; // 원 내부 색상
+                            ctx.fill();
+                            ctx.lineWidth = 2;
+                            ctx.strokeStyle = "#ffffff"; // 원 테두리 색상
+                            ctx.stroke();
+
+                            ctx.restore();
+                        }
+                    },
+                },
+            ],
         });
     } catch (error) {
         console.error("차트를 렌더링하는 중 오류 발생:", error);
     }
 }
 
-// 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 차트를 초기화
-document.addEventListener("DOMContentLoaded", () => {
-    fetchCoinData(); // 코인 데이터 가져오기 함수 호출
 
-    // 실시간으로 코인 데이터를 갱신 (10분마다 호출)
-    setInterval(fetchCoinData, 600000); // 600,000ms = 10분
-});
+    // 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 차트를 초기화
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchCoinData(); // 코인 데이터 가져오기 함수 호출
+
+        // 실시간으로 코인 데이터를 갱신 (10분마다 호출)
+        setInterval(fetchCoinData, 600000); // 600,000ms = 10분
+    });
