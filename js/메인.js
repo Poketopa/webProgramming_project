@@ -107,13 +107,16 @@ async function renderTokenChart(coinId, coinName) {
             window.tokenChart.destroy();
         }
 
+        const lastPrice = prices[prices.length - 1]; // 가장 최신 가격
+        const lastLabel = labelsForXAxis[labelsForXAxis.length - 1]; // 가장 최신 날짜
+
         window.tokenChart = new Chart(ctx, {
             type: "line",
             data: {
                 labels: labelsForXAxis, // X축에 날짜만 표시
                 datasets: [
                     {
-                        label: `${coinName} 가격 (7일)`,
+                        label: "", // 범례 제거
                         data: prices,
                         borderColor: "#007bff",
                         backgroundColor: "rgba(0, 123, 255, 0.1)",
@@ -129,13 +132,20 @@ async function renderTokenChart(coinId, coinName) {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: true,
-                        labels: {
-                            color: "#ffffff",
-                            font: {
-                                size: 14,
-                                weight: "bold",
-                            },
+                        display: false, // 범례 비활성화
+                    },
+                    title: {
+                        display: true, // 제목 표시
+                        text: coinName, // 코인 이름만 표시
+                        align: "start", // 좌측 정렬
+                        color: "#ffffff", // 텍스트 색상
+                        font: {
+                            size: 18, // 폰트 크기
+                            weight: "bold",
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 10,
                         },
                     },
                     tooltip: {
@@ -182,6 +192,26 @@ async function renderTokenChart(coinId, coinName) {
                             tooltipBox.style.top = mouseY + 100 + "px";
                         },
                     },
+                    annotation: {
+                        annotations: {
+                            lastPriceLabel: {
+                                type: "label",
+                                xValue: lastLabel, // 최신 라벨
+                                yValue: lastPrice, // 최신 가격
+                                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                                borderRadius: 4,
+                                color: "#ffffff",
+                                content: [`$${lastPrice.toLocaleString("en-US")}`], // 최신 가격 텍스트
+                                font: {
+                                    size: 14,
+                                    weight: "bold",
+                                },
+                                position: "end", // 오른쪽 끝에 표시
+                                xAdjust: 10, // 약간 오른쪽으로 이동
+                                yAdjust: -10, // 약간 위로 이동
+                            },
+                        },
+                    },
                 },
                 interaction: {
                     mode: "index",
@@ -212,8 +242,6 @@ async function renderTokenChart(coinId, coinName) {
                             display: false,
                         },
                     },
-                    
-                    
                     y: {
                         ticks: {
                             color: "#ffffff",
@@ -269,7 +297,6 @@ async function renderTokenChart(coinId, coinName) {
         console.error("차트를 렌더링하는 중 오류 발생:", error);
     }
 }
-
 
     // 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 차트를 초기화
     document.addEventListener("DOMContentLoaded", () => {
