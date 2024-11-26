@@ -72,49 +72,12 @@ async function fetchCoinData() {
     }
 }
 
-// TradingView 차트를 초기화하는 함수
-function initializeTradingViewCharts() {
-    // ETH/USD 차트 위젯 생성
-    new TradingView.widget({
-      container_id: "eth-chart", // 차트를 렌더링할 HTML 요소 ID
-      autosize: true, // 자동 크기 조정
-      symbol: "BINANCE:ETHUSD", // ETH/USD 심볼 (BINANCE 거래소)
-      interval: "D", // 기본 차트 간격 (일 단위)
-      timezone: "Asia/Seoul", // 시간대 설정
-      theme: "dark", // 차트 테마 (다크 테마)
-      style: "1", // 차트 스타일 설정
-      locale: "ko", // 언어 설정 (한국어)
-      toolbar_bg: "#f1f3f6", // 도구 모음 배경색
-      enable_publishing: false, // 퍼블리싱 기능 비활성화
-      hide_side_toolbar: false, // 사이드 도구 모음 표시
-      allow_symbol_change: true, // 심볼 변경 허용
-      withdateranges: true, // 날짜 범위 표시 허용
-      hideideas: true, // 사용자 아이디어 숨기기
-    });
 
-    // USD/KRW 차트 위젯 생성
-    new TradingView.widget({
-      container_id: "usd-chart", // 차트를 렌더링할 HTML 요소 ID
-      autosize: true, // 자동 크기 조정
-      symbol: "FX_IDC:USDKRW", // USD/KRW 심볼 (FX_IDC)
-      interval: "D", // 기본 차트 간격 (일 단위)
-      timezone: "Asia/Seoul", // 시간대 설정
-      theme: "dark", // 차트 테마 (다크 테마)
-      style: "1", // 차트 스타일 설정
-      locale: "ko", // 언어 설정 (한국어)
-      toolbar_bg: "#f1f3f6", // 도구 모음 배경색
-      enable_publishing: false, // 퍼블리싱 기능 비활성화
-      hide_side_toolbar: false, // 사이드 도구 모음 표시
-      allow_symbol_change: true, // 심볼 변경 허용
-      withdateranges: true, // 날짜 범위 표시 허용
-      hideideas: true, // 사용자 아이디어 숨기기
-    });
-}
 
 // 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 TradingView 차트를 초기화
 document.addEventListener("DOMContentLoaded", () => {
     fetchCoinData(); // 코인 데이터 가져오기 함수 호출
-    initializeTradingViewCharts(); // TradingView 차트 초기화 함수 호출
+    
 
     // 실시간으로 코인 데이터를 갱신 (10분마다 호출)
     setInterval(fetchCoinData, 600000); // 600,000ms = 10분
