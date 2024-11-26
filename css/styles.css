@@ -88,7 +88,8 @@ table {
   border-collapse: collapse;
 }
 
-thead {
+/* coin-table 클래스 추가 */
+.coin-table thead {
   position: sticky; /* 속성행 고정 */
   top: 0; /* 스크롤 시 상단에 고정 */
   z-index: 10;
@@ -96,7 +97,7 @@ thead {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* 속성행 분리감 추가 */
 }
 
-thead th {
+.coin-table thead th {
   padding: 10px;
   text-align: left;
   font-size: 16px;
@@ -104,45 +105,45 @@ thead th {
   background-clip: padding-box; /* 스크롤바 침범 방지 */
 }
 
-tbody tr {
+.coin-table tbody tr {
   border-bottom: 1px solid #444;
 }
 
-tbody tr:hover {
+.coin-table tbody tr:hover {
   background-color: #333333;
 }
 
-tbody td {
+.coin-table tbody td {
   padding: 10px;
   vertical-align: middle;
   font-size: 14px;
 }
 
-tbody td img {
+.coin-table tbody td img {
   vertical-align: middle;
   margin-right: 10px;
 }
 
 /* USD 가격을 강조하는 스타일 */
-.coin-price-usd {
+.coin-table .coin-price-usd {
   font-size: 1.2em;
   font-weight: bold;
 }
 
 /* KRW 가격을 작게 표시하는 스타일 */
-.coin-price-krw {
+.coin-table .coin-price-krw {
   font-size: 0.9em;
   color: #888;
 }
 
 /* 변동률 스타일 */
-.change-positive {
+.coin-table .change-positive {
   color: #00ffff;
   font-weight: bold;
   font-size: 1.1em;
 }
 
-.change-negative {
+.coin-table .change-negative {
   color: #ff6b6b;
   font-weight: bold;
   font-size: 1.1em;
