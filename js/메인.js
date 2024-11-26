@@ -140,7 +140,7 @@ async function renderTokenChart(coinId, coinName) {
                         align: "start", // 좌측 정렬
                         color: "#ffffff", // 텍스트 색상
                         font: {
-                            size: 18, // 폰트 크기
+                            size: 28, // 폰트 크기
                             weight: "bold",
                         },
                         padding: {
