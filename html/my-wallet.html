@@ -56,9 +56,62 @@
     </div>
 
     <script>
+      // Sepolia 네트워크 설정
+      const SEPOLIA_CHAIN_ID = "0xAA36A7"; // 11155111 in hexadecimal
+      const SEPOLIA_RPC_URL =
+        "https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID"; // Replace YOUR_INFURA_PROJECT_ID with your Infura Project ID
+
+      // 네트워크 확인 함수
+      async function checkNetwork() {
+        const currentChainId = await ethereum.request({
+          method: "eth_chainId",
+        });
+        if (currentChainId !== SEPOLIA_CHAIN_ID) {
+          try {
+            // Sepolia 네트워크로 전환
+            await ethereum.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: SEPOLIA_CHAIN_ID }],
+            });
+          } catch (error) {
+            // 네트워크가 추가되어 있지 않은 경우 처리
+            if (error.code === 4902) {
+              try {
+                await ethereum.request({
+                  method: "wallet_addEthereumChain",
+                  params: [
+                    {
+                      chainId: SEPOLIA_CHAIN_ID,
+                      chainName: "Sepolia Test Network",
+                      rpcUrls: [SEPOLIA_RPC_URL],
+                      nativeCurrency: {
+                        name: "Sepolia ETH",
+                        symbol: "ETH",
+                        decimals: 18,
+                      },
+                      blockExplorerUrls: ["https://sepolia.etherscan.io"],
+                    },
+                  ],
+                });
+              } catch (addError) {
+                console.error("네트워크 추가 실패:", addError);
+                alert("Sepolia 네트워크를 추가할 수 없습니다.");
+              }
+            } else {
+              console.error("네트워크 전환 실패:", error);
+              alert("Sepolia 네트워크로 전환할 수 없습니다.");
+            }
+          }
+        }
+      }
+
+      // 지갑 연결 함수
       async function connectWallet() {
         if (typeof window.ethereum !== "undefined") {
           try {
+            // 네트워크 확인 및 전환
+            await checkNetwork();
+
             // MetaMask 연결 요청
             const accounts = await ethereum.request({
               method: "eth_requestAccounts",
