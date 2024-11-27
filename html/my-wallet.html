@@ -22,48 +22,40 @@
     </header>
 
     <div class="container">
-      <!-- 지갑 연결 섹션 -->
+      <!-- ETH 송금 섹션 -->
       <div class="card">
-        <h2>지갑 연결</h2>
-        <button id="connectWalletBtn">지갑 연결</button>
-        <p id="walletAddress">지갑 주소: -</p>
-        <p id="walletBalance">잔액 (ETH): -</p>
-      </div>
-
-      <!-- 입금 섹션 -->
-      <div class="card">
-        <h2>입금</h2>
-        <form id="depositForm">
-          <label for="depositAmount">입금할 금액:</label>
+        <h2>You're sending</h2>
+        <div class="amount-display">
           <input
             type="number"
             id="depositAmount"
-            placeholder="금액 입력 (원)"
-            required
+            placeholder="0"
+            step="0.0001"
+            min="0"
           />
+          <p>ETH</p>
+        </div>
+        <p id="walletBalance">Available: <span>-</span> ETH</p>
 
-          <label for="coinType">입금할 코인 종류:</label>
-          <select id="coinType" required>
-            <option value="bitcoin">비트코인</option>
-            <option value="ethereum">이더리움</option>
-            <option value="ripple">리플</option>
-          </select>
-
-          <label for="recipient">받으실 분:</label>
+        <!-- 수신 주소 입력 섹션 -->
+        <div class="address-display">
+          <label for="recipient">To</label>
           <input
             type="text"
             id="recipient"
-            placeholder="받으실 분 이름 입력"
+            placeholder="Wallet address or ENS name"
             required
           />
+        </div>
+      </div>
 
-          <button type="submit" class="submit-btn">입금하기</button>
-        </form>
+      <!-- Connect Wallet 버튼 -->
+      <div class="button-area">
+        <button id="connectWalletBtn" class="wallet-btn">Connect Wallet</button>
       </div>
     </div>
 
     <script>
-      // MetaMask 지갑 연결 및 잔액 조회 기능
       async function connectWallet() {
         if (typeof window.ethereum !== "undefined") {
           try {
@@ -72,8 +64,6 @@
               method: "eth_requestAccounts",
             });
             const account = accounts[0];
-            document.getElementById("walletAddress").innerText =
-              "지갑 주소: " + account;
 
             // ETH 잔액 조회
             const balance = await ethereum.request({
@@ -83,13 +73,31 @@
             const ethBalance = parseFloat(
               window.web3.utils.fromWei(balance, "ether")
             ).toFixed(4);
-            document.getElementById("walletBalance").innerText =
-              "잔액 (ETH): " + ethBalance;
+
+            // 지갑 주소와 잔액 표시
+            document.getElementById(
+              "walletBalance"
+            ).innerHTML = `Available: <span>${ethBalance}</span> ETH`;
           } catch (error) {
-            console.error("지갑 연결 오류:", error);
-            alert("지갑 연결에 실패했습니다.");
+            // 오류 처리
+            if (error.code === 4001) {
+              alert("사용자가 연결 요청을 취소했습니다.");
+            } else if (error.code === -32002) {
+              alert(
+                "이미 연결 요청이 진행 중입니다. MetaMask 팝업을 확인하세요."
+              );
+            } else {
+              alert("지갑 연결에 실패했습니다. 네트워크 상태를 확인해주세요.");
+              console.error(
+                "Error code:",
+                error.code,
+                "Message:",
+                error.message
+              );
+            }
           }
         } else {
+          // MetaMask가 설치되지 않은 경우
           alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
         }
       }
