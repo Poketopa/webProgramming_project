@@ -4,50 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>암호화폐 사이트 메인</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/베이스.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js 추가 -->
   </head>
   <body>
     <!-- 공통 헤더 -->
     <header>
-      <h1>암호화폐 사이트</h1>
-      <nav>
-        <ul>
-          <li><a href="coin-details.html">코인상세</a></li>
-          <li><a href="etherscan.html">이더스캔</a></li>
-          <li><a href="board.html">게시판</a></li>
-          <li><a href="my-wallet.html">내 지갑</a></li>
-          <li><a href="kakao-login.html">카카오 로그인</a></li>
-        </ul>
-      </nav>
+      <div class="header-container">
+        <table class="header-table">
+          <tr>
+            <!-- 팀 로고 (1행 병합) -->
+            <td class="header-left" rowspan="2">
+              <div class="logo-container">
+                <img src="./img/로고.jpg" alt="팀 로고" class="team-logo" />
+                <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
+              </div>
+            </td>
+
+            <!-- 헤더 제목 -->
+            <td class="header-center">암호화폐 사이트</td>
+
+            <!-- Kakao 로그인 (1행 병합) -->
+            <td class="header-right" rowspan="2">
+              <a href="./html/kakao-login.html" class="kakao-login-link">
+                <button class="kakao-login-button">
+                  <img src="./img/카카오.png" alt="Login with Kakao" />
+                </button>
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <!-- 네비게이션 메뉴 -->
+            <td class="header-nav">
+              <nav>
+                <ul>
+                  <li><a href="./html/coin-details.html">코인상세</a></li>
+                  <li><a href="./html/etherscan.html">이더스캔</a></li>
+                  <li><a href="./html/boardTest.html">게시판</a></li>
+                  <li><a href="./html/my-wallet.html">내 지갑</a></li>
+                </ul>
+              </nav>
+            </td>
+          </tr>
+        </table>
+      </div>
     </header>
 
     <!-- 컨테이너 -->
     <div class="container">
       <!-- 차트 영역 -->
       <div class="charts">
-        <div class="chart-placeholder" id="btc-chart"></div>
-        <div class="chart-placeholder" id="usd-chart"></div>
+        <div class="chart-placeholder" id="btc-chart">
+          <canvas id="btc-chart-canvas"></canvas>
+          <!-- 비트코인 차트를 위한 캔버스 추가 -->
+        </div>
+        <div class="chart-placeholder" id="usd-krw-chart">
+          <canvas id="usd-krw-chart-canvas"></canvas>
+          <!-- USD/KRW 환율 차트를 위한 캔버스 추가 -->
+        </div>
       </div>
 
       <!-- 코인 목록 -->
       <div class="coin-list">
-        <table>
-          <thead>
-            <tr>
-              <th>코인 이름</th>
-              <th>가격 (USD)</th>
-              <th>변동률 (24시간)</th>
-              <th>거래량 (24시간)</th>
-            </tr>
-          </thead>
-          <tbody id="coin-data">
-            <!-- JavaScript로 코인 데이터를 동적으로 추가 -->
-          </tbody>
-        </table>
+        <div class="coin-list-table-container">
+          <table class="coin-table">
+            <!-- 두 번째 테이블에 coin-table 클래스 추가 -->
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>코인 이름</th>
+                <th>가격 (USD / KRW)</th>
+                <th>변동률 (24시간)</th>
+                <th>FDV</th>
+                <th>거래량 (24시간)</th>
+                <th>시가총액</th>
+              </tr>
+            </thead>
+            <tbody id="coin-data">
+              <!-- JavaScript로 코인 데이터를 동적으로 추가 -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <script src="https://s3.tradingview.com/tv.js"></script>
-    <script src="fetchCoinData.js"></script>
+    <script src="./js/메인.js"></script>
+    <script src="./js/차트.js"></script>
+    <!-- 차트 스크립트 추가 -->
   </body>
 </html>
