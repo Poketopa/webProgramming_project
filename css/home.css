@@ -1,0 +1,97 @@
+/* 테이블 스타일 */
+.header-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1e1e1e; /* index.html 테마와 일치 */
+  color: #ffffff;
+  text-align: center;
+}
+
+.header-table td {
+  border: none;
+  padding: 0; /* 셀 내부 여백 초기화 */
+}
+
+/* 팀 로고 스타일 */
+.header-left {
+  width: 20%;
+  vertical-align: middle;
+  text-align: left; /* 왼쪽 정렬 */
+  padding-left: 20px; /* 테이블 셀 왼쪽 여백 조정 */
+}
+
+.logo-container {
+  display: flex; /* 로고와 팀명 가로 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  gap: 10px; /* 로고와 팀명 사이 적당한 간격 */
+}
+
+.team-logo {
+  width: 70px;
+  height: 65px;
+}
+
+.team-name {
+  font-size: 18px; /* 텍스트 크기 조정 */
+  font-weight: bold;
+  line-height: 1.4;
+  margin: 0; /* 불필요한 여백 제거 */
+  padding: 0;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+/* 글쓰기 제목 */
+.header-center {
+  width: 60%;
+  font-size: 27px;
+  font-weight: bold;
+  vertical-align: middle;
+  color: #ffffff; /* 텍스트 색상 유지 */
+}
+
+/* Kakao 로그인 버튼 */
+.header-right {
+  width: 20%;
+  vertical-align: middle;
+  text-align: right; /* 오른쪽 정렬 */
+  padding-right: 20px; /* 테이블 셀 오른쪽 여백 조정 */
+}
+
+.kakao-login-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.kakao-login-button img {
+  width: 170px; /* 버튼 크기 약간 조정 */
+  height: auto;
+}
+
+/* 네비게이션 메뉴 */
+.header-nav {
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+}
+
+nav ul li {
+  margin: 0 10px; /* 간격 조정 */
+}
+
+nav ul li a {
+  color: #ffffff; /* index.html의 링크 색상 유지 */
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.header-container {
+  width: 92%; /* 화면의 90% 너비 */
+  margin: 0 auto; /* 화면 중앙 정렬 */
+  padding: 0; /* 내부 여백 제거 */
+}
