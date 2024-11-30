@@ -84,40 +84,9 @@
           </table>
         </div>
       </div>
-      <div class="exchange-item" data-aos="fade-left">
-        <img src="coinImage/upbit.png" alt="Upbit" />
-      </div>
-    </section>
+    </div>
 
-    <!-- Info Section -->
-    <section class="info-section">
-      <h2 data-aos="zoom-in">More About Cryptocurrencies</h2>
-      <p>
-        Cryptocurrencies are revolutionizing the financial system by providing
-        secure, decentralized, and efficient solutions.
-      </p>
-      <a href="html/home.html" class="btn-main" id="mainBtn">Go to Main Page</a>
-    </section>
-
-    <!-- AOS Script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({
-        duration: 1200, // 애니메이션 지속 시간
-        offset: 200, // 애니메이션 시작 지점
-      });
-
-      // 버튼 활성화 논리
-      const mainBtn = document.getElementById("mainBtn");
-      const activationPoint = 600; // 스크롤 위치 기준 (600px)
-
-      window.addEventListener("scroll", () => {
-        if (window.scrollY >= activationPoint) {
-          mainBtn.classList.add("active"); // 버튼 활성화
-        } else {
-          mainBtn.classList.remove("active"); // 버튼 비활성화
-        }
-      });
-    </script>
+    <script src="./js/메인.js"></script>
+    <script src="./js/차트.js"></script> <!-- 차트 스크립트 추가 -->
   </body>
 </html>
