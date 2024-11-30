@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시판</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <!-- 공통 헤더 -->
+    <header>
+      <h1>게시판</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html">메인</a></li>
+          <li><a href="coin-details.html">코인상세</a></li>
+          <li><a href="etherscan.html">이더스캔</a></li>
+          <li><a href="bulletin-board.html">게시판</a></li>
+          <li><a href="my-wallet.html">내 지갑</a></li>
+          <li><a href="kakao-login.html">카카오 로그인</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- 게시판 메인 컨텐츠 -->
+    <div class="container">
+      <!-- 글쓰기 버튼 -->
+      <div class="write-button">
+        <a href="write-post.html" class="write-btn">글쓰기</a>
+      </div>
+
+      <!-- 게시판 탭 -->
+      <div class="tabs">
+        <button class="tab-button active" onclick="showBoard('all')">
+          전체글보기
+        </button>
+        <button class="tab-button" onclick="showBoard('notice')">
+          공지게시판
+        </button>
+        <button class="tab-button" onclick="showBoard('free')">
+          자유게시판
+        </button>
+        <button class="tab-button" onclick="showBoard('coin')">
+          코인게시판
+        </button>
+      </div>
+
+      <!-- 게시글 목록 -->
+      <div class="card">
+        <h2 id="boardTitle">전체글보기</h2>
+        <table class="post-table" id="postTable">
+          <thead>
+            <tr>
+              <th>제목</th>
+              <th>댓글 수</th>
+              <th>공감 수</th>
+            </tr>
+          </thead>
+          <tbody id="postList"></tbody>
+        </table>
+        <div id="pagination" class="pagination"></div>
+      </div>
+    </div>
+
+    <!-- 게시글 데이터 초기화 -->
+    <script>
+      const boards = {
+        all: [], // 전체 게시글은 각 게시판의 게시글을 모두 모아 표시
+        notice: Array.from({ length: 5 }, (_, index) => ({
+          title: `공지 게시글 ${index + 1}`,
+          comments: Math.floor(Math.random() * 10),
+          likes: Math.floor(Math.random() * 20),
+        })),
+        free: Array.from({ length: 15 }, (_, index) => ({
+          title: `자유 게시글 ${index + 1}`,
+          comments: Math.floor(Math.random() * 30),
+          likes: Math.floor(Math.random() * 60),
+        })),
+        coin: Array.from({ length: 10 }, (_, index) => ({
+          title: `코인 게시글 ${index + 1}`,
+          comments: Math.floor(Math.random() * 40),
+          likes: Math.floor(Math.random() * 80),
+        })),
+      };
+
+      // 전체 게시판에 모든 게시글 추가
+      boards.all = [...boards.notice, ...boards.free, ...boards.coin];
+
+      let currentBoard = "all";
+      let currentPage = 1;
+      const postsPerPage = 10;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        renderPostList();
+        renderPagination();
+      });
+
+      // 게시판 탭 전환
+      function showBoard(board) {
+        currentBoard = board;
+        currentPage = 1;
+        document.getElementById("boardTitle").innerText =
+          board === "all"
+            ? "전체글보기"
+            : board === "notice"
+            ? "공지게시판"
+            : board === "free"
+            ? "자유게시판"
+            : "코인게시판";
+
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.remove("active");
+        });
+        document
+          .querySelector(`[onclick="showBoard('${board}')"]`)
+          .classList.add("active");
+
+        renderPostList();
+        renderPagination();
+      }
+
+      // 게시글 목록 렌더링
+      function renderPostList() {
+        const postList = document.getElementById("postList");
+        postList.innerHTML = "";
+        const start = (currentPage - 1) * postsPerPage;
+        const end = start + postsPerPage;
+        const currentPosts = boards[currentBoard].slice(start, end);
+
+        currentPosts.forEach((post, index) => {
+          const row = document.createElement("tr");
+          row.classList.add("post-row");
+          row.innerHTML = `
+          <td><a href="#">${post.title}</a></td>
+          <td>${post.comments}</td>
+          <td>${post.likes}</td>
+        `;
+          postList.appendChild(row);
+        });
+      }
+
+      // 페이지네이션 렌더링
+      function renderPagination() {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(
+          boards[currentBoard].length / postsPerPage
+        );
+
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "<";
+        prevButton.disabled = currentPage === 1;
+        prevButton.addEventListener("click", () => {
+          if (currentPage > 1) {
+            currentPage--;
+            renderPostList();
+            renderPagination();
+          }
+        });
+        pagination.appendChild(prevButton);
+
+        for (let i = 1; i <= totalPages; i++) {
+          const pageButton = document.createElement("button");
+          pageButton.textContent = i;
+          pageButton.classList.add("page-button");
+          if (i === currentPage) pageButton.classList.add("active");
+          pageButton.addEventListener("click", () => {
+            currentPage = i;
+            renderPostList();
+            renderPagination();
+          });
+          pagination.appendChild(pageButton);
+        }
+
+        const nextButton = document.createElement("button");
+        nextButton.textContent = ">";
+        nextButton.disabled = currentPage === totalPages;
+        nextButton.addEventListener("click", () => {
+          if (currentPage < totalPages) {
+            currentPage++;
+            renderPostList();
+            renderPagination();
+          }
+        });
+        pagination.appendChild(nextButton);
+      }
+    </script>
+  </body>
+</html>
