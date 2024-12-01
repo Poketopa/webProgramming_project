@@ -3,25 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>게시판</title>
-    <link rel="stylesheet" href="../css/board.css" />
-    <script>
-      // 로그인 상태 확인
-      function checkUserSession() {
-        const kakaoNickname = localStorage.getItem("kakaoNickname");
-        if (!kakaoNickname) {
-          alert("로그인이 필요합니다.");
-          window.location.href = "kakao-login.html"; // 로그인 페이지로 이동
-        } else {
-          document.getElementById(
-            "welcomeMessage"
-          ).textContent = `${kakaoNickname}님, 환영합니다!`;
-        }
-      }
-    </script>
+    <title>게시글 상세 보기</title>
+    <link rel="stylesheet" href="../css/postDetail.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   </head>
-  <body onload="checkUserSession(); displayPosts();">
-    <!-- 헤더 -->
+  <body>
     <header>
       <div class="header-container">
         <table class="header-table">
@@ -32,7 +20,7 @@
                 <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
               </div>
             </td>
-            <td class="header-center">게시판</td>
+            <td class="header-center">게시글 상세</td>
             <td class="header-right" rowspan="2">
               <a href="kakao-login.html" class="kakao-login-link">
                 <button class="kakao-login-button">
@@ -48,6 +36,7 @@
                   <li><a href="home.html">메인</a></li>
                   <li><a href="coin-details.html">코인상세</a></li>
                   <li><a href="etherscan.html">이더스캔</a></li>
+                  <li><a href="board.html">게시판</a></li>
                   <li><a href="my-wallet.html">내 지갑</a></li>
                 </ul>
               </nav>
@@ -57,22 +46,12 @@
       </div>
     </header>
 
-    <!-- 환영 메시지 -->
-    <div class="welcome-message">
-      <h2 id="welcomeMessage"></h2>
-    </div>
-
-    <!-- 게시판 -->
     <div class="container">
-      <div class="board-header">
-        <h2>게시물 목록</h2>
-        <a href="write-post.html" class="write-post-btn">글쓰기</a>
-      </div>
-      <ul id="postList" class="post-list">
-        <!-- 게시물 목록이 JavaScript로 동적으로 추가됩니다 -->
-      </ul>
+      <h2 id="postTitle">제목</h2>
+      <p id="postContent">내용</p>
+      <small id="postAuthor">작성자</small>
     </div>
 
-    <script src="../js/board.js"></script>
+    <script src="../js/postDetail.js"></script>
   </body>
 </html>
