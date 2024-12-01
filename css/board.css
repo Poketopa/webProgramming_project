@@ -83,3 +83,53 @@ header {
   transform: scale(1.03);
   background-color: rgb(41, 28, 43);
 }
+
+/* 게시글 상세 보기 */
+.post-detail {
+  border: 1px solid #444;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+.post-detail h2 {
+  font-size: 1.5em;
+  color: #ffcc00;
+}
+
+.post-detail p {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  margin: 15px 0;
+}
+
+.post-detail small {
+  display: block;
+  margin-bottom: 20px;
+  color: #888;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn:hover {
+  background-color: #ff4d4d;
+}

@@ -1,11 +1,3 @@
-// Firebase 라이브러리 로드 확인
-if (typeof firebase === "undefined") {
-  alert(
-    "Firebase 라이브러리가 로드되지 않았습니다. HTML에 Firebase 스크립트를 포함하세요."
-  );
-  throw new Error("Firebase 라이브러리가 로드되지 않았습니다.");
-}
-
 // Firebase 초기화
 const firebaseConfig = {
   apiKey: "AIzaSyAcGdEVkZS8l_w4eczwzFGKL5enLHXJKFk",
@@ -16,52 +8,10 @@ const firebaseConfig = {
   appId: "1:169348055607:web:c0c5440edecc1d0e3a35b2",
   measurementId: "G-8PPXSFGBB3",
 };
-
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 게시글 추가 함수
-async function addPost(title, content) {
-  try {
-    const userId = localStorage.getItem("kakaoUserId"); // 로그인한 사용자 ID
-    const nickname = localStorage.getItem("kakaoNickname"); // 로그인한 사용자 닉네임
-
-    if (!userId || !nickname) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
-    await db.collection("posts").add({
-      title: title.trim(),
-      content: content.trim(),
-      author: nickname,
-      userId: userId,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-
-    console.log("게시글 추가 완료");
-    displayPosts();
-  } catch (error) {
-    console.error("게시글 추가 중 오류 발생:", error);
-    alert("게시글 추가 중 문제가 발생했습니다.");
-  }
-}
-
-// 게시글 읽기 함수
-async function getPosts() {
-  try {
-    const snapshot = await db
-      .collection("posts")
-      .orderBy("timestamp", "desc")
-      .get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("게시글 불러오기 중 오류 발생:", error);
-    alert("게시글 목록을 불러오지 못했습니다.");
-  }
-}
-
-// 게시글 상세 보기
+// 게시글 상세 보기 함수
 async function showPostDetail(postId) {
   try {
     const doc = await db.collection("posts").doc(postId).get();
@@ -74,13 +24,34 @@ async function showPostDetail(postId) {
       document.getElementById(
         "detailAuthor"
       ).textContent = `작성자: ${post.author}`;
-      document.getElementById("postDetail").style.display = "block";
 
+      // 수정 및 삭제 버튼 처리
+      const editButton = document.getElementById("editPostBtn");
       const deleteButton = document.getElementById("deletePostBtn");
-      deleteButton.dataset.id = postId;
 
-      deleteButton.style.display =
-        post.userId === currentUserId ? "inline-block" : "none";
+      if (post.userId === currentUserId) {
+        editButton.style.display = "inline-block";
+        deleteButton.style.display = "inline-block";
+
+        // 수정 버튼 클릭 이벤트
+        editButton.onclick = () => loadPostForEdit(postId);
+
+        // 삭제 버튼 클릭 이벤트
+        deleteButton.onclick = async () => {
+          if (confirm("정말로 삭제하시겠습니까?")) {
+            await deletePost(postId);
+            document.getElementById("postDetail").style.display = "none";
+            displayPosts(); // 목록 새로고침
+          }
+        };
+      } else {
+        editButton.style.display = "none";
+        deleteButton.style.display = "none";
+      }
+
+      document.getElementById("postDetail").style.display = "block";
+    } else {
+      alert("게시글을 찾을 수 없습니다.");
     }
   } catch (error) {
     console.error("게시글 상세 보기 중 오류 발생:", error);
@@ -90,53 +61,65 @@ async function showPostDetail(postId) {
 // 게시글 삭제 함수
 async function deletePost(postId) {
   try {
-    const doc = await db.collection("posts").doc(postId).get();
-    const currentUserId = localStorage.getItem("kakaoUserId");
-
-    if (doc.exists && doc.data().userId === currentUserId) {
-      await db.collection("posts").doc(postId).delete();
-      console.log("게시글 삭제 완료");
-      displayPosts();
-    } else {
-      alert("삭제 권한이 없습니다.");
-    }
+    await db.collection("posts").doc(postId).delete();
+    alert("게시글이 삭제되었습니다.");
   } catch (error) {
     console.error("게시글 삭제 중 오류 발생:", error);
     alert("게시글 삭제 중 문제가 발생했습니다.");
   }
 }
 
-// 게시글 목록 렌더링
-async function displayPosts() {
-  const postList = document.getElementById("postList");
-  postList.innerHTML = ""; // 기존 게시글 목록 초기화
-
-  const posts = await getPosts();
-  if (posts) {
-    posts.forEach((post) => {
-      const li = document.createElement("li");
-      li.textContent = `${post.title} - ${post.author}`;
-      li.dataset.id = post.id;
-      li.onclick = () => showPostDetail(post.id);
-      postList.appendChild(li);
-    });
+// 게시글 수정 로드 함수
+function loadPostForEdit(postId) {
+  const newTitle = prompt("새 제목을 입력하세요:");
+  const newContent = prompt("새 내용을 입력하세요:");
+  if (newTitle && newContent) {
+    updatePost(postId, newTitle, newContent);
   }
 }
 
-// 게시글 추가 이벤트
-document.getElementById("postForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const title = document.getElementById("title").value;
-  const content = document.getElementById("content").value;
-
-  if (!title || !content) {
-    alert("모든 필드를 작성해주세요.");
-    return;
+// 게시글 수정 함수
+async function updatePost(postId, title, content) {
+  try {
+    await db.collection("posts").doc(postId).update({
+      title: title.trim(),
+      content: content.trim(),
+    });
+    alert("게시글이 수정되었습니다.");
+    displayPosts(); // 목록 새로고침
+  } catch (error) {
+    console.error("게시글 수정 중 오류 발생:", error);
+    alert("게시글 수정 중 문제가 발생했습니다.");
   }
+}
 
-  await addPost(title, content);
-  document.getElementById("postForm").reset();
-});
+// 게시글 목록 렌더링
+async function displayPosts() {
+  const postList = document.getElementById("postList");
+  postList.innerHTML = ""; // 기존 게시글 초기화
+  const posts = await getPosts();
+  posts.forEach((post) => {
+    const li = document.createElement("li");
+    li.textContent = `${post.title} - ${post.author}`;
+    li.dataset.id = post.id;
+    li.onclick = () => showPostDetail(post.id);
+    postList.appendChild(li);
+  });
+}
+
+// 게시글 데이터 가져오기
+async function getPosts() {
+  try {
+    const snapshot = await db
+      .collection("posts")
+      .orderBy("timestamp", "desc")
+      .get();
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("게시글 불러오기 중 오류 발생:", error);
+    return [];
+  }
+}
 
 // 초기 실행
 displayPosts();
