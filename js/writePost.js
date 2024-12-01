@@ -1,8 +1,12 @@
 // Firebase 초기화
 const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-  projectId: "YOUR_FIREBASE_PROJECT_ID",
+  apiKey: "AIzaSyAcGdEVkZS8l_w4eczwzFGKL5enLHXJKFk",
+  authDomain: "webproject-12c7a.firebaseapp.com",
+  projectId: "webproject-12c7a",
+  storageBucket: "webproject-12c7a.appspot.com",
+  messagingSenderId: "169348055607",
+  appId: "1:169348055607:web:c0c5440edecc1d0e3a35b2",
+  measurementId: "G-8PPXSFGBB3",
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
