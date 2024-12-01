@@ -207,20 +207,19 @@ async function renderTokenChart(coinId, coinName) {
                             maxRotation: 0, // 라벨 수평 유지
                             minRotation: 0,
                             callback: function (value, index, values) {
-                                // 표시할 라벨 수를 10개로 제한
-                                const totalLabels = values.length;
-                                const maxLabels = 7; // 최대 10개의 라벨만 표시
-                                const interval = Math.ceil(totalLabels / maxLabels);
-                                if (index % interval === 0) {
+                                // 라벨 값이 00시인 경우만 표시
+                                const labelDate = new Date(data.prices[index][0]);
+                                if (labelDate.getHours() === 0) {
                                     return this.getLabelForValue(value);
                                 }
-                                return ""; // 나머지는 빈 문자열
+                                return ""; // 00시가 아닌 경우 빈 문자열 반환
                             },
                         },
                         grid: {
                             display: false,
                         },
                     },
+                    
                     y: {
                         ticks: {
                             color: "#ffffff",
