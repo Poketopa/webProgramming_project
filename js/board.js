@@ -12,7 +12,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 게시글 불러오기 함수
+// 게시글 불러오기
 async function getPosts() {
   try {
     const snapshot = await db
@@ -22,10 +22,12 @@ async function getPosts() {
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("게시글 불러오기 중 오류 발생:", error);
+    alert("게시글 목록을 불러오는 데 실패했습니다.");
+    return [];
   }
 }
 
-// 게시글 렌더링 함수
+// 게시글 목록 표시
 async function displayPosts() {
   const postList = document.getElementById("postList");
   postList.innerHTML = ""; // 기존 목록 초기화
@@ -34,9 +36,10 @@ async function displayPosts() {
   if (posts && posts.length > 0) {
     posts.forEach((post) => {
       const li = document.createElement("li");
-      li.textContent = `${post.title}`;
+      li.textContent = `${post.title} - ${post.author}`;
+      li.className = "post-item";
       li.onclick = () => {
-        window.location.href = `post-detail.html?id=${post.id}`;
+        window.location.href = `view-post.html?id=${post.id}`; // 게시글 상세 보기 페이지로 이동
       };
       postList.appendChild(li);
     });
@@ -44,8 +47,3 @@ async function displayPosts() {
     postList.innerHTML = "<li>게시글이 없습니다.</li>";
   }
 }
-
-// DOMContentLoaded 이벤트로 초기화 후 호출
-document.addEventListener("DOMContentLoaded", () => {
-  displayPosts();
-});
