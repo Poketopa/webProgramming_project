@@ -1,86 +1,74 @@
-// MetaMask 지갑 연결
-let account;
+// web3.js 초기화
+const Web3 = window.Web3;
+let web3;
+let userAccount;
 
+// 지갑 연결 함수
 async function connectWallet() {
   if (typeof window.ethereum !== "undefined") {
     try {
-      // MetaMask 계정 요청
-      const accounts = await ethereum.request({
+      // web3 객체 초기화
+      web3 = new Web3(window.ethereum);
+
+      // MetaMask 연결 요청
+      const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      account = accounts[0];
+      userAccount = accounts[0];
 
-      // ETH 잔액 조회
-      const balanceWei = await ethereum.request({
-        method: "eth_getBalance",
-        params: [account, "latest"],
-      });
+      // 지갑 주소와 잔액 표시
+      const balance = await web3.eth.getBalance(userAccount);
+      const ethBalance = web3.utils.fromWei(balance, "ether");
 
-      const ethBalance = parseFloat(
-        web3.utils.fromWei(balanceWei, "ether")
-      ).toFixed(4);
       document.getElementById(
         "walletBalance"
       ).innerHTML = `Available: <span>${ethBalance}</span> ETH`;
 
-      alert(`지갑 연결 성공: ${account}`);
+      alert(`지갑이 연결되었습니다: ${userAccount}`);
     } catch (error) {
-      if (error.code === 4001) {
-        alert("사용자가 지갑 연결 요청을 취소했습니다.");
-      } else {
-        alert("지갑 연결에 실패했습니다. MetaMask를 확인해주세요.");
-        console.error("Error connecting wallet:", error);
-      }
+      console.error("지갑 연결 실패:", error);
+      alert("지갑 연결에 실패했습니다. MetaMask를 확인해주세요.");
     }
   } else {
-    alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
+    alert("MetaMask가 설치되어 있지 않습니다. 설치 후 다시 시도해주세요.");
   }
 }
 
-// ETH 전송
+// ETH 송금 함수
 async function sendEth() {
-  const amount = document.getElementById("depositAmount").value.trim();
   const recipient = document.getElementById("recipient").value.trim();
+  const amount = document.getElementById("depositAmount").value.trim();
 
-  if (!amount || !recipient) {
-    alert("수신 주소와 송금 금액을 입력해주세요.");
-    return;
-  }
-
-  if (isNaN(amount) || parseFloat(amount) <= 0) {
-    alert("유효한 금액을 입력해주세요.");
+  if (!recipient || !amount) {
+    alert("수신 주소와 금액을 입력해주세요.");
     return;
   }
 
   try {
-    // 금액을 Wei로 변환
-    const valueWei = web3.utils.toWei(amount, "ether");
+    const valueInWei = web3.utils.toWei(amount, "ether");
 
-    // 트랜잭션 파라미터 설정
+    // 트랜잭션 생성
     const transactionParameters = {
-      from: account,
       to: recipient,
-      value: valueWei,
+      from: userAccount,
+      value: valueInWei,
     };
 
-    // MetaMask를 통한 송금 요청
-    await ethereum.request({
+    // MetaMask를 통한 트랜잭션 요청
+    await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [transactionParameters],
     });
 
-    alert(`${amount} ETH가 성공적으로 전송되었습니다.`);
+    alert("트랜잭션이 성공적으로 전송되었습니다.");
   } catch (error) {
-    if (error.code === 4001) {
-      alert("사용자가 트랜잭션 요청을 취소했습니다.");
-    } else {
-      alert("송금 중 오류가 발생했습니다.");
-      console.error("송금 오류:", error);
-    }
+    console.error("송금 실패:", error);
+    alert("ETH 송금에 실패했습니다. 다시 시도해주세요.");
   }
 }
 
-// 이벤트 리스너
+// 버튼 이벤트 바인딩
 document
   .getElementById("connectWalletBtn")
   .addEventListener("click", connectWallet);
+document.getElementById("sendEthBtn").addEventListener("click", sendEth);
