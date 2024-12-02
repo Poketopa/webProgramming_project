@@ -46,6 +46,7 @@
     </header>
 
     <div class="container">
+      <!-- ETH 송금 섹션 -->
       <div class="card">
         <h2>You're sending</h2>
         <div class="amount-display">
@@ -59,6 +60,8 @@
           <p>ETH</p>
         </div>
         <p id="walletBalance">Available: <span>-</span> ETH</p>
+
+        <!-- 수신 주소 입력 섹션 -->
         <div class="address-display">
           <label for="recipient">To</label>
           <input
@@ -70,25 +73,25 @@
         </div>
       </div>
 
+      <!-- Connect Wallet 및 송금 버튼 -->
       <div class="button-area">
         <button id="connectWalletBtn" class="wallet-btn">Connect Wallet</button>
+        <button id="sendEthBtn" class="wallet-btn">Send ETH</button>
       </div>
     </div>
 
     <script>
       let web3;
+      let account;
 
       async function connectWallet() {
         if (typeof window.ethereum !== "undefined") {
           try {
-            // Web3 초기화
             web3 = new Web3(window.ethereum);
-
-            // MetaMask 연결 요청
             const accounts = await ethereum.request({
               method: "eth_requestAccounts",
             });
-            const account = accounts[0];
+            account = accounts[0];
 
             // ETH 잔액 조회
             const balanceWei = await web3.eth.getBalance(account);
@@ -99,19 +102,51 @@
               "walletBalance"
             ).innerHTML = `Available: <span>${balanceEth}</span> ETH`;
           } catch (error) {
-            if (error.code === 4001) {
-              alert("사용자가 연결 요청을 취소했습니다.");
-            } else if (error.code === -32002) {
-              alert(
-                "이미 연결 요청이 진행 중입니다. MetaMask 팝업을 확인하세요."
-              );
-            } else {
-              alert("지갑 연결에 실패했습니다. MetaMask를 확인해주세요.");
-              console.error("Error:", error);
-            }
+            handleMetaMaskError(error);
           }
         } else {
           alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
+        }
+      }
+
+      async function sendEth() {
+        const amount = document.getElementById("depositAmount").value;
+        const recipient = document.getElementById("recipient").value;
+
+        if (!amount || !recipient) {
+          alert("수신 주소와 송금 금액을 입력해주세요.");
+          return;
+        }
+
+        try {
+          const valueWei = web3.utils.toWei(amount, "ether");
+
+          // MetaMask를 통한 송금
+          await ethereum.request({
+            method: "eth_sendTransaction",
+            params: [
+              {
+                from: account,
+                to: recipient,
+                value: valueWei,
+              },
+            ],
+          });
+
+          alert(`${amount} ETH가 성공적으로 전송되었습니다.`);
+        } catch (error) {
+          handleMetaMaskError(error);
+        }
+      }
+
+      function handleMetaMaskError(error) {
+        if (error.code === 4001) {
+          alert("사용자가 요청을 취소했습니다.");
+        } else if (error.code === -32002) {
+          alert("이미 요청이 진행 중입니다. MetaMask 팝업을 확인해주세요.");
+        } else {
+          alert("지갑 연결 또는 송금 중 오류가 발생했습니다.");
+          console.error("Error:", error);
         }
       }
 
@@ -119,6 +154,7 @@
       document
         .getElementById("connectWalletBtn")
         .addEventListener("click", connectWallet);
+      document.getElementById("sendEthBtn").addEventListener("click", sendEth);
     </script>
   </body>
 </html>
