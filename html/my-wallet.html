@@ -6,13 +6,15 @@
     <title>내 지갑</title>
     <link rel="stylesheet" href="../css/my-wallet.css" />
     <link rel="stylesheet" href="../css/base.css" />
+    <!-- web3.js CDN 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   </head>
   <body>
     <header>
       <div class="header-container">
         <table class="header-table">
           <tr>
-            <!-- 팀 로고 (1행 병합) -->
+            <!-- 팀 로고 -->
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
@@ -20,10 +22,10 @@
               </div>
             </td>
 
-            <!-- 헤더 제목 -->
-            <td class="header-center">내 지갑</td>
+            <!-- 페이지 제목 -->
+            <td class="header-center">내지갑</td>
 
-            <!-- Kakao 로그인 (1행 병합) -->
+            <!-- Kakao 로그인 -->
             <td class="header-right" rowspan="2">
               <a href="kakao-login.html" class="kakao-login-link">
                 <button class="kakao-login-button">
@@ -66,7 +68,7 @@
         </div>
         <p id="walletBalance">Available: <span>-</span> ETH</p>
 
-        <!-- 수신 주소 입력 섹션 -->
+        <!-- 수신 주소 입력 -->
         <div class="address-display">
           <label for="recipient">To</label>
           <input
@@ -78,14 +80,14 @@
         </div>
       </div>
 
-      <!-- Connect Wallet 및 송금 버튼 -->
+      <!-- 버튼 섹션 -->
       <div class="button-area">
         <button id="connectWalletBtn" class="wallet-btn">Connect Wallet</button>
         <button id="sendEthBtn" class="wallet-btn">Send ETH</button>
       </div>
     </div>
 
-    <!-- 외부 JavaScript 파일 추가 -->
-    <script src="../js/my-wallet.js" defer></script>
+    <!-- my-wallet.js 연결 -->
+    <script src="../js/my-wallet.js"></script>
   </body>
 </html>
