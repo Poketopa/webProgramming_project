@@ -12,37 +12,67 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 게시글 목록 불러오기
-async function getPosts() {
+// 게시글 목록 초기화 및 렌더링
+async function displayPosts() {
   try {
+    const postList = document.getElementById("postList");
+
+    // 기존 게시글 목록 초기화
+    postList.innerHTML = ""; // 목록을 완전히 비웁니다.
+
     const snapshot = await db
       .collection("posts")
       .orderBy("timestamp", "desc")
       .get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    snapshot.forEach((doc) => {
+      const post = doc.data();
+      const li = document.createElement("li");
+      li.dataset.id = doc.id;
+      li.textContent = `${post.title} - ${post.author}`;
+      li.addEventListener("click", () => viewPostDetail(doc.id));
+      postList.appendChild(li);
+    });
   } catch (error) {
     console.error("게시글 불러오기 중 오류 발생:", error);
-    alert("게시글 목록을 불러오지 못했습니다.");
-    return [];
+    alert("게시글을 불러오는 데 실패했습니다.");
   }
 }
 
-// 게시글 목록 표시
-async function displayPosts() {
-  const postList = document.getElementById("postList");
-  postList.innerHTML = ""; // 기존 게시글 초기화
-  const posts = await getPosts();
-
-  posts.forEach((post) => {
-    const li = document.createElement("li");
-    li.textContent = `${post.title} - ${post.author}`;
-    li.dataset.id = post.id;
-    li.onclick = () => {
-      window.location.href = `view-post.html?id=${post.id}`;
-    };
-    postList.appendChild(li);
-  });
+// 게시글 상세 보기로 이동
+function viewPostDetail(postId) {
+  window.location.href = `view-post.html?id=${postId}`;
 }
 
+// 게시글 추가
+document.getElementById("postForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value.trim();
+  const content = document.getElementById("content").value.trim();
+  const author = localStorage.getItem("kakaoNickname"); // 현재 로그인 사용자 닉네임 가져오기
+
+  if (!title || !content) {
+    alert("제목과 내용을 모두 입력해주세요.");
+    return;
+  }
+
+  try {
+    await db.collection("posts").add({
+      title,
+      content,
+      author,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    alert("게시글이 성공적으로 등록되었습니다.");
+    displayPosts(); // 목록을 다시 렌더링
+    document.getElementById("postForm").reset();
+  } catch (error) {
+    console.error("게시글 추가 중 오류 발생:", error);
+    alert("게시글 추가에 실패했습니다.");
+  }
+});
+
 // 초기 실행
-document.addEventListener("DOMContentLoaded", displayPosts);
+document.addEventListener("DOMContentLoaded", () => {
+  displayPosts(); // 페이지 로드 시 게시글 목록 표시
+});
