@@ -47,7 +47,8 @@ async function sendEth() {
   }
 
   try {
-    const valueInWei = web3.utils.toWei(amount, "ether"); // ETH -> Wei 변환
+    // 입력한 ETH 값을 Wei로 변환
+    const valueInWei = web3.utils.toWei(amount, "ether");
 
     // 트랜잭션 생성
     const transactionParameters = {
