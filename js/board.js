@@ -33,7 +33,7 @@ async function addPost(title, content) {
     });
 
     console.log("게시글 추가 완료");
-    await displayPosts();
+    await displayPosts(); // 목록 갱신
   } catch (error) {
     console.error("게시글 추가 중 오류 발생:", error);
     alert("게시글 추가 중 문제가 발생했습니다.");
@@ -73,12 +73,21 @@ async function showPostDetail(postId) {
       const deleteButton = document.getElementById("deletePostBtn");
       deleteButton.dataset.id = postId;
 
+      let editButton = document.getElementById("editButton");
+      if (!editButton) {
+        editButton = document.createElement("button");
+        editButton.id = "editButton";
+        editButton.textContent = "수정";
+        editButton.addEventListener("click", () => loadPostForEdit(postId));
+        document.getElementById("postDetail").appendChild(editButton);
+      }
+
       if (post.userId === currentUserId) {
         deleteButton.style.display = "inline-block";
-        document.getElementById("editButton").style.display = "inline-block";
+        editButton.style.display = "inline-block";
       } else {
         deleteButton.style.display = "none";
-        document.getElementById("editButton").style.display = "none";
+        editButton.style.display = "none";
       }
     }
   } catch (error) {
@@ -105,27 +114,11 @@ async function displayPosts() {
       postList.innerHTML = "<li>게시글이 없습니다.</li>";
     }
   } catch (error) {
-    console.error("게시글 렌더링 중 오류 발생:", error);
+    console.error("게시글 목록 렌더링 중 오류 발생:", error);
   }
 }
 
-// 초기 실행
+// DOM 로드 후 실행
 document.addEventListener("DOMContentLoaded", () => {
   displayPosts();
-});
-
-// 게시글 추가 이벤트
-document.getElementById("postForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const title = document.getElementById("title").value;
-  const content = document.getElementById("content").value;
-
-  if (!title || !content) {
-    alert("제목과 내용을 모두 작성해주세요.");
-    return;
-  }
-
-  await addPost(title, content);
-  document.getElementById("postForm").reset();
 });
