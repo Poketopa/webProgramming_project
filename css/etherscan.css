@@ -3,10 +3,10 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: rgb(20, 20, 20); /* 어두운 배경 */
-  color: rgb(150, 150, 150); /* 기본 텍스트 색상 */
-  position: relative; /* 배경 이미지 포지션 */
-  overflow-x: hidden; /* 가로 스크롤 방지 */
+  background-color: rgb(20, 20, 20);
+  color: rgb(150, 150, 150);
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* 헤더 스타일 */
@@ -48,17 +48,18 @@ nav ul li a:hover {
   width: 85%;
   margin: 50px auto;
   padding: 20px;
-  position: relative; /* 카드의 위치를 배경과 분리 */
-  z-index: 10; /* 카드가 배경보다 위에 보이도록 설정 */
+  position: relative;
+  z-index: 10;
 }
 
 /* 카드 스타일 */
 .card {
-  background-color: rgba(30, 30, 30, 0.9); /* 반투명 어두운 배경 */
+  background-color: rgba(30, 30, 30, 0.9);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
   text-align: center;
+  margin-bottom: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -68,23 +69,29 @@ nav ul li a:hover {
 }
 
 h2 {
-  color: rgb(234, 118, 250); /* 테마 컬러 */
+  color: rgb(234, 118, 250);
   font-size: 1.8em;
+}
+
+h3 {
+  color: rgb(234, 118, 250);
+  font-size: 1.4em;
+  margin-bottom: 15px;
 }
 
 p {
   font-size: 1.1em;
   line-height: 1.6em;
   margin-top: 15px;
-  color: rgb(200, 200, 200); /* 밝은 회색 */
+  color: rgb(200, 200, 200);
 }
 
 /* 이더스캔 버튼 스타일 */
 .etherscan-btn {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: rgb(41, 28, 43); /* 테마 색상 */
-  color: rgb(234, 118, 250); /* 버튼 텍스트 */
+  background-color: rgb(41, 28, 43);
+  color: rgb(234, 118, 250);
   font-size: 1em;
   border: none;
   border-radius: 5px;
@@ -93,7 +100,25 @@ p {
 }
 
 .etherscan-btn:hover {
-  background-color: rgb(60, 40, 63); /* 버튼 호버 배경 */
+  background-color: rgb(60, 40, 63);
+}
+
+/* 지갑 입력 필드 스타일 */
+.wallet-input {
+  width: 80%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1em;
+  color: rgb(200, 200, 200);
+  background-color: rgba(20, 20, 20, 0.9);
+  border: 1px solid rgb(234, 118, 250);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.wallet-input:focus {
+  outline: none;
+  border-color: #ffcc00;
 }
 
 /* 배경 이미지 스타일 */
@@ -103,10 +128,10 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../coinImage/etherscan.jpg"); /* 이더스캔 이미지 */
+  background-image: url("../coinImage/etherscan.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.1; /* 불투명도 조정 */
-  z-index: 0; /* 배경이 콘텐츠 아래에 위치하도록 설정 */
-  pointer-events: none; /* 클릭 방지 */
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
 }
