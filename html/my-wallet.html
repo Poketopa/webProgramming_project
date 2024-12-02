@@ -12,18 +12,16 @@
       <div class="header-container">
         <table class="header-table">
           <tr>
-            <!-- 팀 로고 (1행 병합) -->
+            <!-- 팀 로고 -->
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
                 <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
               </div>
             </td>
-
-            <!-- 글쓰기 제목 -->
-            <td class="header-center">내지갑</td>
-
-            <!-- Kakao 로그인 (1행 병합) -->
+            <!-- 페이지 제목 -->
+            <td class="header-center">내 지갑</td>
+            <!-- Kakao 로그인 -->
             <td class="header-right" rowspan="2">
               <a href="kakao-login.html" class="kakao-login-link">
                 <button class="kakao-login-button">
@@ -33,7 +31,7 @@
             </td>
           </tr>
           <tr>
-            <!-- 네비게이션 메뉴 -->
+            <!-- 네비게이션 -->
             <td class="header-nav">
               <nav>
                 <ul>
@@ -81,10 +79,13 @@
       <!-- Connect Wallet 버튼 -->
       <div class="button-area">
         <button id="connectWalletBtn" class="wallet-btn">Connect Wallet</button>
+        <button id="sendETHBtn" class="wallet-btn" disabled>Send ETH</button>
       </div>
     </div>
 
     <script>
+      let userAccount;
+
       async function connectWallet() {
         if (typeof window.ethereum !== "undefined") {
           try {
@@ -92,12 +93,12 @@
             const accounts = await ethereum.request({
               method: "eth_requestAccounts",
             });
-            const account = accounts[0];
+            userAccount = accounts[0];
 
             // ETH 잔액 조회
             const balance = await ethereum.request({
               method: "eth_getBalance",
-              params: [account, "latest"],
+              params: [userAccount, "latest"],
             });
             const ethBalance = parseFloat(
               window.web3.utils.fromWei(balance, "ether")
@@ -107,34 +108,68 @@
             document.getElementById(
               "walletBalance"
             ).innerHTML = `Available: <span>${ethBalance}</span> ETH`;
+
+            // Send ETH 버튼 활성화
+            document.getElementById("sendETHBtn").disabled = false;
+
+            alert("지갑 연결 성공: " + userAccount);
           } catch (error) {
-            // 오류 처리
             if (error.code === 4001) {
               alert("사용자가 연결 요청을 취소했습니다.");
-            } else if (error.code === -32002) {
-              alert(
-                "이미 연결 요청이 진행 중입니다. MetaMask 팝업을 확인하세요."
-              );
             } else {
-              alert("지갑 연결에 실패했습니다. 네트워크 상태를 확인해주세요.");
-              console.error(
-                "Error code:",
-                error.code,
-                "Message:",
-                error.message
-              );
+              alert("지갑 연결에 실패했습니다. MetaMask를 확인해주세요.");
+              console.error("Error:", error);
             }
           }
         } else {
-          // MetaMask가 설치되지 않은 경우
           alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
         }
       }
 
-      // 지갑 연결 버튼 클릭 이벤트
+      async function sendETH() {
+        const recipient = document.getElementById("recipient").value.trim();
+        const amount = document.getElementById("depositAmount").value.trim();
+
+        if (
+          !recipient ||
+          !recipient.startsWith("0x") ||
+          recipient.length !== 42
+        ) {
+          alert("유효한 수신 주소를 입력하세요.");
+          return;
+        }
+
+        if (!amount || isNaN(amount) || parseFloat(amount) <= 0) {
+          alert("유효한 금액을 입력하세요.");
+          return;
+        }
+
+        try {
+          const weiValue = window.web3.utils.toWei(amount, "ether");
+
+          await ethereum.request({
+            method: "eth_sendTransaction",
+            params: [
+              {
+                from: userAccount,
+                to: recipient,
+                value: weiValue,
+              },
+            ],
+          });
+
+          alert("ETH 전송 성공!");
+        } catch (error) {
+          console.error("ETH 전송 오류:", error);
+          alert("ETH 전송 중 오류가 발생했습니다.");
+        }
+      }
+
+      // 이벤트 바인딩
       document
         .getElementById("connectWalletBtn")
         .addEventListener("click", connectWallet);
+      document.getElementById("sendETHBtn").addEventListener("click", sendETH);
     </script>
   </body>
 </html>
