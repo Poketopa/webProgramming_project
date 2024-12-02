@@ -47,15 +47,14 @@ async function sendEth() {
   }
 
   try {
-    // 입력한 ETH 값을 Wei로 변환
-    const valueInWei = web3.utils.toWei(amount, "ether");
+    // ETH 값을 Wei로 변환하고 16진수로 표현
+    const valueInHex = "0x" + (amount * 1e18).toString(16);
 
     // 트랜잭션 생성
     const transactionParameters = {
       to: recipient, // 수신 주소
-      from: userAccount, // 송신 주소 (연결된 계정)
-      value: web3.utils.toHex(valueInWei), // 전송 금액 (Wei)
-      gas: web3.utils.toHex(21000), // 기본 가스 한도
+      from: userAccount, // 송신 주소
+      value: valueInHex, // 전송 금액 (Hexadecimal 형식의 Wei)
     };
 
     // MetaMask를 통한 트랜잭션 요청

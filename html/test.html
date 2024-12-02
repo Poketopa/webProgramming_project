@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetaMask ETH Transfer</title>
+  </head>
+  <body>
+    <h1>MetaMask를 이용한 ETH 전송</h1>
+
+    <!-- MetaMask 연결 상태 -->
+    <button id="connectButton">MetaMask 연결</button>
+    <p id="account">현재 계정: 연결되지 않음</p>
+
+    <!-- 전송할 주소 입력 -->
+    <label for="recipient">받는 사람 주소:</label>
+    <input type="text" id="recipient" placeholder="0x1234..." />
+    <br /><br />
+
+    <!-- 전송할 금액 입력 -->
+    <label for="amount">보낼 ETH:</label>
+    <input type="number" id="amount" placeholder="0.01" step="0.01" />
+    <br /><br />
+
+    <!-- 전송 버튼 -->
+    <button id="sendButton">ETH 전송</button>
+    <p id="status"></p>
+
+    <!-- Script -->
+    <script>
+      // 페이지 로드 후 실행
+      window.onload = function () {
+        // MetaMask 연결 상태를 확인하는 버튼
+        const connectButton = document.getElementById("connectButton");
+        const sendButton = document.getElementById("sendButton");
+        const accountDisplay = document.getElementById("account");
+        const statusDisplay = document.getElementById("status");
+
+        let currentAccount = null;
+
+        // MetaMask 연결
+        connectButton.onclick = async () => {
+          if (typeof window.ethereum !== "undefined") {
+            try {
+              // MetaMask 계정 요청
+              const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+              });
+              currentAccount = accounts[0];
+              accountDisplay.innerText = `현재 계정: ${currentAccount}`;
+              statusDisplay.innerText = "MetaMask 연결 성공";
+            } catch (error) {
+              console.error(error);
+              statusDisplay.innerText = "MetaMask 연결 실패";
+            }
+          } else {
+            alert(
+              "MetaMask가 설치되어 있지 않습니다. https://metamask.io/ 에서 설치해주세요."
+            );
+          }
+        };
+
+        // ETH 전송
+        sendButton.onclick = async () => {
+          if (!currentAccount) {
+            statusDisplay.innerText = "먼저 MetaMask를 연결하세요.";
+            return;
+          }
+
+          const recipient = document.getElementById("recipient").value;
+          const amount = document.getElementById("amount").value;
+
+          if (!recipient || !amount) {
+            statusDisplay.innerText = "주소와 금액을 모두 입력하세요.";
+            return;
+          }
+
+          try {
+            // ETH 전송 트랜잭션
+            const transactionParameters = {
+              to: recipient, // 수신자 주소
+              from: currentAccount, // 송신자 주소
+              value: "0x" + (amount * 1e18).toString(16), // ETH 값을 Wei로 변환
+            };
+
+            // MetaMask 트랜잭션 요청
+            await ethereum.request({
+              method: "eth_sendTransaction",
+              params: [transactionParameters],
+            });
+
+            statusDisplay.innerText = `ETH 전송 성공! 받는 사람: ${recipient}, 금액: ${amount} ETH`;
+          } catch (error) {
+            console.error(error);
+            statusDisplay.innerText = "ETH 전송 실패: " + error.message;
+          }
+        };
+      };
+    </script>
+  </body>
+</html>
