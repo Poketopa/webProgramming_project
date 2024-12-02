@@ -15,9 +15,10 @@
           alert("로그인이 필요합니다.");
           window.location.href = "kakao-login.html";
         } else {
-          document.getElementById(
-            "welcomeMessage"
-          ).textContent = `${kakaoNickname}님, 환영합니다!`;
+          const welcomeMessage = document.getElementById("welcomeMessage");
+          if (welcomeMessage) {
+            welcomeMessage.textContent = `${kakaoNickname}님, 환영합니다!`;
+          }
         }
       }
     </script>
@@ -70,6 +71,15 @@
       <ul id="postList" class="post-list">
         <!-- 게시글 목록이 JavaScript로 추가됩니다 -->
       </ul>
+    </div>
+
+    <div id="postDetail" style="display: none">
+      <h2 id="detailTitle"></h2>
+      <p id="detailContent"></p>
+      <small id="detailAuthor"></small>
+      <br />
+      <button id="deletePostBtn" style="display: none">삭제</button>
+      <button id="editPostBtn" style="display: none">수정</button>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
