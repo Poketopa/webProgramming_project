@@ -67,6 +67,7 @@ async function showPostDetail(postId) {
 async function displayPosts() {
   const postList = document.getElementById("postList");
   postList.innerHTML = ""; // 기존 게시글 목록 초기화
+
   const posts = await getPosts();
   if (posts) {
     posts.forEach((post) => {
