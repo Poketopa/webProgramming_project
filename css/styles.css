@@ -138,7 +138,7 @@ table {
 
 /* 변동률 스타일 */
 .coin-table .change-positive {
-  color: #00ffff;
+  color: rgb(84, 177, 154);
   font-weight: bold;
   font-size: 1.1em;
 }
