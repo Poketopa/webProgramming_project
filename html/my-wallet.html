@@ -6,20 +6,24 @@
     <title>내 지갑</title>
     <link rel="stylesheet" href="../css/my-wallet.css" />
     <link rel="stylesheet" href="../css/base.css" />
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
   </head>
   <body>
     <header>
       <div class="header-container">
         <table class="header-table">
           <tr>
+            <!-- 팀 로고 (1행 병합) -->
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
                 <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
               </div>
             </td>
+
+            <!-- 헤더 제목 -->
             <td class="header-center">내 지갑</td>
+
+            <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
               <a href="kakao-login.html" class="kakao-login-link">
                 <button class="kakao-login-button">
@@ -29,6 +33,7 @@
             </td>
           </tr>
           <tr>
+            <!-- 네비게이션 메뉴 -->
             <td class="header-nav">
               <nav>
                 <ul>
@@ -80,81 +85,7 @@
       </div>
     </div>
 
-    <script>
-      let web3;
-      let account;
-
-      async function connectWallet() {
-        if (typeof window.ethereum !== "undefined") {
-          try {
-            web3 = new Web3(window.ethereum);
-            const accounts = await ethereum.request({
-              method: "eth_requestAccounts",
-            });
-            account = accounts[0];
-
-            // ETH 잔액 조회
-            const balanceWei = await web3.eth.getBalance(account);
-            const balanceEth = web3.utils.fromWei(balanceWei, "ether");
-
-            // 지갑 주소와 잔액 표시
-            document.getElementById(
-              "walletBalance"
-            ).innerHTML = `Available: <span>${balanceEth}</span> ETH`;
-          } catch (error) {
-            handleMetaMaskError(error);
-          }
-        } else {
-          alert("MetaMask가 설치되어 있지 않습니다. MetaMask를 설치해주세요.");
-        }
-      }
-
-      async function sendEth() {
-        const amount = document.getElementById("depositAmount").value;
-        const recipient = document.getElementById("recipient").value;
-
-        if (!amount || !recipient) {
-          alert("수신 주소와 송금 금액을 입력해주세요.");
-          return;
-        }
-
-        try {
-          const valueWei = web3.utils.toWei(amount, "ether");
-
-          // MetaMask를 통한 송금
-          await ethereum.request({
-            method: "eth_sendTransaction",
-            params: [
-              {
-                from: account,
-                to: recipient,
-                value: valueWei,
-              },
-            ],
-          });
-
-          alert(`${amount} ETH가 성공적으로 전송되었습니다.`);
-        } catch (error) {
-          handleMetaMaskError(error);
-        }
-      }
-
-      function handleMetaMaskError(error) {
-        if (error.code === 4001) {
-          alert("사용자가 요청을 취소했습니다.");
-        } else if (error.code === -32002) {
-          alert("이미 요청이 진행 중입니다. MetaMask 팝업을 확인해주세요.");
-        } else {
-          alert("지갑 연결 또는 송금 중 오류가 발생했습니다.");
-          console.error("Error:", error);
-        }
-      }
-
-      // 버튼 클릭 이벤트 리스너
-      document
-        .getElementById("connectWalletBtn")
-        .addEventListener("click", connectWallet);
-      document.getElementById("sendEthBtn").addEventListener("click", sendEth);
-    </script>
+    <!-- 외부 JavaScript 파일 추가 -->
+    <script src="../js/my-wallet.js" defer></script>
   </body>
 </html>
