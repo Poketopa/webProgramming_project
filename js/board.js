@@ -55,7 +55,7 @@ async function getPosts() {
 
 // 게시글 목록 렌더링
 async function displayPosts() {
-  console.log("displayPosts 호출됨"); // 호출 여부 확인
+  console.log("displayPosts 호출됨"); // 호출 확인
   const postList = document.getElementById("postList");
   postList.innerHTML = ""; // 기존 게시글 초기화
 
@@ -73,5 +73,22 @@ async function displayPosts() {
 
 // 초기 실행
 document.addEventListener("DOMContentLoaded", () => {
-  displayPosts(); // 초기 게시글 렌더링
+  displayPosts(); // 페이지 로드 시 한 번만 호출
+});
+
+// 게시글 추가 이벤트
+document.getElementById("postForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value;
+  const content = document.getElementById("content").value;
+
+  if (!title || !content) {
+    alert("제목과 내용을 모두 작성해주세요.");
+    return;
+  }
+
+  await addPost(title, content);
+  displayPosts(); // 게시글 추가 후 목록 갱신
+  document.getElementById("postForm").reset(); // 입력 폼 초기화
 });
