@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>게시글 상세 보기</title>
     <link rel="stylesheet" href="../css/board.css" />
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="../js/view-post.js" defer></script>
   </head>
   <body>
@@ -18,7 +18,11 @@
       <h2 id="detailTitle"></h2>
       <p id="detailContent"></p>
       <small id="detailAuthor"></small>
-      <button id="deletePostBtn">삭제</button>
+      <br />
+      <div id="editDeleteButtons" style="display: none">
+        <button id="editPostBtn">수정</button>
+        <button id="deletePostBtn">삭제</button>
+      </div>
     </div>
   </body>
 </html>
