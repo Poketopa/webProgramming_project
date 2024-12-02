@@ -9,46 +9,126 @@ const firebaseConfig = {
   measurementId: "G-8PPXSFGBB3",
 };
 
+// Firebase 초기화
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 게시글 불러오기 함수
-async function getPosts() {
+// 게시글 추가 함수
+async function addPost(title, content) {
+  try {
+    const userId = localStorage.getItem("kakaoUserId");
+    const nickname = localStorage.getItem("kakaoNickname");
+
+    if (!userId || !nickname) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    await db.collection("posts").add({
+      title: title.trim(),
+      content: content.trim(),
+      author: nickname,
+      userId: userId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    console.log("게시글 추가 완료");
+    await displayPosts();
+  } catch (error) {
+    console.error("게시글 추가 중 오류 발생:", error);
+  }
+}
+
+// 게시글 목록 렌더링
+async function displayPosts() {
+  const postList = document.getElementById("postList");
+
+  // 기존 게시물 목록 초기화
+  postList.innerHTML = "";
+
   try {
     const snapshot = await db
       .collection("posts")
       .orderBy("timestamp", "desc")
       .get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error("게시글 불러오기 중 오류 발생:", error);
-    alert("게시글 목록을 불러오는 데 실패했습니다.");
-    return [];
-  }
-}
 
-// 게시글 렌더링 함수
-async function displayPosts() {
-  const postList = document.getElementById("postList");
-  postList.innerHTML = ""; // 기존 목록 초기화
-
-  const posts = await getPosts();
-  if (posts && posts.length > 0) {
-    posts.forEach((post) => {
+    snapshot.forEach((doc) => {
+      const post = doc.data();
       const li = document.createElement("li");
-      li.textContent = `${post.title}`;
-      li.className = "post-item";
-      li.onclick = () => {
-        window.location.href = `view-post.html?id=${post.id}`; // 게시글 상세 보기 페이지로 이동
-      };
+      li.textContent = `${post.title} - ${post.author}`;
+      li.dataset.id = doc.id;
+      li.addEventListener("click", () => showPostDetail(doc.id));
       postList.appendChild(li);
     });
-  } else {
-    postList.innerHTML = "<li>게시글이 없습니다.</li>";
+
+    console.log("게시글 목록 불러오기 완료");
+  } catch (error) {
+    console.error("게시글 불러오기 중 오류 발생:", error);
   }
 }
 
-// DOMContentLoaded 이벤트로 초기화 후 호출
+// 게시글 상세 보기
+async function showPostDetail(postId) {
+  try {
+    const doc = await db.collection("posts").doc(postId).get();
+    if (doc.exists) {
+      const post = doc.data();
+      const currentUserId = localStorage.getItem("kakaoUserId");
+
+      document.getElementById("detailTitle").textContent = post.title;
+      document.getElementById("detailContent").textContent = post.content;
+      document.getElementById(
+        "detailAuthor"
+      ).textContent = `작성자: ${post.author}`;
+      document.getElementById("postDetail").style.display = "block";
+
+      // 삭제 버튼 설정
+      const deleteButton = document.getElementById("deletePostBtn");
+      deleteButton.dataset.id = postId;
+      deleteButton.style.display =
+        post.userId === currentUserId ? "inline-block" : "none";
+
+      // 수정 버튼 설정
+      const editButton = document.getElementById("editPostBtn");
+      editButton.dataset.id = postId;
+      editButton.style.display =
+        post.userId === currentUserId ? "inline-block" : "none";
+    }
+  } catch (error) {
+    console.error("게시글 상세 보기 중 오류 발생:", error);
+  }
+}
+
+// 게시글 삭제
+document.getElementById("deletePostBtn").addEventListener("click", async () => {
+  const postId = document.getElementById("deletePostBtn").dataset.id;
+
+  try {
+    await db.collection("posts").doc(postId).delete();
+    alert("게시글이 삭제되었습니다.");
+    document.getElementById("postDetail").style.display = "none";
+    displayPosts();
+  } catch (error) {
+    console.error("게시글 삭제 중 오류 발생:", error);
+  }
+});
+
+// 게시글 추가 이벤트
+document.getElementById("postForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = document.getElementById("title").value;
+  const content = document.getElementById("content").value;
+
+  if (!title || !content) {
+    alert("제목과 내용을 입력해주세요.");
+    return;
+  }
+
+  await addPost(title, content);
+  document.getElementById("postForm").reset();
+});
+
+// 초기 실행
 document.addEventListener("DOMContentLoaded", () => {
   displayPosts();
 });

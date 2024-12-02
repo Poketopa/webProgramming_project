@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../css/base.css" />
     <script>
-      // 로그인 상태 확인
+      // 사용자 로그인 상태 확인
       function checkUserSession() {
+        const kakaoUserId = localStorage.getItem("kakaoUserId");
         const kakaoNickname = localStorage.getItem("kakaoNickname");
-        if (!kakaoNickname) {
+
+        if (!kakaoUserId || !kakaoNickname) {
           alert("로그인이 필요합니다.");
-          window.location.href = "kakao-login.html"; // 로그인 페이지로 이동
+          window.location.href = "kakao-login.html"; // 로그인 페이지로 리디렉션
         } else {
           document.getElementById(
             "welcomeMessage"
@@ -21,7 +23,7 @@
       }
     </script>
   </head>
-  <body onload="checkUserSession(); displayPosts();">
+  <body onload="checkUserSession();">
     <!-- 헤더 -->
     <header>
       <div class="header-container">
@@ -72,8 +74,21 @@
       <ul id="postList" class="post-list">
         <!-- 게시물 목록이 JavaScript로 동적으로 추가됩니다 -->
       </ul>
+
+      <!-- 게시글 상세 보기 -->
+      <div id="postDetail" class="post-detail">
+        <h2 id="detailTitle"></h2>
+        <p id="detailContent"></p>
+        <small id="detailAuthor"></small>
+        <div class="post-actions">
+          <button id="deletePostBtn" style="display: none">삭제</button>
+          <button id="editPostBtn" style="display: none">수정</button>
+        </div>
+      </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="../js/board.js"></script>
   </body>
 </html>
