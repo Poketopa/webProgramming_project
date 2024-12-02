@@ -1,101 +1,71 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>게시판</title>
+    <title>Firebase 게시판</title>
     <link rel="stylesheet" href="../css/board.css" />
-    <link rel="stylesheet" href="../css/base.css" />
-
-    <!-- Firebase App (필수) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <!-- Firebase Firestore (필수) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
     <script>
+      // Firebase 초기화
+      const firebaseConfig = {
+        apiKey: "AIzaSyAcGdEVkZS8l_w4eczwzFGKL5enLHXJKFk",
+        authDomain: "webproject-12c7a.firebaseapp.com",
+        projectId: "webproject-12c7a",
+        storageBucket: "webproject-12c7a.appspot.com",
+        messagingSenderId: "169348055607",
+        appId: "1:169348055607:web:c0c5440edecc1d0e3a35b2",
+        measurementId: "G-8PPXSFGBB3",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
       // 로그인 상태 확인
       function checkUserSession() {
+        const kakaoUserId = localStorage.getItem("kakaoUserId");
         const kakaoNickname = localStorage.getItem("kakaoNickname");
-        if (!kakaoNickname) {
+
+        if (!kakaoUserId || !kakaoNickname) {
           alert("로그인이 필요합니다.");
-          window.location.href = "kakao-login.html"; // 로그인 페이지로 이동
+          window.location.href = "kakao-login.html"; // 로그인 페이지로 리디렉션
         } else {
-          document.getElementById(
-            "welcomeMessage"
-          ).textContent = `${kakaoNickname}님, 환영합니다!`;
+          console.log(`${kakaoNickname}님이 로그인 중입니다.`);
         }
       }
     </script>
   </head>
   <body onload="checkUserSession(); displayPosts();">
-    <!-- 헤더 -->
-    <header>
-      <div class="header-container">
-        <table class="header-table">
-          <tr>
-            <td class="header-left" rowspan="2">
-              <div class="logo-container">
-                <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
-                <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
-              </div>
-            </td>
-            <td class="header-center">게시판</td>
-            <td class="header-right" rowspan="2">
-              <a href="kakao-login.html" class="kakao-login-link">
-                <button class="kakao-login-button">
-                  <img src="../img/kakao.png" alt="카카오 로그인" />
-                </button>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td class="header-nav">
-              <nav>
-                <ul>
-                  <li><a href="home.html">메인</a></li>
-                  <li><a href="coin-details.html">코인상세</a></li>
-                  <li><a href="etherscan.html">이더스캔</a></li>
-                  <li><a href="my-wallet.html">내 지갑</a></li>
-                </ul>
-              </nav>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </header>
+    <h1>Firebase 게시판</h1>
 
-    <!-- 게시판 -->
-    <div class="container">
-      <!-- 환영 메시지 -->
-      <div class="welcome-message">
-        <h2 id="welcomeMessage"></h2>
-      </div>
+    <!-- 게시글 추가 폼 -->
+    <form id="postForm">
+      <input type="text" id="title" placeholder="제목" required />
+      <textarea id="content" placeholder="내용" required></textarea>
+      <button type="submit">게시글 추가</button>
+    </form>
 
-      <div class="board-header">
-        <h2>게시물 목록</h2>
-        <a href="write-post.html" class="write-post-btn">글쓰기</a>
-      </div>
-      <ul id="postList" class="post-list">
-        <!-- 게시물 목록이 JavaScript로 동적으로 추가됩니다 -->
-      </ul>
-    </div>
+    <!-- 게시글 목록 -->
+    <ul id="postList"></ul>
 
     <!-- 게시글 상세 보기 -->
-    <div id="postDetail" class="post-detail" style="display: none">
+    <div
+      id="postDetail"
+      style="
+        display: none;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 20px;
+      "
+    >
       <h2 id="detailTitle"></h2>
       <p id="detailContent"></p>
       <small id="detailAuthor"></small>
-      <div class="detail-actions">
-        <button id="editPostBtn" class="edit-btn" style="display: none">
-          수정
-        </button>
-        <button id="deletePostBtn" class="delete-btn" style="display: none">
-          삭제
-        </button>
-      </div>
+      <br />
+      <button id="deletePostBtn">삭제</button>
     </div>
 
-    <!-- JavaScript -->
     <script src="../js/board.js"></script>
   </body>
 </html>
