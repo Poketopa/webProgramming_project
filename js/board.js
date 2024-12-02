@@ -9,16 +9,19 @@ const firebaseConfig = {
   measurementId: "G-8PPXSFGBB3",
 };
 
-firebase.initializeApp(firebaseConfig);
+// Firebase 초기화
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.firestore();
 
-// 게시글 목록 초기화 및 렌더링
+// 게시글 목록 렌더링
 async function displayPosts() {
   try {
     const postList = document.getElementById("postList");
 
     // 기존 게시글 목록 초기화
-    postList.innerHTML = ""; // 목록을 완전히 비웁니다.
+    postList.innerHTML = ""; // 기존 게시물 삭제
 
     const snapshot = await db
       .collection("posts")
@@ -26,10 +29,19 @@ async function displayPosts() {
       .get();
     snapshot.forEach((doc) => {
       const post = doc.data();
+
+      // 게시글 항목 생성
       const li = document.createElement("li");
       li.dataset.id = doc.id;
       li.textContent = `${post.title} - ${post.author}`;
-      li.addEventListener("click", () => viewPostDetail(doc.id));
+      li.classList.add("post-item");
+
+      // 클릭 이벤트 추가 (글 상세 보기로 이동)
+      li.addEventListener("click", () => {
+        viewPostDetail(doc.id);
+      });
+
+      // 게시글 추가
       postList.appendChild(li);
     });
   } catch (error) {
@@ -43,36 +55,7 @@ function viewPostDetail(postId) {
   window.location.href = `view-post.html?id=${postId}`;
 }
 
-// 게시글 추가
-document.getElementById("postForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const title = document.getElementById("title").value.trim();
-  const content = document.getElementById("content").value.trim();
-  const author = localStorage.getItem("kakaoNickname"); // 현재 로그인 사용자 닉네임 가져오기
-
-  if (!title || !content) {
-    alert("제목과 내용을 모두 입력해주세요.");
-    return;
-  }
-
-  try {
-    await db.collection("posts").add({
-      title,
-      content,
-      author,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    alert("게시글이 성공적으로 등록되었습니다.");
-    displayPosts(); // 목록을 다시 렌더링
-    document.getElementById("postForm").reset();
-  } catch (error) {
-    console.error("게시글 추가 중 오류 발생:", error);
-    alert("게시글 추가에 실패했습니다.");
-  }
-});
-
-// 초기 실행
+// DOMContentLoaded 이벤트로 초기 실행
 document.addEventListener("DOMContentLoaded", () => {
   displayPosts(); // 페이지 로드 시 게시글 목록 표시
 });
