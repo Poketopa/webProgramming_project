@@ -13,6 +13,32 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// 게시글 추가 함수
+async function addPost(title, content) {
+  try {
+    const userId = localStorage.getItem("kakaoUserId");
+    const nickname = localStorage.getItem("kakaoNickname");
+
+    if (!userId || !nickname) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    await db.collection("posts").add({
+      title: title.trim(),
+      content: content.trim(),
+      author: nickname,
+      userId: userId,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+
+    console.log("게시글 추가 완료");
+    displayPosts(); // 글 추가 후 목록 갱신
+  } catch (error) {
+    console.error("게시글 추가 중 오류 발생:", error);
+  }
+}
+
 // 게시글 읽기 함수
 async function getPosts() {
   try {
@@ -27,46 +53,11 @@ async function getPosts() {
   }
 }
 
-// 게시글 상세 보기
-async function showPostDetail(postId) {
-  try {
-    const doc = await db.collection("posts").doc(postId).get();
-    if (doc.exists) {
-      const post = doc.data();
-      const currentNickname = localStorage.getItem("kakaoNickname"); // 현재 로그인 사용자 닉네임
-
-      // 게시글 내용 표시
-      document.getElementById("detailTitle").textContent = post.title;
-      document.getElementById("detailContent").textContent = post.content;
-      document.getElementById(
-        "detailAuthor"
-      ).textContent = `작성자: ${post.author}`;
-      document.getElementById("postDetail").style.display = "block";
-
-      // 수정 및 삭제 버튼 활성화/비활성화
-      const editButton = document.getElementById("editPostBtn");
-      const deleteButton = document.getElementById("deletePostBtn");
-
-      if (post.author === currentNickname) {
-        editButton.style.display = "inline-block"; // 수정 버튼 보이기
-        deleteButton.style.display = "inline-block"; // 삭제 버튼 보이기
-        deleteButton.dataset.id = postId; // 삭제 버튼에 게시글 ID 저장
-        editButton.dataset.id = postId; // 수정 버튼에 게시글 ID 저장
-      } else {
-        editButton.style.display = "none"; // 수정 버튼 숨기기
-        deleteButton.style.display = "none"; // 삭제 버튼 숨기기
-      }
-    }
-  } catch (error) {
-    console.error("게시글 상세 보기 중 오류 발생:", error);
-    alert("게시글 정보를 불러오지 못했습니다.");
-  }
-}
-
 // 게시글 목록 렌더링
 async function displayPosts() {
+  console.log("displayPosts 호출됨"); // 호출 여부 확인
   const postList = document.getElementById("postList");
-  postList.innerHTML = ""; // 기존 게시글 목록 초기화
+  postList.innerHTML = ""; // 기존 게시글 초기화
 
   const posts = await getPosts();
   if (posts) {
@@ -80,52 +71,7 @@ async function displayPosts() {
   }
 }
 
-// 게시글 삭제
-async function deletePost(postId) {
-  try {
-    await db.collection("posts").doc(postId).delete();
-    alert("게시글이 삭제되었습니다.");
-    displayPosts(); // 게시글 목록 새로고침
-    document.getElementById("postDetail").style.display = "none"; // 상세 보기 숨기기
-  } catch (error) {
-    console.error("게시글 삭제 중 오류 발생:", error);
-    alert("게시글 삭제 중 오류가 발생했습니다.");
-  }
-}
-
-// 게시글 수정
-async function editPost(postId) {
-  const newTitle = prompt("새 제목을 입력하세요:");
-  const newContent = prompt("새 내용을 입력하세요:");
-
-  if (newTitle && newContent) {
-    try {
-      await db.collection("posts").doc(postId).update({
-        title: newTitle,
-        content: newContent,
-      });
-      alert("게시글이 수정되었습니다.");
-      displayPosts(); // 게시글 목록 새로고침
-      document.getElementById("postDetail").style.display = "none"; // 상세 보기 숨기기
-    } catch (error) {
-      console.error("게시글 수정 중 오류 발생:", error);
-      alert("게시글 수정 중 오류가 발생했습니다.");
-    }
-  }
-}
-
-// 이벤트 리스너 추가
-document.getElementById("deletePostBtn").addEventListener("click", () => {
-  const postId = document.getElementById("deletePostBtn").dataset.id;
-  if (confirm("정말 삭제하시겠습니까?")) {
-    deletePost(postId);
-  }
-});
-
-document.getElementById("editPostBtn").addEventListener("click", () => {
-  const postId = document.getElementById("editPostBtn").dataset.id;
-  editPost(postId);
-});
-
 // 초기 실행
-displayPosts();
+document.addEventListener("DOMContentLoaded", () => {
+  displayPosts(); // 초기 게시글 렌더링
+});
