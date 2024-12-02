@@ -22,7 +22,9 @@ async function connectWallet() {
 
       document.getElementById(
         "walletBalance"
-      ).innerHTML = `Available: <span>${ethBalance}</span> ETH`;
+      ).innerHTML = `Available: <span>${parseFloat(ethBalance).toFixed(
+        4
+      )}</span> ETH`;
 
       alert(`지갑이 연결되었습니다: ${userAccount}`);
     } catch (error) {
@@ -39,28 +41,29 @@ async function sendEth() {
   const recipient = document.getElementById("recipient").value.trim();
   const amount = document.getElementById("depositAmount").value.trim();
 
-  if (!recipient || !amount) {
-    alert("수신 주소와 금액을 입력해주세요.");
+  if (!recipient || !amount || isNaN(amount)) {
+    alert("수신 주소와 금액을 올바르게 입력해주세요.");
     return;
   }
 
   try {
-    const valueInWei = web3.utils.toWei(amount, "ether");
+    const valueInWei = web3.utils.toWei(amount, "ether"); // ETH -> Wei 변환
 
     // 트랜잭션 생성
     const transactionParameters = {
-      to: recipient,
-      from: userAccount,
-      value: valueInWei,
+      to: recipient, // 수신 주소
+      from: userAccount, // 송신 주소 (연결된 계정)
+      value: web3.utils.toHex(valueInWei), // 전송 금액 (Wei)
+      gas: web3.utils.toHex(21000), // 기본 가스 한도
     };
 
     // MetaMask를 통한 트랜잭션 요청
-    await window.ethereum.request({
+    const txHash = await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [transactionParameters],
     });
 
-    alert("트랜잭션이 성공적으로 전송되었습니다.");
+    alert(`트랜잭션이 성공적으로 전송되었습니다. 트랜잭션 해시: ${txHash}`);
   } catch (error) {
     console.error("송금 실패:", error);
     alert("ETH 송금에 실패했습니다. 다시 시도해주세요.");
