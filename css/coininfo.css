@@ -54,7 +54,7 @@ header {
 .details {
   background-color: #1e1e2f;
   border-radius: 10px;
-  height: 400px;
+  height: 55vh;
   padding: 20px;
   box-sizing: border-box; /* 패딩 포함 */
 }
@@ -86,4 +86,13 @@ h3 {
 
 p {
   margin: 0;
+}
+.exchange p {
+  font-size: 2.5rem; /* 글씨 크기 크게 */
+  text-align: center; /* 가운데 정렬 */
+  margin: 0; /* 여백 제거 */
+}
+.price p {
+  font-size: 1.5rem; /* 글씨 크기 조정 */
+  margin: 0; /* 여백 제거 */
 }

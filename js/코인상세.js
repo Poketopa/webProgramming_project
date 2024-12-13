@@ -255,7 +255,7 @@ async function fetchExchangeRate() {
     const usdToKrwRate = data.rates.KRW; // 1 USD당 원화 값
 
     // 환율 섹션 업데이트
-    document.querySelector(".exchange p").textContent = `${usdToKrwRate.toFixed(2)}₩`;
+    document.querySelector(".exchange p").textContent = `₩ ${usdToKrwRate.toFixed(2)}`;
     return usdToKrwRate; // 환율 반환
   } catch (error) {
     console.error("환율 정보를 가져오는 중 오류 발생:", error);
@@ -271,8 +271,8 @@ async function fetchCurrentPrices(usdToKrwRate) {
     const krwPrice = (usdPrice * usdToKrwRate).toFixed(2); // USD 가격을 KRW로 변환
 
     // 현재 가격 섹션 업데이트
-    document.querySelector(".price p:nth-child(2)").textContent = `달러: $${usdPrice.toLocaleString()}`;
-    document.querySelector(".price p:nth-child(3)").textContent = `원화: ₩${krwPrice.toLocaleString()}`;
+    document.querySelector(".price p:nth-child(2)").textContent = `$   ${usdPrice.toLocaleString()}`;
+    document.querySelector(".price p:nth-child(3)").textContent = `₩ ${krwPrice.toLocaleString()}`;
   } catch (error) {
     console.error("현재가 정보를 가져오는 중 오류 발생:", error);
   }
