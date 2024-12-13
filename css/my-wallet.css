@@ -123,6 +123,10 @@ nav ul li a:hover {
 .button-area {
   width: 100%;
   text-align: center;
+  display: flex; /* Flexbox 활성화 */
+  flex-direction: column; /* 버튼을 세로로 배치 */
+  gap: 20px; /* 버튼 간의 간격을 20px로 설정 */
+  align-items: center; /* 버튼들을 중앙 정렬 */
 }
 
 .wallet-btn {
@@ -134,7 +138,7 @@ nav ul li a:hover {
   font-size: 1.2em;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 100%; /* 버튼 크기 유지 */
 }
 
 .wallet-btn:hover {
