@@ -271,8 +271,8 @@ async function fetchCurrentPrices(usdToKrwRate) {
     const krwPrice = (usdPrice * usdToKrwRate).toFixed(2); // USD 가격을 KRW로 변환
 
     // 현재 가격 섹션 업데이트
-    document.querySelector(".price p:nth-child(2)").textContent = `$   ${usdPrice.toLocaleString()}`;
-    document.querySelector(".price p:nth-child(3)").textContent = `₩ ${krwPrice.toLocaleString()}`;
+    document.getElementById("usd-price").textContent = `$ ${usdPrice.toLocaleString()}`;
+    document.getElementById("krw-price").textContent = `₩ ${krwPrice.toLocaleString()}`;
   } catch (error) {
     console.error("현재가 정보를 가져오는 중 오류 발생:", error);
   }

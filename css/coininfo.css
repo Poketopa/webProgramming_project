@@ -102,6 +102,7 @@ p {
   padding: 20px;
   box-sizing: border-box; /* 패딩 포함 */
   height: 400px;
+  line-height: 2; /* 줄 간격 조정 */
   overflow-y: auto; /* 세로 스크롤 추가 */
 }
 
@@ -122,4 +123,24 @@ p {
 .scroll::-webkit-scrollbar-track {
   background-color: #1e1e2f; /* 스크롤 트랙 배경 */
   border-radius: 5px; /* 둥근 모서리 */
+}
+.price table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.price th,
+.price td {
+  padding: 10px;
+}
+
+.price th {
+  color: #fff;
+  font-weight: bold;
+}
+
+.price td {
+  color: #fff;
 }
