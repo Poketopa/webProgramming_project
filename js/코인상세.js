@@ -277,6 +277,25 @@ async function fetchCurrentPrices(usdToKrwRate) {
     console.error("현재가 정보를 가져오는 중 오류 발생:", error);
   }
 }
+// 코인 설명 데이터 가져오기 및 업데이트
+async function fetchCoinDescription(coinId) {
+  try {
+    // CoinGecko API에서 데이터 가져오기
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const data = await response.json();
+
+    // 코인 설명 업데이트
+    const descriptionElement = document.querySelector(".description p");
+    const descriptionText = data.description.ko || data.description.en || "설명이 없습니다.";
+    descriptionElement.textContent = descriptionText;
+  } catch (error) {
+    console.error("코인 설명 정보를 가져오는 중 오류 발생:", error);
+
+    // 오류 발생 시 기본 메시지 표시
+    const descriptionElement = document.querySelector(".description p");
+    descriptionElement.textContent = "설명을 가져오는 데 실패했습니다.";
+  }
+}
 
 // 페이지 로드 시 실행
 document.addEventListener("DOMContentLoaded", async () => {
@@ -287,4 +306,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (usdToKrwRate) {
     await fetchCurrentPrices(usdToKrwRate); // 현재가 가져오기
   }
+  await fetchCoinDescription(coinId);
 });
