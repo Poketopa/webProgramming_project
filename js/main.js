@@ -13,11 +13,10 @@ function moveToCoinDetailsPage(coinId, coinName) {
   window.location.href = targetUrl;
 }
 
-
 async function fetchCoinData() {
   try {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1"
     );
     const data = await response.json();
 
@@ -328,20 +327,23 @@ async function renderTokenChart(coinId, coinName) {
 // 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 차트를 초기화
 document.addEventListener("DOMContentLoaded", () => {
   fetchCoinData(); // 코인 데이터 가져오기 함수 호출
-  document.querySelector("a[href='coin-details.html']").addEventListener("click", (event) => {
-    event.preventDefault(); // 기본 링크 이동 동작 막기
+  document
+    .querySelector("a[href='coin-details.html']")
+    .addEventListener("click", (event) => {
+      event.preventDefault(); // 기본 링크 이동 동작 막기
 
-    if (!currentCoinId || !currentCoinName) {
-      alert("현재 차트에 표시된 코인 정보가 없습니다."); // ID가 없을 경우
-      return;
-    }
+      if (!currentCoinId || !currentCoinName) {
+        alert("현재 차트에 표시된 코인 정보가 없습니다."); // ID가 없을 경우
+        return;
+      }
 
-    console.log(`코인상세 요청 - ID: ${currentCoinId}, 이름: ${currentCoinName}`);
+      console.log(
+        `코인상세 요청 - ID: ${currentCoinId}, 이름: ${currentCoinName}`
+      );
 
-    // 이후 상세 페이지 이동 함수 호출 (3단계에서 구현)
-    moveToCoinDetailsPage(currentCoinId, currentCoinName);
-  });
-
+      // 이후 상세 페이지 이동 함수 호출 (3단계에서 구현)
+      moveToCoinDetailsPage(currentCoinId, currentCoinName);
+    });
 
   setInterval(fetchCoinData, 600000); // 600,000ms = 10분
 });

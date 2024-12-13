@@ -45,11 +45,13 @@ nav ul li a:hover {
 
 /* 컨테이너 스타일 */
 .container {
-  width: 85%;
+  width: 40%; /* My Wallet 페이지와 유사한 가로 크기 */
   margin: 50px auto;
   padding: 20px;
-  position: relative;
-  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 가운데 정렬 */
+  gap: 20px; /* 카드 사이의 간격 추가 */
 }
 
 /* 카드 스타일 */
@@ -60,7 +62,7 @@ nav ul li a:hover {
   padding: 20px;
   text-align: center;
   margin-bottom: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%; /* 카드가 컨테이너 너비에 맞게 조정 */
 }
 
 .card:hover {
@@ -89,14 +91,17 @@ p {
 /* 이더스캔 버튼 스타일 */
 .etherscan-btn {
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 15px 10px; /* 버튼 크기 키움 */
   background-color: rgb(41, 28, 43);
   color: rgb(234, 118, 250);
-  font-size: 1em;
+  font-size: 1.2em; /* 글씨 크기 키움 */
   border: none;
-  border-radius: 5px;
+  border-radius: 10px; /* 버튼 모서리 둥글게 */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 100%; /* 버튼 크기를 동일하게 */
+  max-width: 300px; /* 버튼의 최대 너비 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
 }
 
 .etherscan-btn:hover {
@@ -131,7 +136,7 @@ p {
   background-image: url("../coinImage/etherscan.jpg");
   background-size: cover;
   background-position: center;
-  opacity: 0.1;
+  opacity: 0.05;
   z-index: 0;
   pointer-events: none;
 }
