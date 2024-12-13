@@ -15,42 +15,69 @@
         color: white;
         font-family: Arial, sans-serif;
       }
+
       .container {
         display: flex;
         flex-direction: column;
         gap: 20px;
         padding: 20px;
       }
+
       .row {
         display: flex;
         gap: 20px;
       }
+
       .chart {
+        flex: 6.43;
+        background-color: #1e1e2f;
+        border-radius: 10px;
+        height: 400px;
+        padding: 20px;
+      }
+
+      .right-column {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .exchange {
+        flex: none;
+        background-color: #252539;
+        border-radius: 10px;
+        height: 80px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .price {
+        flex: none;
+        background-color: #252539;
+        border-radius: 10px;
+        height: 120px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .details {
         flex: 7;
         background-color: #1e1e2f;
         border-radius: 10px;
-        height: 300px;
+        height: 250px;
         padding: 20px;
       }
-      .exchange, .price {
-        flex: 3;
-        background-color: #252539;
-        border-radius: 10px;
-        height: 140px;
-        padding: 20px;
-      }
-      .details {
-        flex: 1;
-        background-color: #1e1e2f;
-        border-radius: 10px;
-        height: 300px;
-        padding: 20px;
-      }
+
       .description {
         flex: 3;
         background-color: #252539;
         border-radius: 10px;
-        height: 300px;
+        height: 250px;
         padding: 20px;
       }
     </style>
@@ -95,26 +122,26 @@
 
     <!-- 메인 컨텐츠 -->
     <div class="container">
-      <!-- 상단: 코인 차트와 환율 -->
+      <!-- 상단: 코인 차트와 오른쪽 열 -->
       <div class="row">
         <!-- 코인 차트 -->
         <div class="chart">
           <canvas id="coin-chart-canvas"></canvas>
         </div>
-        <!-- 환율 및 가격 -->
-        <div>
+        <!-- 오른쪽 열: 환율 및 가격 -->
+        <div class="right-column">
           <div class="exchange">
             <h2>환율</h2>
             <p>1 USD = 원화</p>
           </div>
           <div class="price">
-            <h2>현재 가격</h2>
+            <h3>현재 가격</h3>
             <p>달러: $</p>
             <p>원화: ₩</p>
           </div>
         </div>
       </div>
-      <!-- 하단: 코인의 상세한 정보 -->
+      <!-- 하단: 코인의 상세한 정보와 설명 -->
       <div class="row">
         <div class="details">
           <h2>코인의 상세한 정보</h2>
@@ -125,6 +152,7 @@
         </div>
       </div>
     </div>
+
     <script src="../js/코인상세.js"></script>
   </body>
 </html>
