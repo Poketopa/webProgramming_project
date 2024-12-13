@@ -52,7 +52,7 @@ header {
 /* 차트와 상세 정보 */
 .chart,
 .details {
-  background-color: #1e1e2f;
+  background-color: #222222;
   border-radius: 10px;
   height: 35vh;
   padding: 20px;
@@ -63,7 +63,7 @@ header {
 .exchange,
 .price,
 .description {
-  background-color: #252539;
+  background-color: #222222;
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box; /* 패딩 포함 */
@@ -97,7 +97,7 @@ p {
   margin: 0; /* 여백 제거 */
 }
 .scroll {
-  background-color: #252539;
+  background-color: rgb(48, 48, 48);
   border-radius: 10px;
   padding: 20px;
   box-sizing: border-box; /* 패딩 포함 */
@@ -121,7 +121,7 @@ p {
 }
 
 .scroll::-webkit-scrollbar-track {
-  background-color: #1e1e2f; /* 스크롤 트랙 배경 */
+  background-color: rgb(48, 48, 48); /* 스크롤 트랙 배경 */
   border-radius: 5px; /* 둥근 모서리 */
 }
 .price table {
@@ -154,7 +154,7 @@ p {
 
 .detail-item {
   flex: 1 1 calc(33.333% - 20px); /* 한 줄에 3개씩 */
-  background-color: #252539;
+  background-color: rgb(48, 48, 48);
   border-radius: 5px;
   padding: 5px;
   box-sizing: border-box;
