@@ -6,7 +6,33 @@
     <title>코인 상세</title>
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/coininfo.css" />
+    <script src="../js/common.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* 사용자 이름과 이미지 관련 스타일 */
+      .user-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .kakao-login-image {
+        width: 170px;
+        height: auto;
+        display: block;
+      }
+
+      .user-name {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: center;
+        pointer-events: none; /* 클릭 불가 */
+      }
+    </style>
   </head>
   <body>
     <!-- 공통 헤더 -->
@@ -14,27 +40,38 @@
       <div class="header-container">
         <table class="header-table">
           <tr>
+            <!-- 팀 로고 -->
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
                 <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
               </div>
             </td>
+            <!-- 페이지 제목 -->
             <td class="header-center">코인상세</td>
+            <!-- 카카오 로그인 -->
             <td class="header-right" rowspan="2">
-              <a href="kakao-login.html" class="kakao-login-link">
-                <button class="kakao-login-button">
-                  <img src="../img/kakao.png" alt="Login with Kakao" />
-                </button>
-              </a>
+              <div id="userContainer" class="user-container">
+                <img
+                  id="kakaoLoginImage"
+                  src="../img/kakao.png"
+                  alt="Kakao Login"
+                  class="kakao-login-image"
+                />
+                <span
+                  id="userName"
+                  class="user-name"
+                  style="display: none"
+                ></span>
+              </div>
             </td>
           </tr>
           <tr>
+            <!-- 네비게이션 메뉴 -->
             <td class="header-nav">
               <nav>
                 <ul>
                   <li><a href="home.html">Main</a></li>
-                  <li><a href="coin-details.html">Coin Info</a></li>
                   <li><a href="etherscan.html">Ether Scan</a></li>
                   <li><a href="board.html">Community</a></li>
                   <li><a href="my-wallet.html">My Wallet</a></li>
