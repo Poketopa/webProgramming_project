@@ -8,6 +8,31 @@
     <link rel="stylesheet" href="../css/base.css" />
     <script src="../js/common.js" defer></script>
     <!-- 공통 스크립트 -->
+    <style>
+      /* 사용자 이름과 이미지 관련 스타일 */
+      .user-container {
+        position: relative;
+        display: inline-block;
+      }
+
+      .kakao-login-image {
+        width: 170px;
+        height: auto;
+        display: block;
+      }
+
+      .user-name {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: black;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: center;
+        pointer-events: none; /* 클릭 불가 */
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -22,20 +47,20 @@
             </td>
             <td class="header-center">Community</td>
             <td class="header-right" rowspan="2">
-              <!-- 사용자 이름 표시 및 로그인 버튼 -->
-              <span
-                id="userNameContainer"
-                style="display: none; font-size: 1.2em; color: #ffffff"
-              ></span>
-              <a
-                href="kakao-login.html"
-                id="loginButton"
-                class="kakao-login-link"
-              >
-                <button class="kakao-login-button">
-                  <img src="../img/kakao.png" alt="카카오 로그인" />
-                </button>
-              </a>
+              <!-- Kakao 로그인 영역 -->
+              <div id="userContainer" class="user-container">
+                <img
+                  id="kakaoLoginImage"
+                  src="../img/kakaoLogin.png"
+                  alt="Kakao Login"
+                  class="kakao-login-image"
+                />
+                <span
+                  id="userName"
+                  class="user-name"
+                  style="display: none"
+                ></span>
+              </div>
             </td>
           </tr>
           <tr>
