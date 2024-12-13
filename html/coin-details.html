@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/base.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   </head>
   <body>
     <!-- 공통 헤더 -->
@@ -19,12 +18,12 @@
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
-                <div class="team-name">열심히하다보면<br />뭐라도돼겠죠</div>
+                <div class="team-name">열심히 하다보면<br />뭐라도 되겠조</div>
               </div>
             </td>
 
             <!-- 제목 -->
-            <td class="header-center">코인상세</td>
+            <td class="header-center">Coin Info</td>
 
             <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
@@ -40,11 +39,11 @@
             <td class="header-nav">
               <nav>
                 <ul>
-                  <li><a href="home.html">메인</a></li>
-                  <li><a href="coin-details.html">코인상세</a></li>
-                  <li><a href="etherscan.html">이더스캔</a></li>
-                  <li><a href="board.html">게시판</a></li>
-                  <li><a href="my-wallet.html">내 지갑</a></li>
+                  <li><a href="home.html">Main</a></li>
+                  <li><a href="coin-details.html">Coin Info</a></li>
+                  <li><a href="etherscan.html">Ether Scan</a></li>
+                  <li><a href="board.html">Community</a></li>
+                  <li><a href="my-wallet.html">My Wallet</a></li>
                 </ul>
               </nav>
             </td>
@@ -55,15 +54,22 @@
 
     <!-- 메인 컨텐츠 -->
     <!-- 상단 섹션: 코인 차트 -->
-    <div class="charts" style="margin-bottom: 20px;">
-      <div class="chart-placeholder" id="btc-chart" style="background-color: #1e1e2f; padding: 20px; border-radius: 10px;">
+    <div class="charts" style="margin-bottom: 20px">
+      <div
+        class="chart-placeholder"
+        id="btc-chart"
+        style="background-color: #1e1e2f; padding: 20px; border-radius: 10px"
+      >
         <canvas id="coin-chart-canvas"></canvas>
       </div>
     </div>
 
     <!-- 하단 섹션: 코인 상세 정보 -->
-    <div class="card details-container" style="background-color: #252539; padding: 20px; border-radius: 10px;">
-      <h2 style="margin-bottom: 10px;">코인 정보</h2>
+    <div
+      class="card details-container"
+      style="background-color: #252539; padding: 20px; border-radius: 10px"
+    >
+      <h2 style="margin-bottom: 10px">코인 정보</h2>
       <div id="coin-details">
         <!-- JavaScript로 데이터가 동적으로 추가됩니다 -->
       </div>
