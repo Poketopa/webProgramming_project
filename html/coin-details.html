@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>코인 상세</title>
-    <link rel="stylesheet" href="../css/coin-details.css" />
+    <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/base.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   </head>
   <body>
     <!-- 공통 헤더 -->
@@ -21,7 +23,7 @@
               </div>
             </td>
 
-            <!-- 글쓰기 제목 -->
+            <!-- 제목 -->
             <td class="header-center">코인상세</td>
 
             <!-- Kakao 로그인 (1행 병합) -->
@@ -53,47 +55,23 @@
 
     <!-- 메인 컨텐츠 -->
     <div class="container">
-      <!-- 상단 섹션: 코인 차트와 가격 정보 -->
+      <!-- 상단 섹션: 코인 차트 -->
       <div class="top-section">
-        <!-- 코인 차트 섹션 -->
         <div class="card chart-container">
           <h2>해당 코인 차트</h2>
-          <div class="chart-placeholder">
-            <p>외부 API 차트 로드 중...</p>
-          </div>
-        </div>
-
-        <!-- 가격 정보 섹션 -->
-        <div class="card price-info">
-          <h2>현재가</h2>
-          <p class="price">280.3 $</p>
-          <p class="exchange-rate">환율: 39195.46 원</p>
-          <div class="buttons">
-            <button class="buy-btn">구매</button>
-            <button class="sell-btn">판매</button>
-          </div>
+          <canvas id="coin-chart-canvas"></canvas>
         </div>
       </div>
 
-      <!-- 하단 섹션: 코인 정보 및 투자 정보 -->
-      <div class="info-section">
-        <div class="card">
-          <h3>코인 정보</h3>
-          <ul>
-            <li>코인 이름: 코인 이름 1</li>
-            <li>시가총액: 1조 원</li>
-            <li>거래량: 1,000 BTC</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>코인 투자 정보</h3>
-          <ul>
-            <li>최대 상승: 15%</li>
-            <li>최대 하락: -10%</li>
-            <li>평균 변동률: 5%</li>
-          </ul>
+      <!-- 하단 섹션: 코인 상세 정보 -->
+      <div class="card details-container">
+        <h2>코인 정보</h2>
+        <div id="coin-details">
+          <!-- JavaScript로 데이터가 동적으로 추가됩니다 -->
         </div>
       </div>
     </div>
+
+    <script src="../js/코인상세.js"></script>
   </body>
 </html>

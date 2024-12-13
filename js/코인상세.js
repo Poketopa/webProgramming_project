@@ -1,114 +1,16 @@
-// CoinGecko API를 사용하여 30개의 코인 데이터를 가져오는 함수
-let currentCoinId = null;
-let currentCoinName = null;
+// URL에서 코인 ID와 이름 가져오기
+const urlParams = new URLSearchParams(window.location.search);
+const coinId = urlParams.get("coinId");
+const coinName = urlParams.get("coinName");
 
-function moveToCoinDetailsPage(coinId, coinName) {
-  // 코인 이름을 URL 인코딩하여 안전하게 전달
-  const encodedName = encodeURIComponent(coinName);
-
-  // URL에 쿼리 파라미터 추가
-  const targetUrl = `coin-details.html?coinId=${coinId}&coinName=${encodedName}`;
-
-  // 페이지 이동
-  window.location.href = targetUrl;
+// 코인 ID나 이름이 없을 경우 메인 페이지로 이동
+if (!coinId || !coinName) {
+  alert("코인 정보를 찾을 수 없습니다. 메인 페이지로 이동합니다.");
+  window.location.href = "home.html";
 }
 
-
-async function fetchCoinData() {
-  try {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1"
-    );
-    const data = await response.json();
-
-    // CoinGecko API에서 USD/KRW 환율 데이터 가져오기
-    const rateResponse = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=usd&vs_currencies=krw"
-    );
-    const rateData = await rateResponse.json();
-    const usdToKrwRate = rateData.usd.krw;
-
-    const coinDataElement = document.getElementById("coin-data");
-    coinDataElement.innerHTML = "";
-
-    // 기본으로 1위 코인의 차트를 렌더링
-    renderTokenChart(data[0].id, data[0].name);
-
-    data.forEach((coin, index) => {
-      const usdPrice = coin.current_price.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-      const krwPrice = (coin.current_price * usdToKrwRate).toLocaleString(
-        "ko-KR",
-        {
-          style: "currency",
-          currency: "KRW",
-        }
-      );
-
-      // 변동률에 따라 색상 및 아이콘 설정
-      const change24h = coin.price_change_percentage_24h.toFixed(2);
-      const change24hClass =
-        change24h > 0 ? "change-positive" : "change-negative";
-      const change24hIcon = change24h > 0 ? "▲" : "▼";
-
-      // FDV, 거래량, 시가총액에 대해 소수점 이하 값이 있는 경우만 소수점 표시
-      const fdv = coin.fully_diluted_valuation
-        ? coin.fully_diluted_valuation.toLocaleString("en-US", {
-            style: "currency",
-            currency: "USD",
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          })
-        : "N/A";
-      const volume24h = coin.total_volume.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
-      const marketCap = coin.market_cap.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      });
-
-      const row = document.createElement("tr");
-      row.innerHTML = `
-                <td>${index + 1}</td>
-                <td><img src="${coin.image}" alt="${
-        coin.name
-      } logo" width="20" height="20"> ${
-        coin.name
-      } (${coin.symbol.toUpperCase()})</td>
-                <td><span class="coin-price-usd">${usdPrice}</span> / <span class="coin-price-krw">${krwPrice}</span></td>
-                <td class="${change24hClass}">${change24hIcon} ${Math.abs(
-        change24h
-      )}%</td>
-                <td>${fdv}</td>
-                <td>${volume24h}</td>
-                <td>${marketCap}</td>
-            `;
-
-      // 각 행 클릭 시 해당 코인의 차트 렌더링
-      row.addEventListener("click", () => {
-        renderTokenChart(coin.id, coin.name);
-      });
-
-      coinDataElement.appendChild(row);
-    });
-  } catch (error) {
-    console.error("코인 데이터를 가져오는 중 오류 발생:", error);
-  }
-}
-
+// 차트 렌더링 함수
 async function renderTokenChart(coinId, coinName) {
-  currentCoinId = coinId; //추가
-  currentCoinName = coinName; //추가
   try {
     const response = await fetch(
       `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=7`
@@ -130,7 +32,7 @@ async function renderTokenChart(coinId, coinName) {
       prices.push(price[1]);
     });
 
-    const ctx = document.getElementById("btc-chart-canvas").getContext("2d");
+    const ctx = document.getElementById("coin-chart-canvas").getContext("2d");
 
     if (window.tokenChart) {
       window.tokenChart.destroy();
@@ -325,23 +227,28 @@ async function renderTokenChart(coinId, coinName) {
   }
 }
 
-// 페이지가 로드되었을 때 CoinGecko API를 통해 데이터를 가져오고 차트를 초기화
-document.addEventListener("DOMContentLoaded", () => {
-  fetchCoinData(); // 코인 데이터 가져오기 함수 호출
-  document.querySelector("a[href='coin-details.html']").addEventListener("click", (event) => {
-    event.preventDefault(); // 기본 링크 이동 동작 막기
+// 상세 정보 렌더링
+async function fetchCoinDetails(coinId) {
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const data = await response.json();
 
-    if (!currentCoinId || !currentCoinName) {
-      alert("현재 차트에 표시된 코인 정보가 없습니다."); // ID가 없을 경우
-      return;
-    }
+    const detailsContainer = document.getElementById("coin-details");
+    detailsContainer.innerHTML = `
+      <p><strong>이름:</strong> ${data.name} (${data.symbol.toUpperCase()})</p>
+      <p><strong>현재가:</strong> ${data.market_data.current_price.usd.toLocaleString()} USD</p>
+      <p><strong>시가총액:</strong> ${data.market_data.market_cap.usd.toLocaleString()} USD</p>
+      <p><strong>24시간 거래량:</strong> ${data.market_data.total_volume.usd.toLocaleString()} USD</p>
+      <p><strong>24시간 변동률:</strong> ${data.market_data.price_change_percentage_24h.toFixed(2)}%</p>
+      <p><strong>설명:</strong> ${data.description.en || "설명이 없습니다."}</p>
+    `;
+  } catch (error) {
+    console.error("코인 상세 정보를 가져오는 중 오류 발생:", error);
+  }
+}
 
-    console.log(`코인상세 요청 - ID: ${currentCoinId}, 이름: ${currentCoinName}`);
-
-    // 이후 상세 페이지 이동 함수 호출 (3단계에서 구현)
-    moveToCoinDetailsPage(currentCoinId, currentCoinName);
-  });
-
-
-  setInterval(fetchCoinData, 600000); // 600,000ms = 10분
+// 페이지 로드 시 실행
+document.addEventListener("DOMContentLoaded", async () => {
+  await renderTokenChart(coinId, coinName); // 차트 렌더링
+  await fetchCoinDetails(coinId); // 상세 정보 렌더링
 });
