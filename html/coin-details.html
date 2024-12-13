@@ -54,21 +54,18 @@
     </header>
 
     <!-- 메인 컨텐츠 -->
-    <div class="container">
-      <!-- 상단 섹션: 코인 차트 -->
-      <div class="top-section">
-        <div class="card chart-container">
-          <h2>해당 코인 차트</h2>
-          <canvas id="coin-chart-canvas"></canvas>
-        </div>
+    <!-- 상단 섹션: 코인 차트 -->
+    <div class="charts" style="margin-bottom: 20px;">
+      <div class="chart-placeholder" id="btc-chart" style="background-color: #1e1e2f; padding: 20px; border-radius: 10px;">
+        <canvas id="coin-chart-canvas"></canvas>
       </div>
+    </div>
 
-      <!-- 하단 섹션: 코인 상세 정보 -->
-      <div class="card details-container">
-        <h2>코인 정보</h2>
-        <div id="coin-details">
-          <!-- JavaScript로 데이터가 동적으로 추가됩니다 -->
-        </div>
+    <!-- 하단 섹션: 코인 상세 정보 -->
+    <div class="card details-container" style="background-color: #252539; padding: 20px; border-radius: 10px;">
+      <h2 style="margin-bottom: 10px;">코인 정보</h2>
+      <div id="coin-details">
+        <!-- JavaScript로 데이터가 동적으로 추가됩니다 -->
       </div>
     </div>
 
