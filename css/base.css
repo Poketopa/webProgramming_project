@@ -91,7 +91,7 @@ nav ul li a {
 }
 
 .header-container {
-  width: 92%; /* 화면의 90% 너비 */
-  margin: 0 auto; /* 화면 중앙 정렬 */
+  width: 100%; /* 화면 전체 너비 */
+  margin: 0; /* 중앙 정렬 필요 없음 */
   padding: 0; /* 내부 여백 제거 */
 }
