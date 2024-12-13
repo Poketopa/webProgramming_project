@@ -6,19 +6,8 @@
     <title>게시판</title>
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../css/base.css" />
-    <script>
-      function checkUserSession() {
-        const kakaoNickname = localStorage.getItem("kakaoNickname");
-        if (!kakaoNickname) {
-          alert("로그인이 필요합니다.");
-          window.location.href = "kakao-login.html";
-        } else {
-          document.getElementById(
-            "welcomeMessage"
-          ).textContent = `${kakaoNickname}님, 환영합니다!`;
-        }
-      }
-    </script>
+    <script src="../js/common.js" defer></script>
+    <!-- 공통 스크립트 -->
   </head>
   <body>
     <header>
@@ -33,7 +22,16 @@
             </td>
             <td class="header-center">Community</td>
             <td class="header-right" rowspan="2">
-              <a href="kakao-login.html" class="kakao-login-link">
+              <!-- 사용자 이름 표시 및 로그인 버튼 -->
+              <span
+                id="userNameContainer"
+                style="display: none; font-size: 1.2em; color: #ffffff"
+              ></span>
+              <a
+                href="kakao-login.html"
+                id="loginButton"
+                class="kakao-login-link"
+              >
                 <button class="kakao-login-button">
                   <img src="../img/kakao.png" alt="카카오 로그인" />
                 </button>

@@ -97,3 +97,22 @@ nav ul li a {
   margin: 0; /* 중앙 정렬 필요 없음 */
   padding: 0; /* 내부 여백 제거 */
 }
+
+#userNameContainer {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+#loginButton {
+  background-color: rgb(41, 28, 43);
+  color: rgb(234, 118, 250);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#loginButton:hover {
+  background-color: rgb(60, 40, 63);
+}
