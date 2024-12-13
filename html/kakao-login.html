@@ -82,20 +82,29 @@
 
             <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
-              <a
-                href="kakao-login.html"
-                id="kakaoLoginLink"
-                class="kakao-login-link"
-              >
-                <button id="kakaoLoginButton" class="kakao-login-button">
-                  <img src="../img/kakao.png" alt="Login with Kakao" />
-                </button>
-              </a>
-              <span
-                id="kakaoUserName"
-                style="display: none"
-                class="kakao-user-name"
-              ></span>
+              <div id="kakaoLoginContainer" class="kakao-login-container">
+                <a
+                  href="kakao-login.html"
+                  id="kakaoLoginLink"
+                  class="kakao-login-link"
+                >
+                  <button id="kakaoLoginButton" class="kakao-login-button">
+                    <img src="../img/kakao.png" alt="Login with Kakao" />
+                  </button>
+                </a>
+                <div
+                  id="kakaoLoggedIn"
+                  class="kakao-logged-in"
+                  style="display: none"
+                >
+                  <img
+                    src="../img/kakaoLogin.png"
+                    alt="Logged In"
+                    class="kakao-login-image"
+                  />
+                  <span id="kakaoUserName" class="kakao-user-name"></span>
+                </div>
+              </div>
             </td>
           </tr>
           <tr>
