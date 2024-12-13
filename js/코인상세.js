@@ -247,8 +247,44 @@ async function fetchCoinDetails(coinId) {
   }
 }
 
+// 환율 가져오기 및 업데이트
+async function fetchExchangeRate() {
+  try {
+    const response = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+    const data = await response.json();
+    const usdToKrwRate = data.rates.KRW; // 1 USD당 원화 값
+
+    // 환율 섹션 업데이트
+    document.querySelector(".exchange p").textContent = `${usdToKrwRate.toFixed(2)}₩`;
+    return usdToKrwRate; // 환율 반환
+  } catch (error) {
+    console.error("환율 정보를 가져오는 중 오류 발생:", error);
+  }
+}
+
+// 현재가 가져오기 및 업데이트
+async function fetchCurrentPrices(usdToKrwRate) {
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const data = await response.json();
+    const usdPrice = data.market_data.current_price.usd; // 현재 USD 가격
+    const krwPrice = (usdPrice * usdToKrwRate).toFixed(2); // USD 가격을 KRW로 변환
+
+    // 현재 가격 섹션 업데이트
+    document.querySelector(".price p:nth-child(2)").textContent = `달러: $${usdPrice.toLocaleString()}`;
+    document.querySelector(".price p:nth-child(3)").textContent = `원화: ₩${krwPrice.toLocaleString()}`;
+  } catch (error) {
+    console.error("현재가 정보를 가져오는 중 오류 발생:", error);
+  }
+}
+
 // 페이지 로드 시 실행
 document.addEventListener("DOMContentLoaded", async () => {
   await renderTokenChart(coinId, coinName); // 차트 렌더링
   await fetchCoinDetails(coinId); // 상세 정보 렌더링
+  // 환율 및 현재가 업데이트
+  const usdToKrwRate = await fetchExchangeRate(); // 환율 가져오기
+  if (usdToKrwRate) {
+    await fetchCurrentPrices(usdToKrwRate); // 현재가 가져오기
+  }
 });
