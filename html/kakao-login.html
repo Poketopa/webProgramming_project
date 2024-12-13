@@ -11,13 +11,31 @@
       // Kakao JavaScript SDK 초기화
       Kakao.init("3235f2eed2c06c5061b7c819a400b901");
 
+      // 로그인 상태 확인 함수
+      function checkLoginStatus() {
+        const kakaoNickname = localStorage.getItem("kakaoNickname");
+
+        if (kakaoNickname) {
+          // 로그인 상태라면 버튼을 숨기고 사용자 이름 표시
+          document.getElementById("kakaoLoginLink").style.display = "none";
+          const userNameElement = document.getElementById("kakaoUserName");
+          userNameElement.style.display = "inline-block";
+          userNameElement.textContent = `${kakaoNickname}님`;
+        } else {
+          // 로그아웃 상태라면 버튼을 표시하고 사용자 이름 숨기기
+          document.getElementById("kakaoLoginLink").style.display = "block";
+          document.getElementById("kakaoUserName").style.display = "none";
+        }
+      }
+
+      // 카카오 로그인 함수
       function kakaoLogin() {
         Kakao.Auth.login({
           success: function (authObj) {
             Kakao.API.request({
               url: "/v2/user/me",
               success: function (res) {
-                const userId = res.id; // 카카오 사용자 ID
+                const userId = res.id; // 사용자 ID
                 const nickname = res.properties.nickname; // 닉네임
 
                 // 사용자 정보를 localStorage에 저장
@@ -25,8 +43,8 @@
                 localStorage.setItem("kakaoNickname", nickname);
 
                 alert(`${nickname}님, 로그인에 성공했습니다!`);
-                // 로그인 후 이동할 페이지로 리디렉션
-                window.location.href = "home.html";
+                // 로그인 상태 갱신
+                checkLoginStatus();
               },
               fail: function (error) {
                 alert("사용자 정보 요청 실패: " + JSON.stringify(error));
@@ -38,6 +56,11 @@
           },
         });
       }
+
+      // 페이지 로드 시 로그인 상태 확인
+      document.addEventListener("DOMContentLoaded", () => {
+        checkLoginStatus();
+      });
     </script>
   </head>
   <body>
@@ -59,11 +82,20 @@
 
             <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
-              <a href="kakao-login.html" class="kakao-login-link">
-                <button class="kakao-login-button">
+              <a
+                href="kakao-login.html"
+                id="kakaoLoginLink"
+                class="kakao-login-link"
+              >
+                <button id="kakaoLoginButton" class="kakao-login-button">
                   <img src="../img/kakao.png" alt="Login with Kakao" />
                 </button>
               </a>
+              <span
+                id="kakaoUserName"
+                style="display: none"
+                class="kakao-user-name"
+              ></span>
             </td>
           </tr>
           <tr>
