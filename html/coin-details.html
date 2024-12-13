@@ -92,11 +92,18 @@
           <div class="chart">
             <canvas id="coin-chart-canvas"></canvas>
           </div>
-          <div class="details" style="height: 25vh;">
-            <h2>코인의 상세한 정보</h2>
-            <p>여기에 코인 정보를 추가합니다.</p>
+          <div class="details" style="height: 45vh;">
+            <div class="coin-header">
+              <img id="coin-image" src="" alt="코인 이미지" />
+              <h2 id="coin-name">코인 이름</h2>
+            </div>
+            <div id="coin-details-container">
+              <!-- JavaScript로 데이터가 여기에 추가됩니다 -->
+            </div>
+            <div id="recommendation" style="margin-top: 10px; font-weight: bold; text-align: center;">
+              <!-- 매수/매도 추천 결과 표시 -->
+            </div>
           </div>
-        </div>
 
         <!-- 오른쪽 열: 환율, 현재 가격, 코인 설명 -->
         <div class="right-column">

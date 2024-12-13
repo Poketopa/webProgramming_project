@@ -308,3 +308,63 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   await fetchCoinDescription(coinId);
 });
+
+async function fetchDetailedCoinData() {
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const data = await response.json();
+
+    // 코인 이미지와 이름 설정
+    const coinImage = document.getElementById('coin-image');
+    const coinName = document.getElementById('coin-name');
+    coinImage.src = data.image.small; // API에서 작은 이미지 사용
+    coinName.textContent = data.name;
+
+    const detailsContainer = document.getElementById('coin-details-container');
+    detailsContainer.innerHTML = ''; // 기존 내용 제거
+
+    const details = [
+      { key: '시가 총액', value: `$${data.market_data.market_cap.usd.toLocaleString()}` },
+      { key: '총 거래량', value: `$${data.market_data.total_volume.usd.toLocaleString()}` },
+      { key: '24시간 최고가', value: `$${data.market_data.high_24h.usd.toLocaleString()}` },
+      { key: '24시간 최저가', value: `$${data.market_data.low_24h.usd.toLocaleString()}` },
+      { key: '24시간 가격 변동', value: `$${data.market_data.price_change_24h.toLocaleString()}` },
+      { key: '24시간 가격 변동률', value: `${data.market_data.price_change_percentage_24h.toFixed(2)}%` },
+      { key: '24시간 시가 총액 변동', value: `$${data.market_data.market_cap_change_24h.toLocaleString()}` },
+      { key: '24시간 시가 총액 변동률', value: `${data.market_data.market_cap_change_percentage_24h.toFixed(2)}%` },
+      { key: '유통 공급량', value: `${data.market_data.circulating_supply.toLocaleString()} ${data.symbol.toUpperCase()}` },
+      { key: '총 공급량', value: `${data.market_data.total_supply?.toLocaleString() || 'N/A'} ${data.symbol.toUpperCase()}` },
+      { key: '최대 공급량', value: `${data.market_data.max_supply?.toLocaleString() || 'N/A'} ${data.symbol.toUpperCase()}` },
+    ];
+
+    // 데이터를 아이템으로 추가
+    details.forEach((detail) => {
+      const item = document.createElement('div');
+      item.className = 'detail-item';
+      item.innerHTML = `
+        <h4>${detail.key}</h4>
+        <p>${detail.value}</p>
+      `;
+      detailsContainer.appendChild(item);
+    });
+
+    // 분석 결과 추가
+    const recommendation = document.getElementById('recommendation');
+    const priceChange = data.market_data.price_change_percentage_24h;
+    if (priceChange > 3) {
+      recommendation.textContent = '투자 추천: 적극 매수';
+      recommendation.style.color = '#00ff00';
+    } else if (priceChange < -3) {
+      recommendation.textContent = '투자 추천: 적극 매도';
+      recommendation.style.color = '#ff0000';
+    } else {
+      recommendation.textContent = '투자 추천: 관망';
+      recommendation.style.color = '#ffffff';
+    }
+  } catch (error) {
+    console.error('코인 정보를 가져오는 중 오류 발생:', error);
+  }
+}
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', fetchDetailedCoinData);

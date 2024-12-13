@@ -54,7 +54,7 @@ header {
 .details {
   background-color: #1e1e2f;
   border-radius: 10px;
-  height: 55vh;
+  height: 35vh;
   padding: 20px;
   box-sizing: border-box; /* 패딩 포함 */
 }
@@ -144,3 +144,58 @@ p {
 .price td {
   color: #fff;
 }
+/* 코인 상세 정보 컨테이너 */
+#coin-details-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* 항목 간격 */
+  justify-content: space-between; /* 가로로 정렬 */
+}
+
+.detail-item {
+  flex: 1 1 calc(33.333% - 20px); /* 한 줄에 3개씩 */
+  background-color: #252539;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.detail-item h4 {
+  margin: 0 0 5px 0;
+  font-size: 1rem;
+  color: #aaa;
+}
+
+.detail-item p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* 매수/매도 추천 */
+#recommendation {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.coin-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.coin-header img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.coin-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
