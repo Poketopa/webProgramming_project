@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crypto Page with Scroll Activation</title>
+    <title>Intro Page</title>
     <!-- AOS CSS -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
@@ -21,7 +21,7 @@
       .header {
         text-align: center;
         padding: 50px 20px;
-        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        background: linear-gradient(135deg, #ff5ff2, #feca7b);
         color: white;
       }
 
@@ -96,34 +96,41 @@
       }
 
       .btn-main {
-        display: block;
+        display: flex; /* Flexbox 활성화 */
+        justify-content: center; /* 가로 중앙 정렬 */
+        align-items: center; /* 세로 중앙 정렬 */
         margin: 50px auto;
-        padding: 15px 30px;
-        background: gray; /* 초기 비활성 상태 */
-        color: white;
-        font-size: 1.2em;
+        width: 600px; /* 버튼의 가로 크기 */
+        height: 60px; /* 버튼의 세로 크기 */
+        background: rgb(
+          41,
+          28,
+          43
+        ); /* my-wallet Connect Wallet 버튼 테마 색상 */
+        color: rgb(234, 118, 250); /* 텍스트 색상 */
+        font-size: 1.2em; /* 텍스트 크기 */
         font-weight: bold;
         border: none;
-        border-radius: 30px;
+        border-radius: 10px; /* 둥근 테두리 */
         text-decoration: none;
         cursor: not-allowed; /* 비활성 상태 */
-        transition: background 0.3s;
+        transition: background 0.3s ease;
       }
 
       .btn-main.active {
-        background: #ff7e5f; /* 활성화 색상 */
+        background: rgb(60, 40, 63); /* 활성화 색상 */
         cursor: pointer; /* 활성화된 상태 */
       }
 
       .btn-main.active:hover {
-        background: #feb47b;
+        background: rgb(80, 50, 85); /* 활성화된 상태에서 hover 색상 */
       }
     </style>
   </head>
   <body>
     <header class="header">
-      <h1>Web Programming Final Project</h1>
-      <p>Explore the world of cryptocurrencies</p>
+      <h1>Explore the World of Cryptocurrency</h1>
+      <p>Web Programming Final Project</p>
     </header>
 
     <!-- Coins Section -->
@@ -181,11 +188,7 @@
 
     <!-- Info Section -->
     <section class="info-section">
-      <h2 data-aos="zoom-in">More About Cryptocurrencies</h2>
-      <p>
-        Cryptocurrencies are revolutionizing the financial system by providing
-        secure, decentralized, and efficient solutions.
-      </p>
+      <h2 data-aos="zoom-in">Experience more information</h2>
       <a href="./html/home.html" class="btn-main" id="mainBtn"
         >Go to Main Page</a
       >

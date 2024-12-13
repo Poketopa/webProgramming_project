@@ -71,6 +71,8 @@
 /* 네비게이션 메뉴 */
 .header-nav {
   text-align: center;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
 }
 
 nav ul {
