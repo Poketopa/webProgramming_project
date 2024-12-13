@@ -1,0 +1,79 @@
+/* 전체 페이지 스타일 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+/* 컨테이너 */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  width: 1200px; /* 고정 크기 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 가로 배치 */
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+/* 왼쪽 열 */
+.left-column {
+  width: 70%; /* 고정 너비 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 오른쪽 열 */
+.right-column {
+  width: 30%; /* 고정 너비 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 차트와 상세 정보 */
+.chart,
+.details {
+  background-color: #1e1e2f;
+  border-radius: 10px;
+  height: 400px;
+  padding: 20px;
+  box-sizing: border-box; /* 패딩 포함 */
+}
+
+/* 환율, 가격, 설명 */
+.exchange,
+.price,
+.description {
+  background-color: #252539;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box; /* 패딩 포함 */
+}
+
+.exchange,
+.price {
+  height: 120px;
+}
+
+.description {
+  height: 200px;
+}
+
+/* 텍스트 스타일 */
+h2,
+h3 {
+  margin: 0 0 10px 0;
+}
+
+p {
+  margin: 0;
+}
