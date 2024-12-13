@@ -69,7 +69,8 @@ nav ul li a:hover {
   display: block;
 }
 
-#postForm input, #postForm textarea {
+#postForm input,
+#postForm textarea {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -204,7 +205,8 @@ nav ul li a:hover {
   transition: background-color 0.3s ease;
 }
 
-.tab-button.active, .tab-button:hover {
+.tab-button.active,
+.tab-button:hover {
   background-color: #4a90e2;
   color: #fff;
 }
