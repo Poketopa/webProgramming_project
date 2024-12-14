@@ -10,7 +10,7 @@ body {
 /* 헤더 스타일 */
 header {
   background-color: rgb(30, 30, 30); /* 헤더 배경색 */
-  padding: 20px;
+  padding: 35px;
   text-align: center;
   color: rgb(234, 118, 250); /* 헤더 텍스트 색 */
   border-bottom: 2px solid rgb(234, 118, 250); /* 헤더 아래 보더 */

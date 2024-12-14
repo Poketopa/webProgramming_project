@@ -15,7 +15,7 @@ body {
 /* 헤더 스타일 */
 header {
   background-color: rgb(30, 30, 30); /* my-wallet 헤더 색상 */
-  padding: 20px;
+  padding: 35px;
   text-align: center;
   position: fixed;
   top: 0;
