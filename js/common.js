@@ -20,7 +20,7 @@ function checkLoginStatus() {
     if (kakaoLoginImage) kakaoLoginImage.style.display = "none";
     if (loggedInImage) loggedInImage.style.display = "block";
     if (userName) {
-      userName.textContent = kakaoNickname;
+      userName.textContent = `${kakaoNickname} 님`;
       userName.style.display = "block";
     }
   } else {
