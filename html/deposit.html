@@ -29,12 +29,23 @@
             <!-- Kakao 로그인 -->
             <td class="header-right" rowspan="2">
               <div id="userContainer" class="user-container">
+                <!-- 로그인 전 이미지 -->
                 <img
                   id="kakaoLoginImage"
                   src="../img/kakao.png"
                   alt="Kakao Login"
                   class="kakao-login-image"
+                  onclick="kakaoLogin()"
                 />
+                <!-- 로그인 후 이미지 -->
+                <img
+                  id="loggedInImage"
+                  src="../img/kakaoLogin.png"
+                  alt="Kakao Logged In"
+                  class="logged-in-image"
+                  style="display: none"
+                />
+                <!-- 사용자 이름 -->
                 <span
                   id="userName"
                   class="user-name"
