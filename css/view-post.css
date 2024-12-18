@@ -37,6 +37,29 @@ header button:hover {
   background-color: rgb(60, 40, 63); /* 호버 시 버튼 색상 */
 }
 
+/* 버튼 스타일 */
+.button-theme {
+  display: block; /* 블록 레벨 요소 */
+  width: 20%; /* 게시글과 동일한 너비 */
+  margin: 50px auto; /* 위아래 여백 + 가운데 정렬 */
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  color: rgb(234, 118, 250);
+  background-color: rgb(41, 28, 43);
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.button-theme:hover {
+  background-color: rgb(60, 40, 63); /* 호버 시 배경 색상 */
+  color: rgb(255, 255, 255); /* 호버 시 텍스트 색상 */
+}
+
 /* 상세 보기 컨테이너 */
 #postDetail {
   width: 60%;
