@@ -7,33 +7,8 @@
     <link rel="stylesheet" href="../css/styles.css" />
     <link rel="stylesheet" href="../css/base.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="../js/common.js" defer></script>
-    <!-- 공통 스크립트 추가 -->
-    <style>
-      /* 사용자 이름과 이미지 관련 스타일 */
-      .user-container {
-        position: relative;
-        display: inline-block;
-      }
-
-      .kakao-login-image {
-        width: 170px;
-        height: auto;
-        display: block;
-      }
-
-      .user-name {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: black;
-        font-size: 1.2em;
-        font-weight: bold;
-        text-align: center;
-        pointer-events: none; /* 클릭 불가 */
-      }
-    </style>
   </head>
   <body>
     <!-- 공통 헤더 -->
@@ -55,12 +30,23 @@
             <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
               <div id="userContainer" class="user-container">
+                <!-- 로그인 전 이미지 -->
                 <img
                   id="kakaoLoginImage"
                   src="../img/kakao.png"
                   alt="Kakao Login"
                   class="kakao-login-image"
+                  onclick="kakaoLogin()"
                 />
+                <!-- 로그인 후 이미지 -->
+                <img
+                  id="loggedInImage"
+                  src="../img/kakaoLogin.png"
+                  alt="Kakao Logged In"
+                  class="logged-in-image"
+                  style="display: none"
+                />
+                <!-- 사용자 이름 -->
                 <span
                   id="userName"
                   class="user-name"

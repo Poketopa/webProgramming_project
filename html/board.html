@@ -6,33 +6,8 @@
     <title>게시판</title>
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../css/base.css" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script src="../js/common.js" defer></script>
-    <!-- 공통 스크립트 -->
-    <style>
-      /* 사용자 이름과 이미지 관련 스타일 */
-      .user-container {
-        position: relative;
-        display: inline-block;
-      }
-
-      .kakao-login-image {
-        width: 170px;
-        height: auto;
-        display: block;
-      }
-
-      .user-name {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: black;
-        font-size: 1.2em;
-        font-weight: bold;
-        text-align: center;
-        pointer-events: none; /* 클릭 불가 */
-      }
-    </style>
   </head>
   <body>
     <header>
@@ -51,7 +26,7 @@
               <div id="userContainer" class="user-container">
                 <img
                   id="kakaoLoginImage"
-                  src="../img/kakaoLogin.png"
+                  src="../img/kakao.png"
                   alt="Kakao Login"
                   class="kakao-login-image"
                 />

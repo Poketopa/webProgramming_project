@@ -8,59 +8,53 @@
     <link rel="stylesheet" href="../css/base.css" />
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-      // Kakao JavaScript SDK 초기화
-      Kakao.init("3235f2eed2c06c5061b7c819a400b901");
-
-      // 로그인 상태 확인 함수
-      function checkLoginStatus() {
-        const kakaoNickname = localStorage.getItem("kakaoNickname");
-
-        if (kakaoNickname) {
-          // 로그인 상태: 기존 로그인 버튼 숨기기, 새 이미지와 이름 표시
-          document.getElementById("kakaoLoginLink").style.display = "none";
-          const loggedInContainer = document.getElementById("kakaoLoggedIn");
-          const userNameElement = document.getElementById("kakaoUserName");
-          loggedInContainer.style.display = "block";
-          userNameElement.textContent = `${kakaoNickname} 님`;
-        } else {
-          // 로그아웃 상태: 기존 로그인 버튼 표시, 새 이미지와 이름 숨기기
-          document.getElementById("kakaoLoginLink").style.display = "block";
-          document.getElementById("kakaoLoggedIn").style.display = "none";
-        }
+      // Kakao SDK 초기화 (앱 키로 초기화)
+      if (!Kakao.isInitialized()) {
+        Kakao.init("3235f2eed2c06c5061b7c819a400b901"); // 여기에 본인의 카카오 앱 키를 입력하세요
+        console.log("Kakao SDK 초기화 상태:", Kakao.isInitialized());
       }
 
-      // 로그인 함수
       function kakaoLogin() {
         Kakao.Auth.login({
           success: function (authObj) {
+            console.log("로그인 성공:", authObj);
             Kakao.API.request({
               url: "/v2/user/me",
               success: function (res) {
-                const userId = res.id; // 사용자 ID
-                const nickname = res.properties.nickname; // 닉네임
+                const nickname = res.properties.nickname;
 
-                // 사용자 정보를 localStorage에 저장
-                localStorage.setItem("kakaoUserId", userId);
+                // 이미지 상태 변경 및 사용자 이름 표시
+                document.getElementById("kakaoLoginImage").style.display =
+                  "none";
+                document.getElementById("loggedInImage").style.display =
+                  "block";
+                document.getElementById("userName").textContent = `${nickname}`;
+                document.getElementById("userName").style.display = "block";
+
+                // localStorage에 사용자 이름 저장
                 localStorage.setItem("kakaoNickname", nickname);
-
-                alert(`${nickname}님, 로그인에 성공했습니다!`);
-                // 로그인 상태 갱신
-                checkLoginStatus();
               },
               fail: function (error) {
-                alert("사용자 정보 요청 실패: " + JSON.stringify(error));
+                console.error("사용자 정보 요청 실패:", error);
               },
             });
           },
           fail: function (err) {
-            alert("로그인 실패: " + JSON.stringify(err));
+            console.error("로그인 실패:", err);
           },
         });
       }
 
       // 페이지 로드 시 로그인 상태 확인
       document.addEventListener("DOMContentLoaded", () => {
-        checkLoginStatus();
+        const kakaoNickname = localStorage.getItem("kakaoNickname");
+
+        if (kakaoNickname) {
+          document.getElementById("kakaoLoginImage").style.display = "none";
+          document.getElementById("loggedInImage").style.display = "block";
+          document.getElementById("userName").textContent = `${kakaoNickname}`;
+          document.getElementById("userName").style.display = "block";
+        }
       });
     </script>
   </head>

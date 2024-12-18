@@ -1,3 +1,41 @@
+.user-container {
+  position: relative;
+  display: inline-block;
+  width: 170px;
+  height: auto;
+}
+
+/* 로그인 전 이미지 */
+.kakao-login-image {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  position: relative; /* 가장 위에 위치 */
+  z-index: 1;
+}
+
+/* 로그인 후 사용자 이름과 이미지 */
+.user-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2; /* 이름이 이미지 위에 위치하도록 설정 */
+  pointer-events: none; /* 텍스트는 클릭되지 않도록 */
+}
+
+/* 로그인 후 이미지 (숨김 처리) */
+.logged-in-image {
+  display: none;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
 /* 테이블 스타일 */
 .header-table {
   width: 100%;
