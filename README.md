@@ -72,11 +72,7 @@ This project is a **cryptocurrency-related website** that provides real-time coi
 │ ├── 📜 my-wallet.js  
 │ ├── 📜 postDetail.js  
 │ ├── 📜 view-post.js  
-│ ├── 📜 writePost.js  
-│  
-├── 📂 web3_wallet # Web3 wallet integration  
-│ ├── 📄 connectWallet.js  
-│ ├── 📄 web3Test.html  
+│ ├── 📜 writePost.js   
 │  
 ├── 📄 index.html # Main entry point of the project
 
