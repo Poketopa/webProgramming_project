@@ -86,53 +86,62 @@ This project is a **cryptocurrency-related website** that provides real-time coi
 
 ### 0. **Intro Page (`intro.html`)**
 
-![Image](https://github.com/user-attachments/assets/09e38c56-7d71-49b8-a2ce-a377d1130388)
+<img src="https://github.com/user-attachments/assets/09e38c56-7d71-49b8-a2ce-a377d1130388" width="800">
 
 ### 1. **Main Page (`index.html`)**
 
 - Displays a list of cryptocurrencies and their real-time prices.
 - Clicking on a coin redirects to its detail page.
-  ![Image](https://github.com/user-attachments/assets/a37374bd-0dd1-43a7-85e3-01b3125d5a20)
+
+  <img src="https://github.com/user-attachments/assets/a37374bd-0dd1-43a7-85e3-01b3125d5a20" width="800">
 
 ### 2. **Coin Details Page (`coin-details.html`)**
 
 - Shows the price chart and detailed information about a selected coin.
-  ![Image](https://github.com/user-attachments/assets/e6d574dc-4065-43a3-b4b0-3dcc08c6fc5b)
+
+  <img src="https://github.com/user-attachments/assets/e6d574dc-4065-43a3-b4b0-3dcc08c6fc5b" width="800">
 
 ### 3. **Community Board (`board.html`)**
 
 - Users can create, view, edit, and delete posts.
-  ![Image](https://github.com/user-attachments/assets/ddac01c0-a774-44ee-804d-d52a991660aa)
+
+  <img src="https://github.com/user-attachments/assets/ddac01c0-a774-44ee-804d-d52a991660aa" width="800">
 
 ### 4. **Post Creation Page (`write-post.html`)**
 
 - Users can create new posts and submit them to the database.
-  <img width="800" alt="Image" src="https://github.com/user-attachments/assets/6e84d2c1-0a1b-48a7-bc69-dce053da2890" />
+
+  <img src="https://github.com/user-attachments/assets/6e84d2c1-0a1b-48a7-bc69-dce053da2890" width="800">
 
 ### 5. **Post Viewing Page (`view-post.html`)**
 
 - Displays details of a specific post.
-  <img width="800" alt="Image" src="https://github.com/user-attachments/assets/3b620a97-1230-4cba-915f-b377dc630368" />
+
+  <img src="https://github.com/user-attachments/assets/3b620a97-1230-4cba-915f-b377dc630368" width="800">
 
 ### 6. **Kakao Login (`kakao-login.html`)**
 
 - Provides user authentication via Kakao.
-  <img width="800" alt="Image" src="https://github.com/user-attachments/assets/73af5038-54d6-401f-9c08-294cb5c2b788" />
+
+  <img src="https://github.com/user-attachments/assets/73af5038-54d6-401f-9c08-294cb5c2b788" width="800">
 
 ### 7. **My Wallet (`my-wallet.html`)**
 
 - Allows users to connect their MetaMask wallet and perform transactions.
-  ![Image](https://github.com/user-attachments/assets/81459196-60cb-445e-a7f9-3cecd3063104)
+
+  <img src="https://github.com/user-attachments/assets/81459196-60cb-445e-a7f9-3cecd3063104" width="800">
 
 ### 8. **Etherscan (`etherscan.html`)**
 
 - Displays Ethereum-based transaction history.
-  ![Image](https://github.com/user-attachments/assets/7e89fdfa-fc9e-4c92-ac48-03c39854ad33)
+
+  <img src="https://github.com/user-attachments/assets/7e89fdfa-fc9e-4c92-ac48-03c39854ad33" width="800">
 
 ### 9. **Deposit Page (`deposit.html`)**
 
 - Allows users to deposit cryptocurrency.
-  <img width="800" alt="Image" src="https://github.com/user-attachments/assets/c0742b69-8435-4cc0-98f0-f12fb0a63c7e" />
+
+  <img src="https://github.com/user-attachments/assets/c0742b69-8435-4cc0-98f0-f12fb0a63c7e" width="800">
 
 ---
 
