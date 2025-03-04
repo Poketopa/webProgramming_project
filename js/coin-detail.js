@@ -12,9 +12,11 @@ if (!coinId || !coinName) {
 // 차트 렌더링 함수
 async function renderTokenChart(coinId, coinName) {
   try {
+    /*
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=7`
+      ``
     );
+    */
     const data = await response.json();
 
     const labelsForXAxis = []; // X축에 보이는 라벨
@@ -230,7 +232,9 @@ async function renderTokenChart(coinId, coinName) {
 // 상세 정보 렌더링
 async function fetchCoinDetails(coinId) {
   try {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}`
+    );
     const data = await response.json();
 
     const detailsContainer = document.getElementById("coin-details");
@@ -239,7 +243,9 @@ async function fetchCoinDetails(coinId) {
       <p><strong>현재가:</strong> ${data.market_data.current_price.usd.toLocaleString()} USD</p>
       <p><strong>시가총액:</strong> ${data.market_data.market_cap.usd.toLocaleString()} USD</p>
       <p><strong>24시간 거래량:</strong> ${data.market_data.total_volume.usd.toLocaleString()} USD</p>
-      <p><strong>24시간 변동률:</strong> ${data.market_data.price_change_percentage_24h.toFixed(2)}%</p>
+      <p><strong>24시간 변동률:</strong> ${data.market_data.price_change_percentage_24h.toFixed(
+        2
+      )}%</p>
       <p><strong>설명:</strong> ${data.description.en || "설명이 없습니다."}</p>
     `;
   } catch (error) {
@@ -250,12 +256,16 @@ async function fetchCoinDetails(coinId) {
 // 환율 가져오기 및 업데이트
 async function fetchExchangeRate() {
   try {
-    const response = await fetch("https://api.exchangerate-api.com/v4/latest/USD");
+    const response = await fetch(
+      "https://api.exchangerate-api.com/v4/latest/USD"
+    );
     const data = await response.json();
     const usdToKrwRate = data.rates.KRW; // 1 USD당 원화 값
 
     // 환율 섹션 업데이트
-    document.querySelector(".exchange p").textContent = `₩ ${usdToKrwRate.toFixed(2)}`;
+    document.querySelector(
+      ".exchange p"
+    ).textContent = `₩ ${usdToKrwRate.toFixed(2)}`;
     return usdToKrwRate; // 환율 반환
   } catch (error) {
     console.error("환율 정보를 가져오는 중 오류 발생:", error);
@@ -265,14 +275,20 @@ async function fetchExchangeRate() {
 // 현재가 가져오기 및 업데이트
 async function fetchCurrentPrices(usdToKrwRate) {
   try {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}`
+    );
     const data = await response.json();
     const usdPrice = data.market_data.current_price.usd; // 현재 USD 가격
     const krwPrice = (usdPrice * usdToKrwRate).toFixed(2); // USD 가격을 KRW로 변환
 
     // 현재 가격 섹션 업데이트
-    document.getElementById("usd-price").textContent = `$ ${usdPrice.toLocaleString()}`;
-    document.getElementById("krw-price").textContent = `₩ ${krwPrice.toLocaleString()}`;
+    document.getElementById(
+      "usd-price"
+    ).textContent = `$ ${usdPrice.toLocaleString()}`;
+    document.getElementById(
+      "krw-price"
+    ).textContent = `₩ ${krwPrice.toLocaleString()}`;
   } catch (error) {
     console.error("현재가 정보를 가져오는 중 오류 발생:", error);
   }
@@ -281,12 +297,15 @@ async function fetchCurrentPrices(usdToKrwRate) {
 async function fetchCoinDescription(coinId) {
   try {
     // CoinGecko API에서 데이터 가져오기
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}`
+    );
     const data = await response.json();
 
     // 코인 설명 업데이트
     const descriptionElement = document.querySelector(".description p");
-    const descriptionText = data.description.ko || data.description.en || "설명이 없습니다.";
+    const descriptionText =
+      data.description.ko || data.description.en || "설명이 없습니다.";
     descriptionElement.textContent = descriptionText;
   } catch (error) {
     console.error("코인 설명 정보를 가져오는 중 오류 발생:", error);
@@ -311,36 +330,77 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function fetchDetailedCoinData() {
   try {
-    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}`
+    );
     const data = await response.json();
 
     // 코인 이미지와 이름 설정
-    const coinImage = document.getElementById('coin-image');
-    const coinName = document.getElementById('coin-name');
+    const coinImage = document.getElementById("coin-image");
+    const coinName = document.getElementById("coin-name");
     coinImage.src = data.image.small; // API에서 작은 이미지 사용
     coinName.textContent = data.name;
 
-    const detailsContainer = document.getElementById('coin-details-container');
-    detailsContainer.innerHTML = ''; // 기존 내용 제거
+    const detailsContainer = document.getElementById("coin-details-container");
+    detailsContainer.innerHTML = ""; // 기존 내용 제거
 
     const details = [
-      { key: '시가 총액', value: `$${data.market_data.market_cap.usd.toLocaleString()}` },
-      { key: '총 거래량', value: `$${data.market_data.total_volume.usd.toLocaleString()}` },
-      { key: '24시간 최고가', value: `$${data.market_data.high_24h.usd.toLocaleString()}` },
-      { key: '24시간 최저가', value: `$${data.market_data.low_24h.usd.toLocaleString()}` },
-      { key: '24시간 가격 변동', value: `$${data.market_data.price_change_24h.toLocaleString()}` },
-      { key: '24시간 가격 변동률', value: `${data.market_data.price_change_percentage_24h.toFixed(2)}%` },
-      { key: '24시간 시가 총액 변동', value: `$${data.market_data.market_cap_change_24h.toLocaleString()}` },
-      { key: '24시간 시가 총액 변동률', value: `${data.market_data.market_cap_change_percentage_24h.toFixed(2)}%` },
-      { key: '유통 공급량', value: `${data.market_data.circulating_supply.toLocaleString()} ${data.symbol.toUpperCase()}` },
-      { key: '총 공급량', value: `${data.market_data.total_supply?.toLocaleString() || 'N/A'} ${data.symbol.toUpperCase()}` },
-      { key: '최대 공급량', value: `${data.market_data.max_supply?.toLocaleString() || 'N/A'} ${data.symbol.toUpperCase()}` },
+      {
+        key: "시가 총액",
+        value: `$${data.market_data.market_cap.usd.toLocaleString()}`,
+      },
+      {
+        key: "총 거래량",
+        value: `$${data.market_data.total_volume.usd.toLocaleString()}`,
+      },
+      {
+        key: "24시간 최고가",
+        value: `$${data.market_data.high_24h.usd.toLocaleString()}`,
+      },
+      {
+        key: "24시간 최저가",
+        value: `$${data.market_data.low_24h.usd.toLocaleString()}`,
+      },
+      {
+        key: "24시간 가격 변동",
+        value: `$${data.market_data.price_change_24h.toLocaleString()}`,
+      },
+      {
+        key: "24시간 가격 변동률",
+        value: `${data.market_data.price_change_percentage_24h.toFixed(2)}%`,
+      },
+      {
+        key: "24시간 시가 총액 변동",
+        value: `$${data.market_data.market_cap_change_24h.toLocaleString()}`,
+      },
+      {
+        key: "24시간 시가 총액 변동률",
+        value: `${data.market_data.market_cap_change_percentage_24h.toFixed(
+          2
+        )}%`,
+      },
+      {
+        key: "유통 공급량",
+        value: `${data.market_data.circulating_supply.toLocaleString()} ${data.symbol.toUpperCase()}`,
+      },
+      {
+        key: "총 공급량",
+        value: `${
+          data.market_data.total_supply?.toLocaleString() || "N/A"
+        } ${data.symbol.toUpperCase()}`,
+      },
+      {
+        key: "최대 공급량",
+        value: `${
+          data.market_data.max_supply?.toLocaleString() || "N/A"
+        } ${data.symbol.toUpperCase()}`,
+      },
     ];
 
     // 데이터를 아이템으로 추가
     details.forEach((detail) => {
-      const item = document.createElement('div');
-      item.className = 'detail-item';
+      const item = document.createElement("div");
+      item.className = "detail-item";
       item.innerHTML = `
         <h4>${detail.key}</h4>
         <p>${detail.value}</p>
@@ -349,22 +409,22 @@ async function fetchDetailedCoinData() {
     });
 
     // 분석 결과 추가
-    const recommendation = document.getElementById('recommendation');
+    const recommendation = document.getElementById("recommendation");
     const priceChange = data.market_data.price_change_percentage_24h;
     if (priceChange > 3) {
-      recommendation.textContent = '투자 추천: 적극 매수';
-      recommendation.style.color = '#00ff00';
+      recommendation.textContent = "투자 추천: 적극 매수";
+      recommendation.style.color = "#00ff00";
     } else if (priceChange < -3) {
-      recommendation.textContent = '투자 추천: 적극 매도';
-      recommendation.style.color = '#ff0000';
+      recommendation.textContent = "투자 추천: 적극 매도";
+      recommendation.style.color = "#ff0000";
     } else {
-      recommendation.textContent = '투자 추천: 관망';
-      recommendation.style.color = '#ffffff';
+      recommendation.textContent = "투자 추천: 관망";
+      recommendation.style.color = "#ffffff";
     }
   } catch (error) {
-    console.error('코인 정보를 가져오는 중 오류 발생:', error);
+    console.error("코인 정보를 가져오는 중 오류 발생:", error);
   }
 }
 
 // 페이지 로드 시 실행
-document.addEventListener('DOMContentLoaded', fetchDetailedCoinData);
+document.addEventListener("DOMContentLoaded", fetchDetailedCoinData);

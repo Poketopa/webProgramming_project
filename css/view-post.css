@@ -3,17 +3,17 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: rgb(20, 20, 20); /* 어두운 배경 */
-  color: rgb(200, 200, 200); /* 밝은 회색 텍스트 */
+  background-color: rgb(20, 20, 20);
+  color: rgb(200, 200, 200);
 }
 
 /* 헤더 스타일 */
 header {
-  background-color: rgb(30, 30, 30); /* 헤더 배경색 */
+  background-color: rgb(30, 30, 30);
   padding: 35px;
   text-align: center;
-  color: rgb(234, 118, 250); /* 헤더 텍스트 색 */
-  border-bottom: 2px solid rgb(234, 118, 250); /* 헤더 아래 보더 */
+  color: rgb(234, 118, 250);
+  border-bottom: 2px solid rgb(234, 118, 250);
 }
 
 header h1 {
@@ -24,8 +24,8 @@ header h1 {
 header button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: rgb(41, 28, 43); /* 버튼 배경 */
-  color: rgb(234, 118, 250); /* 버튼 텍스트 */
+  background-color: rgb(41, 28, 43);
+  color: rgb(234, 118, 250);
   border: none;
   border-radius: 5px;
   font-size: 1em;
@@ -34,14 +34,14 @@ header button {
 }
 
 header button:hover {
-  background-color: rgb(60, 40, 63); /* 호버 시 버튼 색상 */
+  background-color: rgb(60, 40, 63);
 }
 
 /* 버튼 스타일 */
 .button-theme {
-  display: block; /* 블록 레벨 요소 */
-  width: 20%; /* 게시글과 동일한 너비 */
-  margin: 50px auto; /* 위아래 여백 + 가운데 정렬 */
+  display: block;
+  width: 20%;
+  margin: 50px auto;
   padding: 10px 20px;
   font-size: 1em;
   font-weight: bold;
@@ -56,18 +56,18 @@ header button:hover {
 }
 
 .button-theme:hover {
-  background-color: rgb(60, 40, 63); /* 호버 시 배경 색상 */
-  color: rgb(255, 255, 255); /* 호버 시 텍스트 색상 */
+  background-color: rgb(60, 40, 63);
+  color: rgb(255, 255, 255);
 }
 
 /* 상세 보기 컨테이너 */
 #postDetail {
   width: 60%;
   margin: 50px auto;
-  background-color: rgb(30, 30, 30); /* 카드 배경색 */
+  background-color: rgb(30, 30, 30);
   border-radius: 10px;
   padding: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 카드 그림자 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* 제목 스타일 */
@@ -75,7 +75,7 @@ header button:hover {
   font-size: 1.8em;
   font-weight: bold;
   margin-bottom: 20px;
-  color: rgb(234, 118, 250); /* 제목 색상 */
+  color: rgb(234, 118, 250);
 }
 
 /* 본문 내용 스타일 */
@@ -83,13 +83,13 @@ header button:hover {
   font-size: 1.2em;
   line-height: 1.6;
   margin-bottom: 30px;
-  color: rgb(200, 200, 200); /* 본문 텍스트 색 */
+  color: rgb(200, 200, 200);
 }
 
 /* 작성자 스타일 */
 #detailAuthor {
   font-size: 1em;
-  color: rgb(150, 150, 150); /* 작성자 정보 텍스트 색 */
+  color: rgb(150, 150, 150);
   margin-bottom: 20px;
 }
 
@@ -102,8 +102,8 @@ header button:hover {
 #editDeleteButtons button {
   padding: 10px 20px;
   margin: 0 10px;
-  background-color: rgb(41, 28, 43); /* 버튼 배경색 */
-  color: rgb(234, 118, 250); /* 버튼 텍스트 색 */
+  background-color: rgb(41, 28, 43);
+  color: rgb(234, 118, 250);
   border: none;
   border-radius: 5px;
   font-size: 1em;
@@ -112,13 +112,13 @@ header button:hover {
 }
 
 #editDeleteButtons button:hover {
-  background-color: rgb(60, 40, 63); /* 버튼 호버 색상 */
+  background-color: rgb(60, 40, 63);
 }
 
 /* 반응형 스타일 */
 @media (max-width: 768px) {
   #postDetail {
-    width: 90%; /* 모바일에서 가로 너비 조정 */
+    width: 90%;
     padding: 20px;
   }
 

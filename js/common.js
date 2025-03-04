@@ -1,7 +1,7 @@
 // Kakao SDK 초기화
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof Kakao !== "undefined" && !Kakao.isInitialized()) {
-    Kakao.init("3235f2eed2c06c5061b7c819a400b901"); // 본인의 JavaScript 키로 교체
+    //Kakao.init(""); // 본인의 JavaScript 키로 교체
     console.log("Kakao SDK 초기화됨:", Kakao.isInitialized());
   }
   checkLoginStatus(); // 페이지 로드 시 로그인 상태 확인

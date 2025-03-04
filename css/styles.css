@@ -57,11 +57,11 @@ nav ul li a {
 
 /* 코인 목록 스타일 */
 .coin-list {
-  max-height: 700px; /* 전체 높이 제한 */
-  overflow-y: auto; /* 세로 스크롤 활성화 */
+  max-height: 700px;
+  overflow-y: auto;
   border-radius: 10px;
   border: 1px solid #444;
-  box-sizing: content-box; /* 테이블 크기와 스크롤바 공간 조정 */
+  box-sizing: content-box;
 }
 
 .coin-list::-webkit-scrollbar {
@@ -90,11 +90,11 @@ table {
 
 /* coin-table 클래스 추가 */
 .coin-table thead {
-  position: sticky; /* 속성행 고정 */
-  top: 0; /* 스크롤 시 상단에 고정 */
+  position: sticky;
+  top: 0;
   z-index: 10;
   background-color: #2c2c2c;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* 속성행 분리감 추가 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .coin-table thead th {
@@ -102,7 +102,7 @@ table {
   text-align: left;
   font-size: 16px;
   border-bottom: 2px solid #444;
-  background-clip: padding-box; /* 스크롤바 침범 방지 */
+  background-clip: padding-box;
 }
 
 .coin-table tbody tr {

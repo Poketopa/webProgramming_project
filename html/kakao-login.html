@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="../css/base.css" />
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <script>
-      // Kakao SDK 초기화 (앱 키로 초기화)
       if (!Kakao.isInitialized()) {
-        Kakao.init("3235f2eed2c06c5061b7c819a400b901"); // 여기에 본인의 카카오 앱 키를 입력하세요
+        //Kakao.init("");
         console.log("Kakao SDK 초기화 상태:", Kakao.isInitialized());
       }
 
@@ -23,7 +22,6 @@
               success: function (res) {
                 const nickname = res.properties.nickname;
 
-                // 이미지 상태 변경 및 사용자 이름 표시
                 document.getElementById("kakaoLoginImage").style.display =
                   "none";
                 document.getElementById("loggedInImage").style.display =
@@ -31,7 +29,6 @@
                 document.getElementById("userName").textContent = `${nickname}`;
                 document.getElementById("userName").style.display = "block";
 
-                // localStorage에 사용자 이름 저장
                 localStorage.setItem("kakaoNickname", nickname);
               },
               fail: function (error) {
@@ -59,12 +56,10 @@
     </script>
   </head>
   <body>
-    <!-- 공통 헤더 -->
     <header>
       <div class="header-container">
         <table class="header-table">
           <tr>
-            <!-- 팀 로고 (1행 병합) -->
             <td class="header-left" rowspan="2">
               <div class="logo-container">
                 <img src="../img/logo.jpg" alt="팀 로고" class="team-logo" />
@@ -72,10 +67,8 @@
               </div>
             </td>
 
-            <!-- 글쓰기 제목 -->
             <td class="header-center">Kakao Login</td>
 
-            <!-- Kakao 로그인 (1행 병합) -->
             <td class="header-right" rowspan="2">
               <div id="kakaoLoginContainer" class="kakao-login-container">
                 <a
@@ -103,7 +96,6 @@
             </td>
           </tr>
           <tr>
-            <!-- 네비게이션 메뉴 -->
             <td class="header-nav">
               <nav>
                 <ul>
@@ -120,15 +112,12 @@
       </div>
     </header>
 
-    <!-- 카카오 로그인 섹션 -->
     <div class="container">
-      <!-- 텍스트 영역 -->
       <div class="card text-area">
         <h2>카카오 로그인</h2>
         <p>카카오 계정을 사용하여 로그인하세요.</p>
       </div>
 
-      <!-- 버튼 영역 -->
       <div class="card button-area">
         <button onclick="kakaoLogin()" class="kakao-login-btn">
           카카오 로그인

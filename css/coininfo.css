@@ -17,14 +17,13 @@ header {
   padding: 35px;
 }
 
-/* 컨테이너 */
 .container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  width: 1200px; /* 고정 크기 */
-  margin: 0 auto; /* 가운데 정렬 */
+  width: 1200px;
+  margin: 0 auto;
 }
 
 /* 가로 배치 */
@@ -35,7 +34,7 @@ header {
 
 /* 왼쪽 열 */
 .left-column {
-  width: 70%; /* 고정 너비 */
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -43,7 +42,7 @@ header {
 
 /* 오른쪽 열 */
 .right-column {
-  width: 30%; /* 고정 너비 */
+  width: 30%;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -56,7 +55,7 @@ header {
   border-radius: 10px;
   height: 35vh;
   padding: 20px;
-  box-sizing: border-box; /* 패딩 포함 */
+  box-sizing: border-box;
 }
 
 /* 환율, 가격, 설명 */
@@ -66,7 +65,7 @@ header {
   background-color: #222222;
   border-radius: 10px;
   padding: 20px;
-  box-sizing: border-box; /* 패딩 포함 */
+  box-sizing: border-box;
 }
 
 .exchange,
@@ -88,41 +87,41 @@ p {
   margin: 0;
 }
 .exchange p {
-  font-size: 2.5rem; /* 글씨 크기 크게 */
-  text-align: center; /* 가운데 정렬 */
-  margin: 0; /* 여백 제거 */
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0;
 }
 .price p {
-  font-size: 1.5rem; /* 글씨 크기 조정 */
-  margin: 0; /* 여백 제거 */
+  font-size: 1.5rem;
+  margin: 0;
 }
 .scroll {
   background-color: rgb(48, 48, 48);
   border-radius: 10px;
   padding: 20px;
-  box-sizing: border-box; /* 패딩 포함 */
+  box-sizing: border-box;
   height: 400px;
-  line-height: 2; /* 줄 간격 조정 */
-  overflow-y: auto; /* 세로 스크롤 추가 */
+  line-height: 2;
+  overflow-y: auto;
 }
 
 /* 스크롤바 스타일 */
 .scroll::-webkit-scrollbar {
-  width: 10px; /* 스크롤바 너비 */
+  width: 10px;
 }
 
 .scroll::-webkit-scrollbar-thumb {
-  background-color: #444; /* 스크롤바 색상 */
-  border-radius: 5px; /* 둥근 모서리 */
+  background-color: #444;
+  border-radius: 5px;
 }
 
 .scroll::-webkit-scrollbar-thumb:hover {
-  background-color: #666; /* 호버 시 색상 */
+  background-color: #666;
 }
 
 .scroll::-webkit-scrollbar-track {
-  background-color: rgb(48, 48, 48); /* 스크롤 트랙 배경 */
-  border-radius: 5px; /* 둥근 모서리 */
+  background-color: rgb(48, 48, 48);
+  border-radius: 5px;
 }
 .price table {
   width: 100%;
@@ -148,12 +147,12 @@ p {
 #coin-details-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* 항목 간격 */
-  justify-content: space-between; /* 가로로 정렬 */
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .detail-item {
-  flex: 1 1 calc(33.333% - 20px); /* 한 줄에 3개씩 */
+  flex: 1 1 calc(33.333% - 20px);
   background-color: rgb(48, 48, 48);
   border-radius: 5px;
   padding: 5px;
